@@ -6,15 +6,22 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/03/25 19:08:50 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:46:20 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
+#include <vector>
 
 int	main()
 {
- 	ft::vector<std::string> vector_str;
+ 	//ft::vector<int>		vector_int;
+ 	std::vector<int>		vector_int;
+	vector_int.push_back(5);
+
+	void	*ptr;
+
+	ptr = &vector_int;
 
 
 	return (0);

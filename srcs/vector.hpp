@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/03/25 19:09:25 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/03/27 18:34:08 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,20 @@ namespace	ft
 		private:
 			/* data */
 		public:
-			vector(/* args */);
 			vector(const T &ref);
+			vector();
 			~vector();
 	};
 	
 	template<typename T>
-	vector<T>::vector(/* args */)
+	vector<T>::vector(const T &ref)
 	{
 		
+	}
+	
+	template<typename T>
+	vector<T>::vector() 
+	{
 	}
 	
 	template<typename T>
