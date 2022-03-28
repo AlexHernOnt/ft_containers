@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/03/27 18:34:08 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/03/28 18:59:44 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,65 @@
 # define __VECTOR_HPP__
 # include <iostream>
 
-namespace	ft
+namespace ft
 {
-	template <typename T>
+	template <typename T, class Allocator = std::allocator<T> >
 	class vector
 	{
+		typedef unsigned int size_type;
+		
 		private:
-			/* data */
+			size_type _size;
+			
 		public:
+
+
 			vector(const T &ref);
-			vector();
+			explicit vector();
 			~vector();
 	};
 	
-	template<typename T>
-	vector<T>::vector(const T &ref)
+
+
+
+
+
+
+
+
+
+
+
+	
+
+	/*
+	**		Cons & Dest
+	*/
+	
+	template<typename T, class Allocator>
+	vector<T, Allocator>::vector(const T &ref)
 	{
+		_size = 1;
+	}
+	
+
+
+	vector (Allocator &alloc = allocator_type());
+
+
+
+
+	template<typename T, class Allocator>
+	vector<T, Allocator>::vector() 
+	{
+
+	}
 		
-	}
-	
-	template<typename T>
-	vector<T>::vector() 
-	{
-	}
-	
-	template<typename T>
-	vector<T>::~vector()
+	template<typename T, class Allocator>
+	vector<T, Allocator>::~vector()
 	{
 
 	}
 }
-
+typedef int lenght;
 #endif

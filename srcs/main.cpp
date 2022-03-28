@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/03/27 19:46:20 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/03/28 17:30:20 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,9 @@
 
 int	main()
 {
- 	//ft::vector<int>		vector_int;
- 	std::vector<int>		vector_int;
-	vector_int.push_back(5);
-
-	void	*ptr;
-
-	ptr = &vector_int;
-
+ 	ft::vector<int>			vector_int;
+ 	//std::vector<int>		vector_int;
+	//vector_int.push_back(5);
 
 	return (0);
 }
