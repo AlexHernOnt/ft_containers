@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/03/28 17:30:20 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/03/29 20:07:13 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,63 +16,17 @@
 int	main()
 {
  	ft::vector<int>			vector_int;
- 	//std::vector<int>		vector_int;
-	//vector_int.push_back(5);
+ 	//std::vector<bool>		vector_int;
 
+	for (unsigned int i = 0; i < 10; i++)
+		vector_int.push_back(i);
+
+	for (unsigned int i = 0; i < vector_int.size(); i++)
+		std::cout << vector_int[i] << std::endl;
+
+	// std::cout << std::endl << "Max: " <<  vector_int.max_size() << std::endl;
 	return (0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
