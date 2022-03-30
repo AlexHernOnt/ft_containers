@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/03/29 20:04:26 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/03/30 19:25:19 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ namespace ft
 
 
 
-		typedef unsigned int					size_type;
+		typedef size_t					size_type;
 
 		private:
 			size_type				_size;
@@ -40,14 +40,24 @@ namespace ft
 			value_type				*_ptr;
 
 		public:
-			
+
 			/*
 			**		_______________________________ Capacity  _______________________________
 			*/
-			
+
 			size_type size() const
 			{
-				return (_size);				
+				return (_size);
+			}
+			
+			size_type max_size	() const
+			{
+				return (_allocator.max_size());
+			}
+
+			size_type capacity() const
+			{
+				return (_capacity);
 			}
 
 
@@ -76,11 +86,18 @@ namespace ft
 
 			void push_back (const value_type& val)
 			{
-				if (_size != 0)
+				if (_capacity == 0)
+				{
+					_ptr = _allocator.allocate(1);
+					_ptr[_size] = val;
+					_size++;
+					_capacity++;
+				}
+				else if (_size == _capacity)
 				{
 					value_type				*aux;
 
-					//_capacity = log2();
+					_capacity *= 2;
 					aux = _allocator.allocate(_capacity);
 					for (unsigned int i = 0; i < _size; i++)
 						aux[i] = _ptr[i];
@@ -92,7 +109,6 @@ namespace ft
 				}
 				else
 				{
-					_ptr = _allocator.allocate(1);
 					_ptr[_size] = val;
 					_size++;
 				}
@@ -112,6 +128,7 @@ namespace ft
 
 			vector() 
 			{
+				_ptr = NULL;
 				_size = 0;
 				_capacity = 0;
 			}
@@ -123,8 +140,6 @@ namespace ft
 			}
 	};
 }
-
-
 
 
 

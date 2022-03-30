@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/03/29 20:07:13 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/03/30 16:56:54 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,18 @@
 
 int	main()
 {
- 	ft::vector<int>			vector_int;
- 	//std::vector<bool>		vector_int;
+ 	ft::vector<std::string>					vector_int;
+ 	std::vector<std::string>				std_vector_int;
 
-	for (unsigned int i = 0; i < 10; i++)
-		vector_int.push_back(i);
+	std::cout << "Mine : "<< vector_int.max_size() << std::endl ;
+	std::cout << "STL  : " << std_vector_int.max_size() << std::endl ;
 
-	for (unsigned int i = 0; i < vector_int.size(); i++)
-		std::cout << vector_int[i] << std::endl;
+		//std::cout << powf(i, 1.5f) << std::endl;
+	// for (unsigned int i = 0; i < 10; i++)
+	// 	vector_int.push_back(i);
+
+	// for (unsigned int i = 0; i < vector_int.size(); i++)
+	// 	std::cout << vector_int[i] << std::endl;
 
 	// std::cout << std::endl << "Max: " <<  vector_int.max_size() << std::endl;
 	return (0);
