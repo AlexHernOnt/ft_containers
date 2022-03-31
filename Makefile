@@ -6,7 +6,7 @@
 #    By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 14:48:46 by ahernand          #+#    #+#              #
-#    Updated: 2022/03/28 14:57:13 by ahernand         ###   ########.fr        #
+#    Updated: 2022/03/31 19:22:40 by ahernand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ $(OBJS) : $(SRCS)
 $(NAME) : $(OBJS)
 	$(CXX) $(CPPFLAGS) $(OBJS) -o $@
 
-
+test:
+	cd /Users/ahernand/Documents/containers_test && bash ./do.sh vector
 # - - - - - - - - - - - - - - - - - #
 # - - - - C L E A N I N G - - - - - #
 # - - - - - - - - - - - - - - - - - #
