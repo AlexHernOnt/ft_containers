@@ -6,48 +6,34 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/03/31 19:23:23 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/01 18:03:06 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
 #include <vector>
 
-int		main(void)
+int main ()
 {
-	for (unsigned long int i = 0; i < vct.size(); ++i)
+	std::vector<int> vector;
+	
+	vector.push_back(42);
+	vector.push_back(42);
+	vector.push_back(42);
+
+	std::vector<int>::iterator it;
+	
+	it = vector.begin();
+	it = vector.insert ( it , 200 );
+	
+	
+
+	for (size_t f = 0; f < vector.size(); ++f)
 	{
-		vct.at(i) = (vct.size() - i) * 3;
-		std::cout << "vct.at(): " << vct.at(i) << " | ";
-		std::cout << "vct[]: " << vct[i] << std::endl;
+		std::cout << vector[f] << std::endl;
 	}
-	printSize(vct);
-
-	TESTED_NAMESPACE::vector<TESTED_TYPE> const vct_c(vct);
-
-	std::cout << "front(): " << vct.front() << " " << vct_c.front() << std::endl;
-	std::cout << "back(): " << vct.back() << " " <<  vct_c.back() << std::endl;
-
-	try {
-		vct.at(10) = 42;
-	}
-	catch (std::out_of_range &e) {
-		std::cout << "Catch out_of_range exception!" << std::endl;
-	}
-	catch (std::exception &e) {
-		std::cout << "Catch exception: " << e.what() << std::endl;
-	}
-	return (0);
+	return 0;
 }
-
-
-
-
-
-
-
-
-
 
 
 

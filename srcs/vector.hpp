@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/03/31 19:17:59 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/01 17:53:51 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,12 @@ namespace ft
 		public:
 			typedef T										value_type;
 			typedef Allocator								allocator_type;
-			typedef typename Allocator::reference			reference;
-			typedef typename Allocator::const_reference		const_reference;
-			typedef typename Allocator::pointer				pointer;
-			typedef typename Allocator::const_pointer		const_pointer;
+			typedef value_type&								reference;
+			typedef const value_type&						const_reference;
+			typedef value_type*								pointer;
+			typedef const value_type*						const_pointer;
 			typedef	vector_iterator<vector<T> >				iterator;
-		//	typedef	vector_const_iterator<vector<T> >		const_iterator;
+			// typedef	vector_const_iterator<vector<T> >		const_iterator;
 
 
 
@@ -146,8 +146,7 @@ namespace ft
 
 			iterator begin()
 			{
-				if (!empty())
-					return (vector_iterator<vector<T> >(_ptr));
+				return (vector_iterator<vector<T> >(_ptr));
 			}
 
 			// const_iterator begin()
@@ -183,11 +182,35 @@ namespace ft
 				return (_capacity);
 			}
 
-			//		Implement resize bro, are you retarded ???
+//			resize
 
 			bool empty() const
 			{
 				return (_size == 0);
+			}
+			
+			void reserve (size_type n)
+			{
+				size_type	before;
+
+				before = _capacity;
+				while (n > _capacity)
+				{
+					if (_capacity == 0)
+						_capacity = 1;
+					else
+						_capacity *= 2;	
+				}
+				if (before != _capacity)
+				{
+					value_type				*aux;
+
+					aux = _allocator.allocate(_capacity);
+					for (unsigned int i = 0; i < _size; i++)
+						aux[i] = _ptr[i];
+					_allocator.deallocate(_ptr, _capacity);
+					_ptr = aux;
+				}
 			}
 
 
@@ -224,10 +247,54 @@ namespace ft
 					throw (std::out_of_range("Error: at: trying to access out of bound element."));
 			}
 
+
+
+
 			/*
 			**		_______________________________ Modifiers _______________________________
 			*/
 
+			//						   WHERE               NEW VALUE
+			iterator insert (iterator position, const value_type& val)
+			{
+				iterator	it;
+				iterator	it_next;
+				
+				reserve(_size + 1);
+				while (it != position && it != end())
+					it++;
+				if (it != end())
+				{
+					it_next = it;
+					it_next++;
+					while (it_next != end())
+					{
+						it_next = it;
+						it++;
+						it_next++;
+					}
+					position = val;
+				}
+
+				
+				// go to the iterator position,
+				// move elements to the right
+				// replace with val in position.	
+			}
+			
+
+
+
+
+
+
+
+
+
+
+
+
+			
 			void	push_back (const value_type& val)
 			{
 				if (_capacity == 0)
@@ -262,12 +329,28 @@ namespace ft
 
 
 			/*
+			**		________________________________ Operator _______________________________
+			*/
+			
+			// void	operator=(const T &ref)
+			// {
+				
+			// }
+
+			/*
 			**		______________________________ Cons & Dest ______________________________
 			*/
 
 			vector(const T &ref)
 			{
-				_size = ref.size();
+				
+			}
+
+			explicit vector (size_type n, const value_type& val = value_type(),
+								const allocator_type& alloc = allocator_type())
+			{
+		 
+		 
 			}
 
 			vector() 
