@@ -60,6 +60,7 @@
 		"type_traits": "cpp",
 		"typeinfo": "cpp",
 		"utility": "cpp",
-		"__functional_base_03": "cpp"
+		"__functional_base_03": "cpp",
+		"memory_resource": "cpp"
 	}
 }

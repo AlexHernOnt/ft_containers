@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/01 17:53:51 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/04 19:43:10 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,6 @@ namespace ft
 				return *(m_ptr + idx);
 			}
 
-
-
-
 			bool operator==(const vector_iterator& ref) const
 			{
 				if (m_ptr == ref)
@@ -114,6 +111,37 @@ namespace ft
 			}
 	};
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	template <typename T, typename Allocator = std::allocator<T> >
 	class vector
@@ -194,20 +222,18 @@ namespace ft
 				size_type	before;
 
 				before = _capacity;
-				while (n > _capacity)
-				{
-					if (_capacity == 0)
-						_capacity = 1;
-					else
-						_capacity *= 2;	
-				}
-				if (before != _capacity)
+				if (n > max_size())
+					std::length_error("Error: reserve: trying to reserve more memory than possible by system.");
+				if (n > _capacity)
 				{
 					value_type				*aux;
 
+					_capacity = n;
 					aux = _allocator.allocate(_capacity);
-					for (unsigned int i = 0; i < _size; i++)
+					for (size_type i = 0; i < _size; i++)
+					{
 						aux[i] = _ptr[i];
+					}
 					_allocator.deallocate(_ptr, _capacity);
 					_ptr = aux;
 				}
@@ -254,46 +280,141 @@ namespace ft
 			**		_______________________________ Modifiers _______________________________
 			*/
 
-			//						   WHERE               NEW VALUE
+
+			//		                _________________ Insert_________________
+			
 			iterator insert (iterator position, const value_type& val)
 			{
 				iterator	it;
-				iterator	it_next;
-				
-				reserve(_size + 1);
-				while (it != position && it != end())
-					it++;
-				if (it != end())
-				{
-					it_next = it;
-					it_next++;
-					while (it_next != end())
-					{
-						it_next = it;
-						it++;
-						it_next++;
-					}
-					position = val;
-				}
+				iterator	ite;
+				int			i;
 
-				
-				// go to the iterator position,
-				// move elements to the right
-				// replace with val in position.	
+				it = begin();
+				ite = end();
+				ite++;
+				i = 0;
+
+				while (it != position && it != ite)
+				{
+					it++;
+					i++;
+				}
+				if (it != ite)
+				{
+					reserve(_size + 1);			// Too slow 1 to 1, expands only 1 time each, have to expand to x2 duuuhhh
+					_size++;
+					int a = _size - 1;
+					int b = _size - 2;
+
+					while (a != i)
+					{
+						_ptr[a] = _ptr[b];
+						a--;
+						b--;
+					}
+					_ptr[i] = val;
+					
+					it = begin();
+					for (size_t j = 0; j < i; ++j)
+					{
+						it++;
+					}
+					return (it);
+				}
+				return (position);
+			}
+			
+			void insert (iterator position, size_type n, const value_type& val)
+			{
+				iterator	it;
+				iterator	ite;
+				int			i;
+
+				it = begin();
+				ite = end();
+				ite++;
+				i = 0;
+
+				while (it != position && it != ite)
+				{
+					it++;
+					i++;
+				}
+				if (it != ite)
+				{
+					reserve(_size + n);
+					_size = _size + n;
+					int a = i + n;
+					int b = i;
+
+					while (a != _size)
+					{
+						_ptr[a] = _ptr[b];
+						a++;
+						b++;
+					}
+					a = i;
+					while (a < i + n)
+					{
+						_ptr[a] = val;
+						a++;
+					}
+				}
+			}
+
+			template <class InputIterator>
+		    void insert (iterator position, InputIterator first, InputIterator last)
+			{
+				size_type	size_iterators;
+				iterator	it;
+				iterator	ite;
+				int			i;
+
+				size_iterators = 0;
+				it = begin();
+				ite = end();
+				ite++;
+				i = 0;
+
+				while (it != position && it != ite)
+				{
+					it++;
+					i++;
+				}
+				if (it != ite)
+				{
+					InputIterator first_aux = first;
+					while (first_aux != last)
+					{
+						first_aux++;
+						size_iterators++;
+					}
+					reserve(_size + size_iterators);
+					_size = _size + size_iterators;
+					int a = i + size_iterators;
+					int b = i;
+
+					while (a != _size)
+					{
+						_ptr[a] = _ptr[b];
+						a++;
+						b++;
+					}
+					a = i;
+					while (a < i + size_iterators && first != last)
+					{
+						_ptr[a] = *first;
+						first++;
+						a++;
+					}
+				}
 			}
 			
 
 
 
 
-
-
-
-
-
-
-
-
+			//		                _________________ Push Back _________________
 			
 			void	push_back (const value_type& val)
 			{
@@ -324,6 +445,12 @@ namespace ft
 					_size++;
 				}
 			}
+
+			//void swap (vector& x)
+			//{
+				
+					
+			//}
 
 
 
