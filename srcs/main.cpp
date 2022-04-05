@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/04 19:45:04 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/05 19:56:20 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,137 @@
 
 int main ()
 {
+	//ft::vector<int> myints;
+
+	//myints.insert (myints.end(), 10, 100);
+	//std::cout << "2. size: " << myints.size() << '\n';
+	
+
+
+
+
+	ft::vector<int>					vector;
+	ft::vector<int>::iterator		it;
+	ft::vector<int>::iterator		ite;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	it = vector.begin();
+	ite = vector.end();
+
+	it++;
+	vector.insert(it, 10, 42);
+	for (int i = 0; i < vector.size(); i++)
+	{
+		std::cout << "why" <<  vector[i] << std::endl;
+	}
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+	std::cout << 							"_____________ Simple Iterator test __________" << "\n"<< std::endl;
+
+	ft::vector<std::string>					vector;
+
+	vector.push_back("Hello");
+	vector.push_back("Charming");
+	vector.push_back("Oh beautiful");
+	
+	ft::vector<std::string>::iterator		it = vector.begin();
+	ft::vector<std::string>::iterator		ite = vector.end();
+	
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		it++;
+	}
+*/
+
+
+
+
+
+
+
+/*
+	std::cout << 							"_____________  Instert range test __________" << "\n"<< std::endl;
+
+	ft::vector<int>					vector;
+	ft::vector<int>::iterator		it;
+	ft::vector<int>::iterator		ite;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	it = vector.begin();
+	ite = vector.end();
+
+	it++;
+	vector.insert(it, 10, 42);
+	for (int i = 0; i < vector.size(); i++)
+	{
+		std::cout << vector[i] << std::endl;
+	}
+	return (0);	
+*/
+
+
+
+/*
+	std::cout << 							"_____________  Instert 2 itereators test __________" << "\n"<< std::endl;
+
 	ft::vector<int>					vector_4iterators;
 	ft::vector<int>					vector;
 	ft::vector<int>::iterator		it;
@@ -45,62 +176,8 @@ int main ()
 		std::cout << vector[i] << std::endl;
 	}
 	return (0);	
-}
 
-
-
-
-
-
-
-
-
-
-/*
-	std::cout << 							"_____________ Simple Iterator test __________" << "\n"<< std::endl;
-
-	ft::vector<std::string>					vector;
-
-	vector.push_back("Hello");
-	vector.push_back("Charming");
-	vector.push_back("Oh beautiful");
-	
-	ft::vector<std::string>::iterator		it = vector.begin();
-	ft::vector<std::string>::iterator		ite = vector.end();
-	
-	while (it != ite)
-	{
-		std::cout << *it << std::endl;
-		it++;
-	}
 */
-
-/*
-	ft::vector<int>					vector;
-	ft::vector<int>::iterator		it;
-	ft::vector<int>::iterator		ite;
-
-	vector.push_back(1);
-	vector.push_back(2);
-	vector.push_back(3);
-
-	it = vector.begin();
-	ite = vector.end();
-
-	it++;
-	vector.insert(it, 10, 42);
-	for (int i = 0; i < vector.size(); i++)
-	{
-		std::cout << vector[i] << std::endl;
-	}
-	return (0);	
-*/
-
-
-
-
-
-
 
 
 

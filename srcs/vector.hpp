@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/04 19:43:10 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/05 19:56:59 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,12 +177,12 @@ namespace ft
 				return (vector_iterator<vector<T> >(_ptr));
 			}
 
-			// const_iterator begin()
-			// {
-			// 	if (!empty())
-			// 		return (vector_iterator<vector<T> >(_ptr));
-			// }
-
+			//const_iterator begin()
+			//{
+			//	if (!empty())
+			//		return (vector_iterator<vector<T> >(_ptr));
+			//}
+			
 			iterator end()
 			{
 				return (vector_iterator<vector<T> >(_ptr + _size));
@@ -274,14 +274,70 @@ namespace ft
 			}
 
 
+			reference front()
+			{
+				return (_ptr[0]);
+			}
+			
+			const_reference front() const
+			{
+				return (_ptr[0]);
+			}
+
+
+			reference back()
+			{
+				return (_ptr[_size - 1]);
+			}
+			
+			const_reference back() const
+			{
+				return (_ptr[_size - 1]);
+			}
+
+
 
 
 			/*
 			**		_______________________________ Modifiers _______________________________
 			*/
 
+			//		_________________               Push Back               _________________
+			
+			void	push_back (const value_type& val)
+			{
+				if (_capacity == 0)
+				{
+					_ptr = _allocator.allocate(1);
+					_ptr[_size] = val;
+					_size++;
+					_capacity++;
+				}
+				else if (_size == _capacity)
+				{
+					value_type				*aux;
 
-			//		                _________________ Insert_________________
+					_capacity *= 2;
+					aux = _allocator.allocate(_capacity);
+					for (unsigned int i = 0; i < _size; i++)
+						aux[i] = _ptr[i];
+
+					_allocator.deallocate(_ptr, _capacity);
+					_ptr = aux;
+					_ptr[_size] = val;
+					_size++;
+				}
+				else
+				{
+					_ptr[_size] = val;
+					_size++;
+				}
+			}
+
+
+
+			
+			//		_________________                 Insert                 _________________
 			
 			iterator insert (iterator position, const value_type& val)
 			{
@@ -362,95 +418,129 @@ namespace ft
 				}
 			}
 
-			template <class InputIterator>
-		    void insert (iterator position, InputIterator first, InputIterator last)
-			{
-				size_type	size_iterators;
-				iterator	it;
-				iterator	ite;
-				int			i;
+			//template <class InputIterator>
+			//void insert (iterator position, InputIterator first, InputIterator last)
+			//{
+			//	size_type	size_iterators;
+			//	iterator	it = begin();
+			//	iterator	ite = end();
+			//	int			i;
 
-				size_iterators = 0;
-				it = begin();
-				ite = end();
-				ite++;
-				i = 0;
+			//	size_iterators = 0;
+			//	ite++;
+			//	i = 0;
+			//	while (it != position && it != ite)
+			//	{
+			//		it++;
+			//		i++;
+			//	}
+			//	if (it != ite)
+			//	{
+			//		InputIterator first_aux = first;
+			//		while (first_aux != last)
+			//		{
+			//			first_aux++;
+			//			size_iterators++;
+			//		}
+			//		reserve(_size + size_iterators);
+			//		_size = _size + size_iterators;
+			//		int a = i + size_iterators;
+			//		int b = i;
+
+			//		while (a != _size)
+			//		{
+			//			_ptr[a] = _ptr[b];
+			//			a++;
+			//			b++;
+			//		}
+			//		a = i;
+			//		while (a < i + size_iterators && first != last)
+			//		{
+			//		//	_ptr[a] = *first;
+			//			first++;
+			//			a++;
+			//		}
+			//	}
+			//}
+			
+
+			
+
+			//		_________________                 Erease                 _________________
+
+			iterator erase (iterator position)
+			{
+				iterator	it = begin();
+				iterator	ite = end();
+				int			delete_pos = 0;
+				int			a;
 
 				while (it != position && it != ite)
 				{
+					delete_pos++;
 					it++;
-					i++;
 				}
 				if (it != ite)
 				{
-					InputIterator first_aux = first;
-					while (first_aux != last)
+					a = delete_pos;
+					while (a + 1 != _size)
 					{
-						first_aux++;
-						size_iterators++;
+						_ptr[a] = _ptr[a + 1];
+						a++;
 					}
-					reserve(_size + size_iterators);
-					_size = _size + size_iterators;
-					int a = i + size_iterators;
-					int b = i;
+					_size -= 1;
+					return (it);
+				}
+				return (it);				
+			}
 
-					while (a != _size)
+			iterator erase (iterator first, iterator last)
+			{
+				iterator	it = begin();
+				iterator	ite = end();
+				int			n_first = 0;
+				int			n_last = 0;
+				int			a;
+				int			b;
+
+				while (it != first && it != ite)
+				{
+					n_first++;
+					it++;
+				}
+				it = begin();
+				while (it != last && it != ite)
+				{
+					n_last++;
+					it++;
+				}
+				if (it != ite)
+				{
+					a = n_first;
+					b = n_last;
+					while (b != _size)
 					{
 						_ptr[a] = _ptr[b];
-						a++;
 						b++;
-					}
-					a = i;
-					while (a < i + size_iterators && first != last)
-					{
-						_ptr[a] = *first;
-						first++;
 						a++;
 					}
+					_size -= n_last - n_first;
+					return (it);
 				}
+				return (it);				
 			}
-			
 
 
 
 
-			//		                _________________ Push Back _________________
-			
-			void	push_back (const value_type& val)
+			/*
+			**		_______________________________ Allocator _______________________________
+			*/
+
+			allocator_type get_allocator() const
 			{
-				if (_capacity == 0)
-				{
-					_ptr = _allocator.allocate(1);
-					_ptr[_size] = val;
-					_size++;
-					_capacity++;
-				}
-				else if (_size == _capacity)
-				{
-					value_type				*aux;
-
-					_capacity *= 2;
-					aux = _allocator.allocate(_capacity);
-					for (unsigned int i = 0; i < _size; i++)
-						aux[i] = _ptr[i];
-
-					_allocator.deallocate(_ptr, _capacity);
-					_ptr = aux;
-					_ptr[_size] = val;
-					_size++;
-				}
-				else
-				{
-					_ptr[_size] = val;
-					_size++;
-				}
+				return (_allocator);
 			}
-
-			//void swap (vector& x)
-			//{
-				
-					
-			//}
 
 
 
@@ -476,8 +566,7 @@ namespace ft
 			explicit vector (size_type n, const value_type& val = value_type(),
 								const allocator_type& alloc = allocator_type())
 			{
-		 
-		 
+				insert(begin(), n, val);
 			}
 
 			vector() 
