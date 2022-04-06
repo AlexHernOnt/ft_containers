@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/05 19:56:59 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/06 20:27:54 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,36 +110,9 @@ namespace ft
 				m_ptr = ptr;
 			}
 	};
-	
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	//		______________________________________________________________________    V e c t o r     ______________________________________________________________________
 
 
 
@@ -195,26 +168,44 @@ namespace ft
 			**		_______________________________ Capacity ________________________________
 			*/
 
-			size_type size() const
+			size_type	size() const
 			{
 				return (_size);
 			}
 			
-			size_type max_size	() const
+			size_type	max_size() const
 			{
 				return (_allocator.max_size());
 			}
 
-			size_type capacity() const
+			size_type	capacity() const
 			{
 				return (_capacity);
 			}
 
-//			resize
+			//When in resize: n < (_capacity *2), ej(80 < 128) the reisize goes to that 128 instead of the 80
+			void		resize (size_type n, value_type val = value_type())
+			{
+				if (n <= _size)
+					_size = n;
+				else
+				{
+					if (n > _capacity)
+						reserve(n);
+
+					while (_size < n)
+					{
+						_ptr[_size] = val;
+						_size++;
+					}
+				}
+			}
 
 			bool empty() const
 			{
-				return (_size == 0);
+				if (_size == 0)
+					return (true);
+				return (false);
 			}
 			
 			void reserve (size_type n)
@@ -546,15 +537,6 @@ namespace ft
 
 
 			/*
-			**		________________________________ Operator _______________________________
-			*/
-			
-			// void	operator=(const T &ref)
-			// {
-				
-			// }
-
-			/*
 			**		______________________________ Cons & Dest ______________________________
 			*/
 
@@ -582,8 +564,55 @@ namespace ft
 					_allocator.deallocate(_ptr, _capacity);
 			}
 	};
-}
 
+
+
+
+
+	/*
+	**		______________________________ Relational operators ______________________________
+	*/
+
+	template <class T, class Allocator>
+	bool operator==(const vector<T, Allocator> &lhs, const vector<T, Allocator> &rhs)
+	{
+		if (lhs.size() != rhs.size())	
+			return (false);
+		for (size_t i = 0; i < lhs.size(); i++)
+		{
+			if (lhs[i] != rhs[i])
+				return (false);
+		}
+		return (true);
+	}
+
+	template <class T, class Alloc>
+	bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return (!(lhs == rhs));
+	}
+
+	template <class T, class Alloc>
+	bool operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		if (lhs.size() < rhs.size())	
+			return (true);
+		if (lhs.size() > rhs.size())	
+			return (false);
+		for (size_t i = 0; i < lhs.size(); i++)
+		{
+			if (lhs[i] < rhs[i])
+				return (true);
+		}
+		return (false);
+	}
+
+	template <class T, class Alloc>
+	bool operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return (!(lhs < rhs));
+	}
+}
 
 void	ft_leaks()
 {

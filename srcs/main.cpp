@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/05 19:56:20 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/06 20:26:19 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,15 @@
 
 int main ()
 {
-	//ft::vector<int> myints;
-
-	//myints.insert (myints.end(), 10, 100);
-	//std::cout << "2. size: " << myints.size() << '\n';
+	std::vector<int>		vector_1;
+	std::vector<int>		vector_2;
 	
+	vector_1.push_back(1);
 
 
-
-
-	ft::vector<int>					vector;
-	ft::vector<int>::iterator		it;
-	ft::vector<int>::iterator		ite;
-
-	vector.push_back(1);
-	vector.push_back(2);
-	vector.push_back(3);
-
-	it = vector.begin();
-	ite = vector.end();
-
-	it++;
-	vector.insert(it, 10, 42);
-	for (int i = 0; i < vector.size(); i++)
-	{
-		std::cout << "why" <<  vector[i] << std::endl;
-	}
-	return 0;
+	if (vector_1 < vector_2)
+		std::cout << "True" << std::endl;
+	return (0);
 }
 
 
@@ -59,14 +41,33 @@ int main ()
 
 
 
+/*
+	std::vector<std::string> vector;
+	
+	for (int i = 0 ; i < 5; i++)
+		vector.push_back("Amen");
+		
+	for (int i = 0 ; i < vector.size(); i++)
+		std::cout << vector[i] << std::endl;
+	
+	std::cout << "Capacity Before: " << vector.capacity() << std::endl << std::endl;
 
 
+	
+	
+	vector.resize(15, "PENIS");
+	for (int i = 0 ; i < vector.size(); i++)				std::cout << vector[i] << std::endl;
 
-
-
-
-
-
+	std::cout << "Capacity: " << vector.capacity() << std::endl;
+		std::cout << vector[4] << std::endl;
+	// myvector.resize(8,100);
+	// myvector.resize(12);
+	
+	// std::cout << "myvector contains:";
+	// for (int i = 0; i < myvector.size(); i++)
+	// 	std::cout << ' ' << myvector[i];
+	// std::cout << '\n';
+	*/
 
 
 
@@ -189,9 +190,80 @@ int main ()
 
 
 
+/*
+	{
+		std::cout << std::endl << std::endl << "_____________  Operator test  equal 1__________" << "\n"<< std::endl;
+		
+		ft::vector<int>		vector_1;
+		ft::vector<int>		vector_2;
+	
+		
+		if (vector_1 == vector_2)
+			std::cout << " equal" << std::endl;
+	}
+	{
+		std::cout << std::endl << std::endl << "_____________  Operator test  equal 2__________" << "\n"<< std::endl;
+		
+		ft::vector<int>		vector_1;
+		ft::vector<int>		vector_2;
+	
+		vector_1.push_back(53);
+		vector_2.push_back(53);
+		
+		if (vector_1 == vector_2)
+			std::cout << " equal" << std::endl;
+	}
+	{
+		std::cout << std::endl << std::endl << "_____________  Operator test  equal 2__________" << "\n"<< std::endl;
+		
+		ft::vector<int>		vector_1;
+		ft::vector<int>		vector_2;
+	
+		vector_1.push_back(214);
+		vector_2.push_back(224);
+		
+		if (vector_1 == vector_2)
+			std::cout << " equal" << std::endl;
 
-
-
+			
+		std::cout << std::endl << std::endl << std::endl;
+	}	
+	{
+		std::cout << std::endl << std::endl << "_____________  Operator test not equal 1__________" << "\n"<< std::endl;
+		
+		ft::vector<int>		vector_1;
+		ft::vector<int>		vector_2;
+	
+		vector_1.push_back(214);
+		vector_2.push_back(213);
+		
+		if (vector_1 != vector_2)
+			std::cout << " Not equal" << std::endl;
+	}
+	{
+		std::cout << std::endl << std::endl << "_____________  Operator test not equal 2__________" << "\n"<< std::endl;
+		
+		ft::vector<int>		vector_1;
+		ft::vector<int>		vector_2;
+	
+		vector_1.push_back(214);
+		
+		if (vector_1 != vector_2)
+			std::cout << " Not equal" << std::endl;
+	}
+	{
+		std::cout << std::endl << std::endl << "_____________  Operator test not equal 2__________" << "\n"<< std::endl;
+		
+		ft::vector<int>		vector_1;
+		ft::vector<int>		vector_2;
+	
+		vector_1.push_back(214);
+		vector_2.push_back(214);
+		
+		if (vector_1 != vector_2)
+			std::cout << " Not equal" << std::endl;
+	}		
+*/
 
 
 
