@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/06 20:26:19 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/07 20:35:23 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,58 @@
 
 int main ()
 {
-	std::vector<int>		vector_1;
-	std::vector<int>		vector_2;
+	ft::vector<int> foo (3,0);
+	ft::vector<int> bar (5,0);
 	
-	vector_1.push_back(1);
-
-
-	if (vector_1 < vector_2)
-		std::cout << "True" << std::endl;
-	return (0);
+	bar = foo;
+	foo = ft::vector<int>();
+	
+	std::cout << "Size of foo: " << int(foo.size()) << '\n';
+	std::cout << "Size of bar: " << int(bar.size()) << '\n';
+	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

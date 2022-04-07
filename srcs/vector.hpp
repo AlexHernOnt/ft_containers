@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/06 20:27:54 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/07 20:35:43 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ namespace ft
 			typedef typename vector::value_type				value_type;
 			typedef value_type*								pointer_type;
 			typedef value_type&								reference_type;
+			typedef const value_type&						const_reference_type;
 
 		private:
 			pointer_type									m_ptr;
@@ -34,63 +35,134 @@ namespace ft
 			**		_______________________________ Operators _______________________________
 			*/
 
-			vector_iterator operator=(const vector_iterator& ref)
+			//		________	>< Operators
+
+			bool			operator<(vector_iterator& ref)
 			{
-				this->m_ptr = ref.m_ptr;
-				return (*this);				
-			} 
+				if (&(*m_ptr) < &(*ref))
+					return (true);
+				return (false);
+			}
+
+			bool			operator<=(vector_iterator& ref)
+			{
+				if (&(*m_ptr) <= &(*ref))
+					return (true);
+				return (false);
+			}
+
+			bool			operator>(vector_iterator& ref)
+			{
+				if (&(*m_ptr) >= &(*ref))
+					return (true);
+				return (false);
+			}
+
+			bool			operator>=(vector_iterator& ref)
+			{
+				if (&(*m_ptr) >= &(*ref))
+					return (true);
+				return (false);
+			}
 			
-			vector_iterator &operator++()
+
+
+
+			//		________	+ Operators
+
+			vector_iterator		operator+(const int n)
+			{
+				for (size_t i = 0; i < n; ++i)
+					++m_ptr;
+				return (*this);				
+			}
+
+			vector_iterator		operator+=(const int n)
+			{
+				for (size_t i = 0; i < n; ++i)
+					++m_ptr;
+				return (*this);				
+			}
+
+
+
+			//		________	- Operators
+
+			vector_iterator		operator-(const int n)
+			{
+				for (size_t i = 0; i < n; ++i)
+					--m_ptr;
+				return (*this);				
+			}
+
+			vector_iterator		operator-=(const int n)
+			{
+				for (size_t i = 0; i < n; ++i)
+					--m_ptr;
+				return (*this);				
+			}
+
+
+
+			//		________	++-- Operators
+
+			vector_iterator		&operator++()
 			{
 				m_ptr++;
 				return (*this);
 			}
 
-			vector_iterator operator++(int)
+			vector_iterator		operator++(int)
 			{
 				vector_iterator it_aux = *this;
 				++(*this);
 				return (it_aux);
 			}
 
-			vector_iterator &operator--()
+			vector_iterator		&operator--()
 			{
 				m_ptr--;
 				return (*this);
 			}
 
-			vector_iterator operator--(int)
+			vector_iterator		operator--(int)
 			{
 				vector_iterator it_aux = *this;
 				--(*this);
 				return (it_aux);
 			}
+			
+			vector_iterator		operator=(const vector_iterator& ref)
+			{
+				this->m_ptr = ref.m_ptr;
+				return (*this);				
+			} 
 
-			reference_type operator[](const int &idx)
+			reference_type		operator[](const int &idx)
 			{
 				return *(m_ptr + idx);
 			}
 
-			bool operator==(const vector_iterator& ref) const
+			bool				operator==(vector_iterator& ref) const
 			{
-				if (m_ptr == ref)
-					return (true);				
-				return (false);				
+				if (&(*m_ptr) == &(*ref))
+					return (true);
+				return (false);
 			} 
 
-			bool operator!=(const vector_iterator& ref) const
+			bool				operator!=(vector_iterator& ref) const
 			{
 				if (m_ptr != ref.m_ptr)
 					return (true);				
 				return (false);				
 			}
 
-			reference_type operator*()
+			reference_type		operator*()
 			{
 				return (*m_ptr);
 			}
-			
-			reference_type operator->()
+
+			reference_type		operator->()
 			{
 				return (m_ptr);
 			}
@@ -99,17 +171,20 @@ namespace ft
 			/*
 			**		______________________________ Cons & Dest ______________________________
 			*/
-			
+
 			vector_iterator()
 			{
 				m_ptr = NULL;
 			}
-			
+
 			vector_iterator(pointer_type ptr)
 			{
 				m_ptr = ptr;
 			}
 	};
+
+
+
 
 
 	//		______________________________________________________________________    V e c t o r     ______________________________________________________________________
@@ -210,9 +285,6 @@ namespace ft
 			
 			void reserve (size_type n)
 			{
-				size_type	before;
-
-				before = _capacity;
 				if (n > max_size())
 					std::length_error("Error: reserve: trying to reserve more memory than possible by system.");
 				if (n > _capacity)
@@ -225,7 +297,10 @@ namespace ft
 					{
 						aux[i] = _ptr[i];
 					}
-					_allocator.deallocate(_ptr, _capacity);
+					if (_ptr != NULL)
+					{
+						_allocator.deallocate(_ptr, _capacity);
+					}
 					_ptr = aux;
 				}
 			}
@@ -301,33 +376,29 @@ namespace ft
 				{
 					_ptr = _allocator.allocate(1);
 					_ptr[_size] = val;
-					_size++;
 					_capacity++;
 				}
 				else if (_size == _capacity)
 				{
-					value_type				*aux;
-
-					_capacity *= 2;
-					aux = _allocator.allocate(_capacity);
-					for (unsigned int i = 0; i < _size; i++)
-						aux[i] = _ptr[i];
-
-					_allocator.deallocate(_ptr, _capacity);
-					_ptr = aux;
+					reserve(_capacity * 2);
 					_ptr[_size] = val;
-					_size++;
 				}
 				else
-				{
 					_ptr[_size] = val;
-					_size++;
-				}
+				_size++;
+			}
+
+			//		_________________               Push Back               _________________
+
+			void pop_back()
+			{
+				if (_size >= 1)
+					_size--;
 			}
 
 
 
-			
+
 			//		_________________                 Insert                 _________________
 			
 			iterator insert (iterator position, const value_type& val)
@@ -409,50 +480,50 @@ namespace ft
 				}
 			}
 
-			//template <class InputIterator>
-			//void insert (iterator position, InputIterator first, InputIterator last)
-			//{
-			//	size_type	size_iterators;
-			//	iterator	it = begin();
-			//	iterator	ite = end();
-			//	int			i;
+	//		template <class InputIterator>
+			void insert (iterator position, iterator first, iterator last)
+			{
+				size_type	size_iterators;
+				iterator	it = begin();
+				iterator	ite = end();
+				int			i;
 
-			//	size_iterators = 0;
-			//	ite++;
-			//	i = 0;
-			//	while (it != position && it != ite)
-			//	{
-			//		it++;
-			//		i++;
-			//	}
-			//	if (it != ite)
-			//	{
-			//		InputIterator first_aux = first;
-			//		while (first_aux != last)
-			//		{
-			//			first_aux++;
-			//			size_iterators++;
-			//		}
-			//		reserve(_size + size_iterators);
-			//		_size = _size + size_iterators;
-			//		int a = i + size_iterators;
-			//		int b = i;
+				size_iterators = 0;
+				ite++;
+				i = 0;
+				while (it != position && it != ite)
+				{
+					it++;
+					i++;
+				}
+				if (it != ite)
+				{
+					iterator first_aux = first;
+					while (first_aux != last)
+					{
+						first_aux++;
+						size_iterators++;
+					}
+					reserve(_size + size_iterators);
+					_size = _size + size_iterators;
+					int a = i + size_iterators;
+					int b = i;
 
-			//		while (a != _size)
-			//		{
-			//			_ptr[a] = _ptr[b];
-			//			a++;
-			//			b++;
-			//		}
-			//		a = i;
-			//		while (a < i + size_iterators && first != last)
-			//		{
-			//		//	_ptr[a] = *first;
-			//			first++;
-			//			a++;
-			//		}
-			//	}
-			//}
+					while (a != _size)
+					{
+						_ptr[a] = _ptr[b];
+						a++;
+						b++;
+					}
+					a = i;
+					while (a < i + size_iterators && first != last)
+					{
+						_ptr[a] = *first;
+						first++;
+						a++;
+					}
+				}
+			}
 			
 
 			
@@ -537,6 +608,28 @@ namespace ft
 
 
 			/*
+			**		_______________________________ Operator= _______________________________
+			*/
+
+			ft::vector<T, Allocator>& operator=(const vector& x)
+			{
+				if (_capacity != 0)
+				{
+					_allocator.deallocate(_ptr, _capacity);
+					_ptr = NULL;
+				}
+				_size = 0;
+				_capacity = 0;
+				reserve(x.capacity());
+				for (size_t i = 0; i < x.size(); i++)
+					_ptr[i] = x[i];
+				_size = x.size();
+				_capacity = x.capacity();
+				return (*this);
+			}
+
+
+			/*
 			**		______________________________ Cons & Dest ______________________________
 			*/
 
@@ -548,6 +641,9 @@ namespace ft
 			explicit vector (size_type n, const value_type& val = value_type(),
 								const allocator_type& alloc = allocator_type())
 			{
+				_size = 0;
+				_capacity = 0;
+				_ptr = NULL;
 				insert(begin(), n, val);
 			}
 
@@ -586,37 +682,58 @@ namespace ft
 		return (true);
 	}
 
-	template <class T, class Alloc>
-	bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	template <class T, class Allocator>
+	bool operator!= (const vector<T, Allocator>& lhs, const vector<T, Allocator>& rhs)
 	{
 		return (!(lhs == rhs));
 	}
 
-	template <class T, class Alloc>
-	bool operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	template <class T, class Allocator>
+	bool operator<(const vector<T, Allocator>& lhs, const vector<T, Allocator>& rhs)
 	{
-		if (lhs.size() < rhs.size())	
-			return (true);
-		if (lhs.size() > rhs.size())	
-			return (false);
-		for (size_t i = 0; i < lhs.size(); i++)
+		for (size_t i = 0; i < lhs.size() && i < rhs.size(); i++)
 		{
 			if (lhs[i] < rhs[i])
 				return (true);
+			if (lhs[i] > rhs[i])
+				return (false);
 		}
+		if (lhs.size() < rhs.size())	
+			return (true);
 		return (false);
 	}
 
-	template <class T, class Alloc>
-	bool operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	template <class T, class Allocator>
+	bool operator>(const vector<T, Allocator>& lhs, const vector<T, Allocator>& rhs)
 	{
-		return (!(lhs < rhs));
+		for (size_t i = 0; i < lhs.size() && i < rhs.size(); i++)
+		{
+			if (lhs[i] > rhs[i])
+				return (true);
+			if (lhs[i] < rhs[i])
+				return (false);
+		}
+		if (lhs.size() > rhs.size())	
+			return (true);
+		return (false);
+	}
+
+	template <class T, class Allocator>
+	bool operator<=(const vector<T, Allocator>& lhs, const vector<T, Allocator>& rhs)
+	{
+		return (lhs < rhs || lhs == rhs);
+	}
+
+	template <class T, class Allocator>
+	bool operator>=(const vector<T, Allocator>& lhs, const vector<T, Allocator>& rhs)
+	{
+		return (lhs > rhs || lhs == rhs);
 	}
 }
 
-void	ft_leaks()
-{
-	system("leaks ft_containers");
-}
+//void	ft_leaks()
+//{
+//	system("leaks ft_containers");
+//}
 
 #endif
