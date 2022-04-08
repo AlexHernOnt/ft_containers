@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/07 20:35:43 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/08 16:33:34 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -633,9 +633,15 @@ namespace ft
 			**		______________________________ Cons & Dest ______________________________
 			*/
 
-			vector(const T &ref)
+			vector (const vector& x)
 			{
-				
+				_size = 0;
+				_capacity = 0;
+				reserve(x.capacity());
+				for (size_t i = 0; i < x.size(); i++)
+					_ptr[i] = x[i];
+				_size = x.size();
+				_capacity = x.capacity();
 			}
 
 			explicit vector (size_type n, const value_type& val = value_type(),
@@ -645,6 +651,65 @@ namespace ft
 				_capacity = 0;
 				_ptr = NULL;
 				insert(begin(), n, val);
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			template <class InputIterator>
+			vector (InputIterator first, InputIterator last,
+						const allocator_type& alloc = allocator_type())
+			{
+				int			i = 0;
+				iterator	it = first;
+
+				while (it != last)
+				{
+					it++;
+					i++;
+				}
+				if (it != last)
+				{
+					reserve(i);
+					for (size_t j = 0; j < i; ++j)
+					{
+						std::cout << first[j] << std::endl;
+						_ptr[j] = first[j];
+					}
+				}
+				_size = i;
+				_capacity = i;
 			}
 
 			vector() 
@@ -682,11 +747,13 @@ namespace ft
 		return (true);
 	}
 
+
 	template <class T, class Allocator>
 	bool operator!= (const vector<T, Allocator>& lhs, const vector<T, Allocator>& rhs)
 	{
 		return (!(lhs == rhs));
 	}
+
 
 	template <class T, class Allocator>
 	bool operator<(const vector<T, Allocator>& lhs, const vector<T, Allocator>& rhs)
@@ -703,6 +770,7 @@ namespace ft
 		return (false);
 	}
 
+
 	template <class T, class Allocator>
 	bool operator>(const vector<T, Allocator>& lhs, const vector<T, Allocator>& rhs)
 	{
@@ -717,6 +785,7 @@ namespace ft
 			return (true);
 		return (false);
 	}
+
 
 	template <class T, class Allocator>
 	bool operator<=(const vector<T, Allocator>& lhs, const vector<T, Allocator>& rhs)

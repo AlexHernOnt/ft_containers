@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/07 20:35:23 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/08 16:36:00 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,17 @@
 
 int main ()
 {
-	ft::vector<int> foo (3,0);
-	ft::vector<int> bar (5,0);
+	ft::vector<int> second;
+	second.push_back(2);
+	second.push_back(4);
+	second.push_back(8);
 	
-	bar = foo;
-	foo = ft::vector<int>();
+	ft::vector<int> third(second.begin(), second.end());
 	
-	std::cout << "Size of foo: " << int(foo.size()) << '\n';
-	std::cout << "Size of bar: " << int(bar.size()) << '\n';
+	//for (int i = 0; i < third.size(); i++)
+	//{
+	//	std::cout << third[i] << std::endl;
+	//}
 	return 0;
 }
 
@@ -34,7 +37,22 @@ int main ()
 
 
 
+	//ft::vector<int> first;
+	//ft::vector<int> second (4, 100);
+	//ft::vector<int> third (second.begin(), second.end());
+	//ft::vector<int> fourth (third);
 
+	//// the iterator constructor can also be used to construct from arrays:
+	
+	//int myints[] = { 16, 2, 77, 29 };
+	//ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+
+	//std::cout << "The contents of fifth are:";
+	
+	//for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+	//	std::cout << ' ' << *it;
+	
+	//std::cout << '\n';
 
 
 
