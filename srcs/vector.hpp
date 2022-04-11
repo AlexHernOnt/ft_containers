@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/08 16:33:34 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:17:43 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,11 +253,6 @@ namespace ft
 				return (_allocator.max_size());
 			}
 
-			size_type	capacity() const
-			{
-				return (_capacity);
-			}
-
 			//When in resize: n < (_capacity *2), ej(80 < 128) the reisize goes to that 128 instead of the 80
 			void		resize (size_type n, value_type val = value_type())
 			{
@@ -274,6 +269,11 @@ namespace ft
 						_size++;
 					}
 				}
+			}
+
+			size_type	capacity() const
+			{
+				return (_capacity);
 			}
 
 			bool empty() const
@@ -367,6 +367,20 @@ namespace ft
 			/*
 			**		_______________________________ Modifiers _______________________________
 			*/
+			
+			//		_________________                 Assign                _________________
+
+
+			void assign (size_type n, const value_type& val)
+			{
+				reserve(n);
+				_size = n;
+				for (size_type i = 0; i < n; ++i)
+					_ptr[i] = val;
+			}
+
+
+
 
 			//		_________________               Push Back               _________________
 			
@@ -480,8 +494,8 @@ namespace ft
 				}
 			}
 
-	//		template <class InputIterator>
-			void insert (iterator position, iterator first, iterator last)
+			template <class InputIterator>
+			void insert (iterator position, InputIterator first, InputIterator last)
 			{
 				size_type	size_iterators;
 				iterator	it = begin();
@@ -591,6 +605,44 @@ namespace ft
 				}
 				return (it);				
 			}
+			
+			void clear()
+			{
+				_size = 0;
+			}
+			
+			void swap (vector& x)
+			{
+				value_type				*aux;
+				size_type				aux_size;
+				size_type				aux_capacity;
+
+				aux_size = _size;
+				aux_capacity = _capacity;
+				
+				if (_capacity != 0)
+				{
+					aux = _allocator.allocate(_capacity);
+					for (size_type i = 0; i < _size; ++i)
+						aux[i] = _ptr[i];
+
+
+					_allocator.deallocate(_ptr, _capacity);
+					_capacity = x.capacity();
+					_size = x.size();
+					_ptr = _allocator.allocate(x.capacity());
+
+					for (size_type i = 0; i < x.size(); ++i)
+						_ptr[i] = x[i];
+					while (x.size() != 0)
+						x.pop_back();
+					for (size_type i = 0; i < aux_size; ++i)
+						x.push_back(aux[i]);
+					_allocator.deallocate(aux, aux_capacity);
+				}
+			}
+
+
 
 
 
@@ -687,30 +739,30 @@ namespace ft
 
 
 
-			template <class InputIterator>
-			vector (InputIterator first, InputIterator last,
-						const allocator_type& alloc = allocator_type())
-			{
-				int			i = 0;
-				iterator	it = first;
+			//template <class InputIterator>
+			//vector (InputIterator first, InputIterator last,
+			//			const allocator_type& alloc = allocator_type())
+			//{
+			//	int			i = 0;
+			//	iterator	it = first;
 
-				while (it != last)
-				{
-					it++;
-					i++;
-				}
-				if (it != last)
-				{
-					reserve(i);
-					for (size_t j = 0; j < i; ++j)
-					{
-						std::cout << first[j] << std::endl;
-						_ptr[j] = first[j];
-					}
-				}
-				_size = i;
-				_capacity = i;
-			}
+			//	while (it != last)
+			//	{
+			//		it++;
+			//		i++;
+			//	}
+			//	if (it != last)
+			//	{
+			//		reserve(i);
+			//		for (size_t j = 0; j < i; ++j)
+			//		{
+			//			std::cout << first[j] << std::endl;
+			//			_ptr[j] = first[j];
+			//		}
+			//	}
+			//	_size = i;
+			//	_capacity = i;
+			//}
 
 			vector() 
 			{

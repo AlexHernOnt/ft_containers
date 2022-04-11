@@ -6,28 +6,53 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/08 16:36:00 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/11 19:18:19 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "functions.hpp"
 #include "vector.hpp"
 #include <vector>
 
-int main ()
+int main()
 {
-	ft::vector<int> second;
-	second.push_back(2);
-	second.push_back(4);
-	second.push_back(8);
-	
-	ft::vector<int> third(second.begin(), second.end());
-	
-	//for (int i = 0; i < third.size(); i++)
-	//{
-	//	std::cout << third[i] << std::endl;
-	//}
-	return 0;
+	return (0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -44,8 +69,8 @@ int main ()
 
 	//// the iterator constructor can also be used to construct from arrays:
 	
-	//int myints[] = { 16, 2, 77, 29 };
-	//ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+	//int ints[] = { 16, 2, 77, 29 };
+	//ft::vector<int> fifth (ints, ints + sizeof(ints) / sizeof(int) );
 
 	//std::cout << "The contents of fifth are:";
 	
@@ -120,12 +145,12 @@ int main ()
 
 	std::cout << "Capacity: " << vector.capacity() << std::endl;
 		std::cout << vector[4] << std::endl;
-	// myvector.resize(8,100);
-	// myvector.resize(12);
+	// vector.resize(8,100);
+	// vector.resize(12);
 	
-	// std::cout << "myvector contains:";
-	// for (int i = 0; i < myvector.size(); i++)
-	// 	std::cout << ' ' << myvector[i];
+	// std::cout << "vector contains:";
+	// for (int i = 0; i < vector.size(); i++)
+	// 	std::cout << ' ' << vector[i];
 	// std::cout << '\n';
 	*/
 
@@ -233,9 +258,7 @@ int main ()
 	vector.insert(it, vector_4iterators.begin(), vector_4iterators.end());
 
 	for (int i = 0; i < vector.size(); i++)
-	{
 		std::cout << vector[i] << std::endl;
-	}
 	return (0);	
 
 */
