@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/11 19:18:19 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/12 19:36:24 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,91 @@
 
 int main()
 {
+	ft::vector<int>		deposit;
+	ft::vector<int>		vector;
+
+	deposit.push_back(3);
+	deposit.push_back(2);
+	deposit.push_back(5);
+	deposit.push_back(7);
+
+	vector.insert(vector.begin(), 2, 3);
+	
+	for (int i = 0; i < vector.size(); i++)
+		std::cout << vector[i] << std::endl;
+	
 	return (0);
+
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//ft::vector<int>		vector;
+
+	//vector.insert(vector.begin(), vector.begin(), vector.end());
+	
+	//for (int i = 0; i < vector.size(); i++)
+	//	std::cout << vector[i] << std::endl;
+	
+	//return (0);
 
 
 
@@ -221,9 +303,7 @@ int main()
 	it++;
 	vector.insert(it, 10, 42);
 	for (int i = 0; i < vector.size(); i++)
-	{
 		std::cout << vector[i] << std::endl;
-	}
 	return (0);	
 */
 

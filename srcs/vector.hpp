@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/11 17:17:43 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/12 20:23:36 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,23 @@
 # define __VECTOR_HPP__
 # include <iostream>
 # include <cmath>
+# include <type_traits>
+# include "functions.hpp"
 
 namespace ft
 {
+			template < bool B, class T = void >
+			struct EnableIf
+			{
+				
+			};
+
+			template<class T>
+			struct EnableIf<true, T>
+			{
+				typedef T type;
+			};
+
 	template <typename vector>
 	class vector_iterator
 	{
@@ -494,8 +508,30 @@ namespace ft
 				}
 			}
 
+
+
+
+
+
+
+
+
+
+
+
+			//template < typename T, typename Allocator> template <class Ite>
+			//void	insert(iterator position, Ite first, typename ft::enable_if<!std::numeric_limits<Ite>::is_integer, Ite>::type last) 
+			//void	insert(iterator position, InputIterator first, typename std::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type last) 
+			//void	insert(iterator position, InputIterator first, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last) 
+
+
+
+
+
+			
+			//void insert (iterator position, InputIterator first, InputIterator last, typename std::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type)
 			template <class InputIterator>
-			void insert (iterator position, InputIterator first, InputIterator last)
+			void	insert(iterator position, InputIterator first, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last) 
 			{
 				size_type	size_iterators;
 				iterator	it = begin();
