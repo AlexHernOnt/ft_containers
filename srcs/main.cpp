@@ -6,31 +6,18 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/12 19:36:24 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/13 20:43:29 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "functions.hpp"
 #include "vector.hpp"
+#include "tests.hpp"
 #include <vector>
 
 int main()
 {
-	ft::vector<int>		deposit;
-	ft::vector<int>		vector;
-
-	deposit.push_back(3);
-	deposit.push_back(2);
-	deposit.push_back(5);
-	deposit.push_back(7);
-
-	vector.insert(vector.begin(), 2, 3);
-	
-	for (int i = 0; i < vector.size(); i++)
-		std::cout << vector[i] << std::endl;
-	
+	test_assign();
 	return (0);
-
 }
 
 
@@ -77,30 +64,81 @@ int main()
 
 
 
+//			888     888                   888                     
+//			888     888                   888                     
+//			888     888                   888                     
+//			Y88b   d88P  .d88b.   .d8888b 888888  .d88b.  888d888 
+//			 Y88b d88P  d8P  Y8b d88P"    888    d88""88b 888P"   
+//			  Y88o88P   88888888 888      888    888  888 888     
+//			   Y888P    Y8b.     Y88b.    Y88b.  Y88..88P 888     
+//			    Y8P      "Y8888   "Y8888P  "Y888  "Y88P"  888     
+
+
+template < typename T>
+void print_vector(ft::vector<T> aux)
+{
+	for (size_t i = 0; i < aux.size(); ++i)
+		std::cout << aux[i] << std::endl;
+}
+
+
+template < typename T>
+void print_vector(std::vector<T> aux)
+{
+	for (size_t i = 0; i < aux.size(); ++i)
+		std::cout << aux[i] << std::endl;
+}
 
 
 
 
+void test_constructors()
+{
+	ft::vector<int>			a;
+	ft::vector<int>		b(2, 42);
+	ft::vector<int>		c(b.begin(), b.end());
+	ft::vector<int>		d(b);
+
+	std::cout << "Fill Constructor: " << std::endl;
+	for (int i = 0; i < b.size(); i++)
+		std::cout << b[i] << std::endl;
+		
+	std::cout << "Range Constructor: " << std::endl << std::endl;
+	for (int i = 0; i < c.size(); i++)
+		std::cout << c[i] << std::endl;
+		
+	std::cout << "Copy Constructor: " << std::endl << std::endl;
+	for (int i = 0; i < d.size(); i++)
+		std::cout << d[i] << std::endl;
+}
 
 
 
 
-
-
-
-
-
-
-
-
-	//ft::vector<int>		vector;
-
-	//vector.insert(vector.begin(), vector.begin(), vector.end());
+void test_assign()
+{
+	ft::vector<int> first;
+	ft::vector<int> second;
+	ft::vector<int> third;
 	
-	//for (int i = 0; i < vector.size(); i++)
-	//	std::cout << vector[i] << std::endl;
+	first.assign (7, 100);
 	
-	//return (0);
+	ft::vector<int>::iterator it;
+	it = first.begin() + 1;
+	
+	second.assign (it, first.end() - 1);
+	
+	int myints[] = { 1776, 7, 4};
+	third.assign (myints, myints + 3);
+
+	std::cout << "Size of first: "	<< int (first.size())	<< '\n';
+	print_vector(first);
+	std::cout << "Size of second: "	<< int (second.size())	<< '\n';
+	print_vector(second);
+	std::cout << "Size of third: "	<< int (third.size())	<< '\n';
+	print_vector(third);
+
+}
 
 
 
@@ -126,6 +164,26 @@ int main()
 
 
 
+
+
+
+
+
+
+/*		INSERT TEST
+	ft::vector<int>		deposit;
+	ft::vector<int>		vector;
+
+	deposit.push_back(3);
+	deposit.push_back(2);
+	deposit.push_back(5);
+	deposit.push_back(7);
+
+	vector.insert(vector.begin(), deposit.begin(), deposit.end());
+	
+	for (int i = 0; i < vector.size(); i++)
+		std::cout << vector[i] << std::endl;
+	*/
 
 
 

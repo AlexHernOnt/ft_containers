@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/12 20:23:36 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/13 20:28:28 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,6 @@
 
 namespace ft
 {
-			template < bool B, class T = void >
-			struct EnableIf
-			{
-				
-			};
-
-			template<class T>
-			struct EnableIf<true, T>
-			{
-				typedef T type;
-			};
-
 	template <typename vector>
 	class vector_iterator
 	{
@@ -394,6 +382,30 @@ namespace ft
 			}
 
 
+			template <class InputIterator>
+			void assign (typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
+			{
+				int					i;
+				InputIterator		it;
+						
+				i = 0;
+				it = first;
+				while (it != last)
+				{
+					it++;
+					i++;
+				}
+				if (i != 0)
+				{
+					reserve(i);
+					_size = i;
+					for (size_type j = 0; j < i; ++j)
+					{
+						_ptr[j] = *first;
+						first++;
+					}
+				}
+			}
 
 
 			//		_________________               Push Back               _________________
@@ -509,29 +521,8 @@ namespace ft
 			}
 
 
-
-
-
-
-
-
-
-
-
-
-			//template < typename T, typename Allocator> template <class Ite>
-			//void	insert(iterator position, Ite first, typename ft::enable_if<!std::numeric_limits<Ite>::is_integer, Ite>::type last) 
-			//void	insert(iterator position, InputIterator first, typename std::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type last) 
-			//void	insert(iterator position, InputIterator first, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last) 
-
-
-
-
-
-			
-			//void insert (iterator position, InputIterator first, InputIterator last, typename std::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type)
 			template <class InputIterator>
-			void	insert(iterator position, InputIterator first, typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last) 
+			void	insert(iterator position, InputIterator first, typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last) 
 			{
 				size_type	size_iterators;
 				iterator	it = begin();
@@ -561,7 +552,7 @@ namespace ft
 
 					while (a != _size)
 					{
-						_ptr[a] = _ptr[b];
+						_ptr [a] = _ptr[b];
 						a++;
 						b++;
 					}
@@ -641,7 +632,7 @@ namespace ft
 				}
 				return (it);				
 			}
-			
+
 			void clear()
 			{
 				_size = 0;
@@ -717,20 +708,19 @@ namespace ft
 			}
 
 
+
+
 			/*
 			**		______________________________ Cons & Dest ______________________________
 			*/
 
-			vector (const vector& x)
+			explicit vector (const allocator_type& alloc = allocator_type())
 			{
+				_ptr = NULL;
 				_size = 0;
 				_capacity = 0;
-				reserve(x.capacity());
-				for (size_t i = 0; i < x.size(); i++)
-					_ptr[i] = x[i];
-				_size = x.size();
-				_capacity = x.capacity();
 			}
+
 
 			explicit vector (size_type n, const value_type& val = value_type(),
 								const allocator_type& alloc = allocator_type())
@@ -742,70 +732,42 @@ namespace ft
 			}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			//template <class InputIterator>
-			//vector (InputIterator first, InputIterator last,
-			//			const allocator_type& alloc = allocator_type())
-			//{
-			//	int			i = 0;
-			//	iterator	it = first;
-
-			//	while (it != last)
-			//	{
-			//		it++;
-			//		i++;
-			//	}
-			//	if (it != last)
-			//	{
-			//		reserve(i);
-			//		for (size_t j = 0; j < i; ++j)
-			//		{
-			//			std::cout << first[j] << std::endl;
-			//			_ptr[j] = first[j];
-			//		}
-			//	}
-			//	_size = i;
-			//	_capacity = i;
-			//}
-
-			vector() 
+			template <class InputIterator>
+			vector (typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last, const allocator_type& alloc = allocator_type())
 			{
+				int			i = 0;
+				iterator	it = first;
+
 				_ptr = NULL;
+				_capacity = 0;
+				_size = 0;
+				while (it != last) 
+				{
+					it++;
+					i++;
+				}
+				if (i != 0)
+				{
+					reserve(i);
+					for (size_type j = 0; j < i; ++j)
+						_ptr[j] = first[j];
+				}
+				_size = i;
+			}
+
+
+			vector (const vector& x)
+			{
 				_size = 0;
 				_capacity = 0;
+				_ptr = NULL;
+				reserve(x.capacity());
+				for (size_t i = 0; i < x.size(); i++)
+					_ptr[i] = x[i];
+				_size = x.size();
+				_capacity = x.capacity();
 			}
+
 
 			~vector()
 			{
@@ -818,8 +780,11 @@ namespace ft
 
 
 
+
+
+
 	/*
-	**		______________________________ Relational operators ______________________________
+	**		______________________________ Operators ______________________________
 	*/
 
 	template <class T, class Allocator>
