@@ -6,17 +6,35 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/13 20:43:29 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/17 19:07:21 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
 #include "tests.hpp"
 #include <vector>
+#include <ctime>
 
 int main()
 {
-	test_assign();
+    time_t now;
+	struct tm *ts;	
+    
+	now = time(0);
+
+	long long a = now;
+	
+	for	(int i = 0; i < 30000; i++)
+		for	(int g = 0; g < 100000; g++)
+			;
+
+
+		
+	std::cout << (a ) << std::endl;
+	std::cout << (now) << std::endl;
+	std::cout << (a - now) << std::endl;
+	
+	//test_assign();
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/13 20:28:28 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/17 17:53:59 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ namespace ft
 			typedef value_type*								pointer;
 			typedef const value_type*						const_pointer;
 			typedef	vector_iterator<vector<T> >				iterator;
-			// typedef	vector_const_iterator<vector<T> >		const_iterator;
+//			typedef	vector_const_iterator<vector<T> >		const_iterator;
 
 
 
