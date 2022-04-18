@@ -6,36 +6,55 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/17 19:07:21 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/18 17:58:56 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
 #include "tests.hpp"
+#include <sys/time.h>
+#include <stdio.h>
+#define TESTED_TYPE ft
 #include <vector>
-#include <ctime>
 
 int main()
 {
-    time_t now;
-	struct tm *ts;	
-    
-	now = time(0);
+	TESTED_TYPE::vector<int> vector;
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
 
-	long long a = now;
-	
-	for	(int i = 0; i < 30000; i++)
-		for	(int g = 0; g < 100000; g++)
-			;
+	TESTED_TYPE::vector<int>::iterator			it_a;
+	TESTED_TYPE::vector<int>::const_iterator	it_const;
+
+	it_a = vector.begin();
+	it_const = it_a;
+	it_a++;
+	it_a++;
+	std::cout << *it_const << std::endl;
 
 
-		
-	std::cout << (a ) << std::endl;
-	std::cout << (now) << std::endl;
-	std::cout << (a - now) << std::endl;
+
+
+
+
+
+
+
+
+
+	//struct timeval start;
+	//gettimeofday(&start, NULL);
 	
 	//test_assign();
-	return (0);
+
+
+	//std::cout << "___________________" << std::endl;
+	//std::cout << "_ It took: _" << time_now(&start) << "_ ms" << std::endl;
+	//std::cout << "___________________" << std::endl;
+	
+
+	return 0;
 }
 
 
@@ -92,13 +111,23 @@ int main()
 //			    Y8P      "Y8888   "Y8888P  "Y888  "Y88P"  888     
 
 
+long	time_now(struct timeval	*start)
+{
+	long				ms;
+	struct timeval		end;
+
+	gettimeofday(&end, NULL);
+	ms = (((end.tv_sec * (1000000) + end.tv_usec)
+				- (start->tv_sec * 1000000 + start->tv_usec)));
+	return (ms);
+}
+
 template < typename T>
 void print_vector(ft::vector<T> aux)
 {
 	for (size_t i = 0; i < aux.size(); ++i)
 		std::cout << aux[i] << std::endl;
 }
-
 
 template < typename T>
 void print_vector(std::vector<T> aux)
@@ -107,41 +136,35 @@ void print_vector(std::vector<T> aux)
 		std::cout << aux[i] << std::endl;
 }
 
-
-
-
 void test_constructors()
 {
-	ft::vector<int>			a;
-	ft::vector<int>		b(2, 42);
-	ft::vector<int>		c(b.begin(), b.end());
-	ft::vector<int>		d(b);
+	TESTED_TYPE::vector<int>		a;
+	TESTED_TYPE::vector<int>		b(2, 42);
+	TESTED_TYPE::vector<int>		c(b.begin(), b.end());
+	TESTED_TYPE::vector<int>		d(b);
 
 	std::cout << "Fill Constructor: " << std::endl;
-	for (int i = 0; i < b.size(); i++)
+	for (size_t i = 0; i < b.size(); i++)
 		std::cout << b[i] << std::endl;
 		
 	std::cout << "Range Constructor: " << std::endl << std::endl;
-	for (int i = 0; i < c.size(); i++)
+	for (size_t i = 0; i < c.size(); i++)
 		std::cout << c[i] << std::endl;
 		
 	std::cout << "Copy Constructor: " << std::endl << std::endl;
-	for (int i = 0; i < d.size(); i++)
+	for (size_t i = 0; i < d.size(); i++)
 		std::cout << d[i] << std::endl;
 }
 
-
-
-
 void test_assign()
 {
-	ft::vector<int> first;
-	ft::vector<int> second;
-	ft::vector<int> third;
+	TESTED_TYPE::vector<int> first;
+	TESTED_TYPE::vector<int> second;
+	TESTED_TYPE::vector<int> third;
 	
 	first.assign (7, 100);
 	
-	ft::vector<int>::iterator it;
+	TESTED_TYPE::vector<int>::iterator it;
 	it = first.begin() + 1;
 	
 	second.assign (it, first.end() - 1);

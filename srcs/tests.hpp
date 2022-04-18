@@ -6,14 +6,15 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:38:36 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/13 20:39:37 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/18 14:26:28 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __TESTS_HPP__
 # define __TESTS_HPP__
 
-void test_constructors();
-void test_assign();
+void	test_constructors();
+void	test_assign();
+long	time_now(struct timeval	*start);
 
 #endif

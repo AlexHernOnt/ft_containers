@@ -6,193 +6,20 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/17 17:53:59 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/18 18:00:13 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __VECTOR_HPP__
 # define __VECTOR_HPP__
-# include <iostream>
 # include <cmath>
+# include <iostream>
 # include <type_traits>
-# include "functions.hpp"
+# include "utils/functions.hpp"
+# include "utils/vector_iterators.hpp"
 
 namespace ft
 {
-	template <typename vector>
-	class vector_iterator
-	{
-		public:
-			typedef typename vector::value_type				value_type;
-			typedef value_type*								pointer_type;
-			typedef value_type&								reference_type;
-			typedef const value_type&						const_reference_type;
-
-		private:
-			pointer_type									m_ptr;
-
-		public:
-
-			/*
-			**		_______________________________ Operators _______________________________
-			*/
-
-			//		________	>< Operators
-
-			bool			operator<(vector_iterator& ref)
-			{
-				if (&(*m_ptr) < &(*ref))
-					return (true);
-				return (false);
-			}
-
-			bool			operator<=(vector_iterator& ref)
-			{
-				if (&(*m_ptr) <= &(*ref))
-					return (true);
-				return (false);
-			}
-
-			bool			operator>(vector_iterator& ref)
-			{
-				if (&(*m_ptr) >= &(*ref))
-					return (true);
-				return (false);
-			}
-
-			bool			operator>=(vector_iterator& ref)
-			{
-				if (&(*m_ptr) >= &(*ref))
-					return (true);
-				return (false);
-			}
-			
-
-
-
-			//		________	+ Operators
-
-			vector_iterator		operator+(const int n)
-			{
-				for (size_t i = 0; i < n; ++i)
-					++m_ptr;
-				return (*this);				
-			}
-
-			vector_iterator		operator+=(const int n)
-			{
-				for (size_t i = 0; i < n; ++i)
-					++m_ptr;
-				return (*this);				
-			}
-
-
-
-			//		________	- Operators
-
-			vector_iterator		operator-(const int n)
-			{
-				for (size_t i = 0; i < n; ++i)
-					--m_ptr;
-				return (*this);				
-			}
-
-			vector_iterator		operator-=(const int n)
-			{
-				for (size_t i = 0; i < n; ++i)
-					--m_ptr;
-				return (*this);				
-			}
-
-
-
-			//		________	++-- Operators
-
-			vector_iterator		&operator++()
-			{
-				m_ptr++;
-				return (*this);
-			}
-
-			vector_iterator		operator++(int)
-			{
-				vector_iterator it_aux = *this;
-				++(*this);
-				return (it_aux);
-			}
-
-			vector_iterator		&operator--()
-			{
-				m_ptr--;
-				return (*this);
-			}
-
-			vector_iterator		operator--(int)
-			{
-				vector_iterator it_aux = *this;
-				--(*this);
-				return (it_aux);
-			}
-			
-			vector_iterator		operator=(const vector_iterator& ref)
-			{
-				this->m_ptr = ref.m_ptr;
-				return (*this);				
-			} 
-
-			reference_type		operator[](const int &idx)
-			{
-				return *(m_ptr + idx);
-			}
-
-			bool				operator==(vector_iterator& ref) const
-			{
-				if (&(*m_ptr) == &(*ref))
-					return (true);
-				return (false);
-			} 
-
-			bool				operator!=(vector_iterator& ref) const
-			{
-				if (m_ptr != ref.m_ptr)
-					return (true);				
-				return (false);				
-			}
-
-			reference_type		operator*()
-			{
-				return (*m_ptr);
-			}
-
-			reference_type		operator->()
-			{
-				return (m_ptr);
-			}
-
-
-			/*
-			**		______________________________ Cons & Dest ______________________________
-			*/
-
-			vector_iterator()
-			{
-				m_ptr = NULL;
-			}
-
-			vector_iterator(pointer_type ptr)
-			{
-				m_ptr = ptr;
-			}
-	};
-
-
-
-
-
-	//		______________________________________________________________________    V e c t o r     ______________________________________________________________________
-
-
-
 	template <typename T, typename Allocator = std::allocator<T> >
 	class vector
 	{
@@ -203,8 +30,8 @@ namespace ft
 			typedef const value_type&						const_reference;
 			typedef value_type*								pointer;
 			typedef const value_type*						const_pointer;
-			typedef	vector_iterator<vector<T> >				iterator;
-//			typedef	vector_const_iterator<vector<T> >		const_iterator;
+			typedef	ft::vector_iterator<vector<T> >			iterator;
+	//		typedef	ft::vector_const_iterator<vector<T> >	const_iterator;
 
 
 
@@ -230,7 +57,7 @@ namespace ft
 			//const_iterator begin()
 			//{
 			//	if (!empty())
-			//		return (vector_iterator<vector<T> >(_ptr));
+			//		return (vector_const_iterator<vector<T> >(_ptr));
 			//}
 			
 			iterator end()
@@ -385,7 +212,7 @@ namespace ft
 			template <class InputIterator>
 			void assign (typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
 			{
-				int					i;
+				size_type			i;
 				InputIterator		it;
 						
 				i = 0;
@@ -445,7 +272,7 @@ namespace ft
 			{
 				iterator	it;
 				iterator	ite;
-				int			i;
+				size_t		i;
 
 				it = begin();
 				ite = end();
@@ -461,8 +288,8 @@ namespace ft
 				{
 					reserve(_size + 1);			// Too slow 1 to 1, expands only 1 time each, have to expand to x2 duuuhhh
 					_size++;
-					int a = _size - 1;
-					int b = _size - 2;
+					size_t a = _size - 1;
+					size_t b = _size - 2;
 
 					while (a != i)
 					{
@@ -486,7 +313,7 @@ namespace ft
 			{
 				iterator	it;
 				iterator	ite;
-				int			i;
+				size_type	i;
 
 				it = begin();
 				ite = end();
@@ -502,8 +329,8 @@ namespace ft
 				{
 					reserve(_size + n);
 					_size = _size + n;
-					int a = i + n;
-					int b = i;
+					size_type a = i + n;
+					size_type b = i;
 
 					while (a != _size)
 					{
@@ -719,15 +546,17 @@ namespace ft
 				_ptr = NULL;
 				_size = 0;
 				_capacity = 0;
+				_allocator = alloc;
 			}
 
 
 			explicit vector (size_type n, const value_type& val = value_type(),
 								const allocator_type& alloc = allocator_type())
 			{
+				_ptr = NULL;
 				_size = 0;
 				_capacity = 0;
-				_ptr = NULL;
+				_allocator = alloc;
 				insert(begin(), n, val);
 			}
 
@@ -735,12 +564,13 @@ namespace ft
 			template <class InputIterator>
 			vector (typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last, const allocator_type& alloc = allocator_type())
 			{
-				int			i = 0;
+				size_type	i = 0;
 				iterator	it = first;
 
 				_ptr = NULL;
-				_capacity = 0;
 				_size = 0;
+				_capacity = 0;
+				_allocator = alloc;
 				while (it != last) 
 				{
 					it++;
@@ -775,12 +605,6 @@ namespace ft
 					_allocator.deallocate(_ptr, _capacity);
 			}
 	};
-
-
-
-
-
-
 
 
 	/*
