@@ -6,54 +6,27 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/18 17:58:56 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/22 15:47:28 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#define TYPE ft
+
 #include "vector.hpp"
-#include "tests.hpp"
+#include "utils/tests.hpp"
 #include <sys/time.h>
 #include <stdio.h>
-#define TESTED_TYPE ft
 #include <vector>
 
-int main()
+#include <algorithm>    // std::lexicographical_compare
+
+int main ()
 {
-	TESTED_TYPE::vector<int> vector;
-	vector.push_back(1);
-	vector.push_back(2);
-	vector.push_back(3);
+	TYPE::vector<int>						vector;
+	TYPE::vector<int>::const_iterator		it;
 
-	TESTED_TYPE::vector<int>::iterator			it_a;
-	TESTED_TYPE::vector<int>::const_iterator	it_const;
-
-	it_a = vector.begin();
-	it_const = it_a;
-	it_a++;
-	it_a++;
-	std::cout << *it_const << std::endl;
-
-
-
-
-
-
-
-
-
-
-
-	//struct timeval start;
-	//gettimeofday(&start, NULL);
-	
-	//test_assign();
-
-
-	//std::cout << "___________________" << std::endl;
-	//std::cout << "_ It took: _" << time_now(&start) << "_ ms" << std::endl;
-	//std::cout << "___________________" << std::endl;
-	
-
+	it = vector.begin();
+		
 	return 0;
 }
 
@@ -84,18 +57,23 @@ int main()
 
 
 
+/*
+	struct timeval start;
+	gettimeofday(&start, NULL);
+	
+	test_assign();
+	test_swap_external();
+	test_lexicolographical_compare();
 
 
 
 
 
+	std::cout << "___________________" << std::endl;
+	std::cout << "_ It took: _" << time_now(&start) << "_ ms" << std::endl;
+	std::cout << "___________________" << std::endl;
 
-
-
-
-
-
-
+*/
 
 
 
@@ -111,37 +89,18 @@ int main()
 //			    Y8P      "Y8888   "Y8888P  "Y888  "Y88P"  888     
 
 
-long	time_now(struct timeval	*start)
-{
-	long				ms;
-	struct timeval		end;
-
-	gettimeofday(&end, NULL);
-	ms = (((end.tv_sec * (1000000) + end.tv_usec)
-				- (start->tv_sec * 1000000 + start->tv_usec)));
-	return (ms);
-}
-
-template < typename T>
-void print_vector(ft::vector<T> aux)
-{
-	for (size_t i = 0; i < aux.size(); ++i)
-		std::cout << aux[i] << std::endl;
-}
-
-template < typename T>
-void print_vector(std::vector<T> aux)
-{
-	for (size_t i = 0; i < aux.size(); ++i)
-		std::cout << aux[i] << std::endl;
-}
+//
+//		____________________________ Constructors _____________________________
+//
 
 void test_constructors()
 {
-	TESTED_TYPE::vector<int>		a;
-	TESTED_TYPE::vector<int>		b(2, 42);
-	TESTED_TYPE::vector<int>		c(b.begin(), b.end());
-	TESTED_TYPE::vector<int>		d(b);
+	std::cout << "\n\nConstructors" << std::endl;
+
+	TYPE::vector<int>		a;
+	TYPE::vector<int>		b(2, 42);
+	TYPE::vector<int>		c(b.begin(), b.end());
+	TYPE::vector<int>		d(b);
 
 	std::cout << "Fill Constructor: " << std::endl;
 	for (size_t i = 0; i < b.size(); i++)
@@ -156,15 +115,24 @@ void test_constructors()
 		std::cout << d[i] << std::endl;
 }
 
+
+
+
+//
+//		______________________________ Assaign ________________________________
+//
+
 void test_assign()
 {
-	TESTED_TYPE::vector<int> first;
-	TESTED_TYPE::vector<int> second;
-	TESTED_TYPE::vector<int> third;
+	std::cout << "\n\nAssaign" << std::endl;
+
+	TYPE::vector<int> first;
+	TYPE::vector<int> second;
+	TYPE::vector<int> third;
 	
 	first.assign (7, 100);
 	
-	TESTED_TYPE::vector<int>::iterator it;
+	TYPE::vector<int>::iterator it;
 	it = first.begin() + 1;
 	
 	second.assign (it, first.end() - 1);
@@ -184,6 +152,117 @@ void test_assign()
 
 
 
+//
+//		___________________________ Swap External _____________________________
+//
+
+void test_swap_external()
+{
+	std::cout << "\n\nSwap External" << std::endl;
+
+	TYPE::vector<int> foo (3,100);   // three ints with a value of 100
+	TYPE::vector<int> bar (5,200);   // five ints with a value of 200
+		
+	swap(foo, bar);
+	
+	TYPE::vector<int>::iterator it = foo.begin();
+		
+	std::cout << "foo contains:";
+	while (it != foo.end())
+	{
+		std::cout << ' ' << *it;
+		++it;
+	}
+	std::cout << '\n';
+		
+	std::cout << "bar contains:";
+	for (TYPE::vector<int>::iterator it = bar.begin(); it != bar.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+}
+
+
+
+
+//
+//		_______________________ Lexicographical_compare _______________________
+//
+
+bool	mycomp (int c1, int c2)
+{
+	return (c1 == c2);
+}
+
+void	test_lexicolographical_compare()
+{
+	std::cout << "\n\nLexicographical_compare" << std::endl;
+	TYPE::vector<int> foo1;
+	TYPE::vector<int> boo1;
+
+	foo1.push_back(1);
+	foo1.push_back(1);
+	foo1.push_back(5);
+	
+	boo1.push_back(1);
+	boo1.push_back(1);
+	boo1.push_back(6);
+
+	std::cout << "Test 1: " << TYPE::lexicographical_compare(foo1.begin(), foo1.begin() + 3, boo1.begin(), boo1.begin() + 3) << std::endl;
+
+
+
+
+	TYPE::vector<int> foo2;
+	TYPE::vector<int> boo2;
+
+	foo2.push_back(10);
+	
+	boo2.push_back(99);
+
+	std::cout << "Test 2: " << TYPE::lexicographical_compare(foo2.begin(), foo2.begin() + 1, boo2.begin(), boo2.begin() + 1, mycomp) << std::endl;
+
+
+
+
+
+	TYPE::vector<int> foo3;
+	TYPE::vector<int> boo3;
+
+	foo3.push_back(10);
+	
+	boo3.push_back(10);
+
+	std::cout << "Test 3: " << TYPE::lexicographical_compare(foo3.begin(), foo3.begin() + 1, boo3.begin(), boo3.begin() + 1, mycomp) << std::endl;
+	
+
+
+
+	TYPE::vector<int> foo4;
+	TYPE::vector<int> boo4;
+
+	foo4.push_back(1200);
+	foo4.push_back(0);
+	
+	boo4.push_back(1200);
+	boo4.push_back(1234);
+
+	std::cout << "Test 4: " << TYPE::lexicographical_compare(foo4.begin(), foo4.begin() + 2, boo4.begin(), boo4.begin() + 2, mycomp) << std::endl;
+
+
+
+
+	TYPE::vector<int> foo5;
+	TYPE::vector<int> boo5;
+
+	foo5.push_back(1200);
+	foo5.push_back(0);
+	
+	boo5.push_back(12);
+	boo5.push_back(10);
+
+	std::cout << "Test 5: " << TYPE::lexicographical_compare(foo5.begin(), foo5.begin() + 2, boo5.begin(), boo5.begin() + 2, mycomp) << std::endl;	
+
+}
 
 
 
@@ -207,6 +286,60 @@ void test_assign()
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//		_________________________ Auxiliar Functions __________________________
+//
+
+long	time_now(struct timeval	*start)
+{
+	long				ms;
+	struct timeval		end;
+
+	gettimeofday(&end, NULL);
+	ms = (((end.tv_sec * (1000000) + end.tv_usec)
+				- (start->tv_sec * 1000000 + start->tv_usec)));
+	return (ms);
+}
+
+template < typename T>
+void print_vector(TYPE::vector<T> aux)
+{
+	for (size_t i = 0; i < aux.size(); ++i)
+		std::cout << aux[i] << std::endl;
+}
 
 
 
@@ -232,17 +365,6 @@ void test_assign()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 	//ft::vector<int> first;
 	//ft::vector<int> second (4, 100);
 	//ft::vector<int> third (second.begin(), second.end());
@@ -259,44 +381,6 @@ void test_assign()
 	//	std::cout << ' ' << *it;
 	
 	//std::cout << '\n';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

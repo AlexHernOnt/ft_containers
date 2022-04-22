@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/18 18:00:13 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/22 16:37:43 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ namespace ft
 			typedef const value_type&						const_reference;
 			typedef value_type*								pointer;
 			typedef const value_type*						const_pointer;
-			typedef	ft::vector_iterator<vector<T> >			iterator;
-	//		typedef	ft::vector_const_iterator<vector<T> >	const_iterator;
+			typedef	ft::vector_iterator<T>					iterator;
+			typedef	ft::vector_iterator<const T>			const_iterator;
 
 
 
@@ -51,18 +51,20 @@ namespace ft
 
 			iterator begin()
 			{
-				return (vector_iterator<vector<T> >(_ptr));
+				if (!empty())
+					return (vector_iterator<T>(_ptr));
 			}
 
-			//const_iterator begin()
-			//{
-			//	if (!empty())
-			//		return (vector_const_iterator<vector<T> >(_ptr));
-			//}
-			
+			const_iterator begin() const
+			{
+				if (!empty())
+					return (ft::vector_iterator<const T>(_ptr));
+			}
+
 			iterator end()
 			{
-				return (vector_iterator<vector<T> >(_ptr + _size));
+				if (!empty())
+					return (vector_iterator<T>(_ptr + _size));
 			}
 
 
@@ -76,7 +78,7 @@ namespace ft
 			{
 				return (_size);
 			}
-			
+
 			size_type	max_size() const
 			{
 				return (_allocator.max_size());
@@ -111,7 +113,7 @@ namespace ft
 					return (true);
 				return (false);
 			}
-			
+
 			void reserve (size_type n)
 			{
 				if (n > max_size())
@@ -196,7 +198,7 @@ namespace ft
 			/*
 			**		_______________________________ Modifiers _______________________________
 			*/
-			
+
 			//		_________________                 Assign                _________________
 
 
@@ -674,6 +676,12 @@ namespace ft
 	bool operator>=(const vector<T, Allocator>& lhs, const vector<T, Allocator>& rhs)
 	{
 		return (lhs > rhs || lhs == rhs);
+	}
+
+	template <class T, class Allocator>
+	void swap (vector<T, Allocator>& x, vector<T, Allocator>& y)
+	{
+		x.swap(y);
 	}
 }
 
