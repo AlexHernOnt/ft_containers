@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/22 16:37:43 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/25 20:15:34 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,25 @@ namespace ft
 
 			iterator begin()
 			{
-				if (!empty())
-					return (vector_iterator<T>(_ptr));
+				return (vector_iterator<T>(_ptr));
+				//return (_ptr);
 			}
 
 			const_iterator begin() const
 			{
-				if (!empty())
-					return (ft::vector_iterator<const T>(_ptr));
+				//if (!empty())
+				return (vector_iterator<const T>(_ptr));
 			}
 
 			iterator end()
 			{
-				if (!empty())
-					return (vector_iterator<T>(_ptr + _size));
+				return (vector_iterator<T>(_ptr + _size));
 			}
 
+			const_iterator end() const
+			{
+				return (vector_iterator<const T>(_ptr + _size));
+			}
 
 
 

@@ -1,0 +1,17 @@
+srcs/main.cpp:138:21: error: no matching constructor for initialization of 'ft::vector_iterator<int>'
+        second.assign (it, first.end() - 1);
+                           ^~~~~~~~~~~~~~~
+                           
+srcs/utils/vector_iterators.hpp:189:4: note: candidate constructor not viable: expects an l-value for 1st argument
+                        vector_iterator(vector_iterator<T> &ref)
+                        ^
+srcs/utils/vector_iterators.hpp:194:4: note: candidate constructor not viable: no known conversion from
+      'ft::vector_iterator<int>' to 'ft::vector_iterator<int>::pointer_type' (aka 'int *') for 1st argument
+                        vector_iterator(pointer_type ptr)
+                        ^
+srcs/utils/vector_iterators.hpp:184:4: note: candidate constructor not viable: requires 0 arguments, but 1 was provided
+                        vector_iterator()
+                        ^
+srcs/vector.hpp:214:123: note: passing argument to parameter 'last' here
+  ...assign (typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
+                                                                                                                       ^

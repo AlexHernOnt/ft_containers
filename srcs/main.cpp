@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/22 15:47:28 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/25 20:46:00 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@
 
 int main ()
 {
-	TYPE::vector<int>						vector;
-	TYPE::vector<int>::const_iterator		it;
-
-	it = vector.begin();
-		
+	ft::vector<int>						vector;
+	ft::vector<int>::const_iterator		itc;
+	
+	itc = vector.begin();
 	return 0;
 }
 
@@ -77,7 +76,7 @@ int main ()
 
 
 
-
+/*
 
 //			888     888                   888                     
 //			888     888                   888                     
@@ -340,6 +339,72 @@ void print_vector(TYPE::vector<T> aux)
 	for (size_t i = 0; i < aux.size(); ++i)
 		std::cout << aux[i] << std::endl;
 }
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

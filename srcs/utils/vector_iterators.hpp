@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:48:17 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/22 17:44:02 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/25 20:40:35 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ namespace ft
 			pointer_type									m_ptr;
 
 		public:
+
+
 
 			//
 			//		_______________________________ Operators _______________________________
@@ -130,15 +132,16 @@ namespace ft
 				return (it_aux);
 			}
 
-			vector_iterator			operator=(const vector_iterator& ref)
+			pointer_type	get_pointer() const
 			{
-				this->m_ptr = ref.m_ptr;
-				return (*this);
+				return (m_ptr);
 			}
+			
 
-			ft::vector_iterator<const T>		operator=(ft::vector_iterator<int> ref)
+			template <typename U>
+			vector_iterator			&operator=(const vector_iterator<U>& ref)
 			{
-				this->m_ptr = ref.m_ptr;
+				this->m_ptr = ref.get_pointer();
 				return (*this);
 			}
 
@@ -154,9 +157,10 @@ namespace ft
 				return (false);
 			} 
 
-			bool					operator!=(vector_iterator ref) const
+			template <typename U>
+			bool					operator!=(vector_iterator<U> ref) const
 			{
-				if (m_ptr != ref.m_ptr)
+				if (m_ptr != ref.get_pointer())
 					return (true);				
 				return (false);				
 			}
@@ -180,7 +184,7 @@ namespace ft
 			{
 				m_ptr = NULL;
 			}
-
+			
 			vector_iterator(pointer_type ptr)
 			{
 				m_ptr = ptr;
