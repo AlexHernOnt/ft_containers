@@ -6,11 +6,11 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/25 20:46:00 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/26 20:54:01 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define TYPE ft
+#define TYPE std
 
 #include "vector.hpp"
 #include "utils/tests.hpp"
@@ -22,15 +22,19 @@
 
 int main ()
 {
-	ft::vector<int>						vector;
-	ft::vector<int>::const_iterator		itc;
-	
-	itc = vector.begin();
+	TYPE::vector<int>						vector;
+	TYPE::vector<int>::reverse_iterator		rit;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	rit = vector.rend();
+	rit--;
+	std::cout << *rit << std::endl;
+
 	return 0;
 }
-
-
-
 
 
 
@@ -63,6 +67,7 @@ int main ()
 	test_assign();
 	test_swap_external();
 	test_lexicolographical_compare();
+	test_vector_iterators()
 
 
 
@@ -76,7 +81,6 @@ int main ()
 
 
 
-/*
 
 //			888     888                   888                     
 //			888     888                   888                     
@@ -271,6 +275,369 @@ void	test_lexicolographical_compare()
 
 
 
+//			88 888888 888888 88""Yb    db    888888  dP"Yb  88""Yb .dP"Y8 
+//			88   88   88__   88__dP   dPYb     88   dP   Yb 88__dP `Ybo." 
+//			88   88   88""   88"Yb   dP__Yb    88   Yb   dP 88"Yb  o.`Y8b 
+//			88   88   888888 88  Yb dP""""Yb   88    YbodP  88  Yb 8bodP' 
+
+
+void	vi_equal()
+{
+	TYPE::vector<int>						vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+	
+	TYPE::vector<int>::iterator				it;
+	TYPE::vector<int>::const_iterator		itc;
+
+	it = vector.begin();
+	itc = vector.begin();
+
+	it++;
+	itc++;
+
+	if (it == itc)
+		std::cout << "it is equal" << std::endl;
+}
+
+void	vi_not_equal()
+{
+	TYPE::vector<int>						vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+	
+	TYPE::vector<int>::iterator				it;
+	TYPE::vector<int>::const_iterator		itc;
+
+	it = vector.begin();
+	itc = vector.begin();
+
+	itc++;
+
+	if (it != itc)
+		std::cout << "it is not equal" << std::endl;
+}
+
+void	vi_major()
+{
+	TYPE::vector<int>						vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+	
+	TYPE::vector<int>::iterator			it;
+	TYPE::vector<int>::const_iterator		itc;
+
+	it = vector.begin();
+	itc = vector.begin();
+
+	it++;
+
+	if (it > itc)
+		std::cout << "it is bigger" << std::endl;
+}
+
+void	vi_major_equal()
+{
+	TYPE::vector<int>						vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+	
+	TYPE::vector<int>::iterator			it;
+	TYPE::vector<int>::const_iterator		itc;
+
+	it = vector.begin();
+	itc = vector.begin();
+
+	if (it >= itc)
+		std::cout << "it is bigger/equal" << std::endl;
+}
+
+void	vi_minor()
+{
+	TYPE::vector<int>						vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+	
+	TYPE::vector<int>::iterator			it;
+	TYPE::vector<int>::const_iterator		itc;
+
+	it = vector.begin();
+	itc = vector.begin();
+
+	itc++;
+
+	if (it < itc)
+		std::cout << "it is smaller" << std::endl;
+}
+
+void	vi_minor_equal()
+{
+	TYPE::vector<int>						vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+	
+	TYPE::vector<int>::iterator			it;
+	TYPE::vector<int>::const_iterator		itc;
+
+	it = vector.begin();
+	itc = vector.begin();
+
+	if (it <= itc)
+		std::cout << "it is smaller/equal" << std::endl;
+}
+
+void	vi_plus()
+{
+	TYPE::vector<int>						vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+	
+	TYPE::vector<int>::iterator			it;
+
+	it = vector.begin();
+	std::cout << *(it + 1) << std::endl;
+	std::cout << *it << std::endl << std::endl;
+
+}
+
+void	vi_plus_equal()
+{
+	TYPE::vector<int>						vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+	
+	TYPE::vector<int>::iterator			it;
+
+	it = vector.begin();
+	std::cout << *(it += 1) << std::endl;
+	std::cout << *it << std::endl << std::endl;
+
+}
+
+void	vi_minus()
+{
+	TYPE::vector<int>						vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+	
+	TYPE::vector<int>::iterator			it;
+
+	it = vector.begin();
+	it++;
+	it++;
+	std::cout << *(it - 1) << std::endl;
+	std::cout << *it << std::endl << std::endl;
+}
+
+void	vi_minus_equal()
+{
+	TYPE::vector<int>						vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+	
+	TYPE::vector<int>::iterator			it;
+
+	it = vector.begin();
+	it++;
+	it++;
+	std::cout << *(it -= 1) << std::endl;
+	std::cout << *it << std::endl << std::endl;
+}
+
+
+void	vi_incre_pre()
+{
+	TYPE::vector<int>					vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	TYPE::vector<int>::iterator	it;
+	TYPE::vector<int>::const_iterator	itc;
+	
+	itc = vector.begin();
+	it = vector.begin();
+
+	std::cout << "Const:     " << *(++itc) << std::endl;
+	std::cout << "Non Const: " << *(++it) << std::endl;
+}
+
+void	vi_incre_post()
+{
+	TYPE::vector<int>					vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	TYPE::vector<int>::iterator	it;
+	TYPE::vector<int>::const_iterator	itc;
+	
+	itc = vector.begin();
+	it = vector.begin();
+
+	std::cout << "Const:     " << *(itc++) << " -> " << *itc << std::endl;
+	std::cout << "Non Const: " << *(it++)  << " -> " << *it  << std::endl << std::endl;
+}
+
+void	vi_decre_pre()
+{
+	TYPE::vector<int>					vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	TYPE::vector<int>::iterator	it;
+	TYPE::vector<int>::const_iterator	itc;
+
+	itc = vector.begin();
+	it = vector.begin();
+
+	it++;
+	it++;
+
+	itc++;
+	itc++;
+
+	std::cout << "Const:     " << *(--itc) << std::endl;
+	std::cout << "Non Const: " << *(--it) << std::endl;
+}
+
+void	vi_decre_post()
+{
+	TYPE::vector<int>					vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	TYPE::vector<int>::iterator	it;
+	TYPE::vector<int>::const_iterator	itc;
+	
+	itc = vector.begin();
+	it = vector.begin();
+
+	it++;
+	it++;
+
+	itc++;
+	itc++;
+
+	std::cout << "Const:     " << *(itc--) << " -> " << *itc << std::endl;
+	std::cout << "Non Const: " << *(it--)  << " -> " << *itc << std::endl << std::endl;
+}
+
+void	vi_copy()
+{
+	TYPE::vector<int>					vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+
+	TYPE::vector<int>::iterator	it;
+	TYPE::vector<int>::const_iterator	itc;
+	
+	it = vector.begin();
+	it++;
+	it++;
+
+	itc = it;
+
+	std::cout << "Copied: " << *itc << " _ Original: " << *it << std::endl;
+}
+
+void	vi_dereference()
+{
+	TYPE::vector<int>					vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	TYPE::vector<int>::iterator			it;
+	TYPE::vector<int>::const_iterator	itc;
+
+	itc = vector.begin();
+	it = vector.begin();
+
+	it++;
+	it++;
+
+	itc++;
+	itc++;
+
+	std::cout << "Const:     " << *(itc) << std::endl;
+	std::cout << "Non Const: " << *(it) << std::endl;
+
+	int &og = *(it);
+
+	og = 42;
+
+	std::cout << og << " _ " << *(itc)<< std::endl;
+}
+
+void	vi_brackets()
+{
+	TYPE::vector<int>					vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	TYPE::vector<int>::iterator			it;
+	TYPE::vector<int>::const_iterator	itc;
+
+	itc = vector.begin();
+	it = vector.begin();
+
+	std::cout << "Const:     " << itc[2] << std::endl;
+	std::cout << "Non Const: " << it[2] << std::endl;
+}
+
+void	test_vector_iterators()
+{
+	vi_equal();
+	vi_not_equal();
+	vi_minor();
+	vi_minor_equal();
+	vi_major();
+	vi_major_equal();
+	vi_plus();
+	vi_plus_equal();
+	vi_minus();
+	vi_minus_equal();
+	vi_incre_pre();
+	vi_incre_post();
+	vi_decre_pre();
+	vi_decre_post();
+	vi_copy();
+	vi_dereference();
+	vi_brackets();
+}
 
 
 
@@ -343,7 +710,6 @@ void print_vector(TYPE::vector<T> aux)
 
 
 
-*/
 
 
 

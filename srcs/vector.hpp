@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/25 20:15:34 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/26 20:54:30 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ namespace ft
 			typedef const value_type*						const_pointer;
 			typedef	ft::vector_iterator<T>					iterator;
 			typedef	ft::vector_iterator<const T>			const_iterator;
-
-
-
+			typedef ft::reverse_vector_iterator<T>			reverse_iterator;
+			typedef ft::reverse_vector_iterator<const T>	const_reverse_iterator;
+			// ?	?										?
 			typedef size_t									size_type;
 
 		private:
@@ -52,12 +52,10 @@ namespace ft
 			iterator begin()
 			{
 				return (vector_iterator<T>(_ptr));
-				//return (_ptr);
 			}
 
 			const_iterator begin() const
 			{
-				//if (!empty())
 				return (vector_iterator<const T>(_ptr));
 			}
 
@@ -70,6 +68,29 @@ namespace ft
 			{
 				return (vector_iterator<const T>(_ptr + _size));
 			}
+
+
+
+			reverse_iterator rbegin()
+			{
+				return (ft::reverse_vector_iterator<T>(_ptr + _size));
+			}
+
+			const_reverse_iterator rbegin() const
+			{
+				return (ft::reverse_vector_iterator<const T>(_ptr + _size));
+			}
+
+			reverse_iterator rend()
+			{
+				return (ft::reverse_vector_iterator<T>(_ptr));
+			}
+
+			const_reverse_iterator rend() const
+			{
+				return (ft::reverse_vector_iterator<const T>(_ptr));
+			}
+
 
 
 
