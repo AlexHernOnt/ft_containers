@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:38:36 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/26 14:37:30 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/27 18:55:33 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,7 @@ void	test_lexicolographical_compare();
 template < typename T>
 void print_vector(TYPE::vector<T> aux);
 void	test_vector_iterators();
+void	test_vector_reverse_iterators();
+
+
 #endif

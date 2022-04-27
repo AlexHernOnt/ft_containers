@@ -6,7 +6,7 @@
 #    By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 14:48:46 by ahernand          #+#    #+#              #
-#    Updated: 2022/04/26 19:07:05 by ahernand         ###   ########.fr        #
+#    Updated: 2022/04/27 17:38:06 by ahernand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,9 @@ $(NAME) : $(OBJS)
 # - - - - - - - - - - - - - - - - - #
 # - - - - C L E A N I N G - - - - - #
 # - - - - - - - - - - - - - - - - - #
+
+test:
+	cd srcs/containers_test && sh do.sh vector
 
 make fclean:
 	@rm -f $(OBJS)

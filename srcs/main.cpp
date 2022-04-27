@@ -6,35 +6,249 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/26 20:54:01 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/27 20:36:26 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define TYPE std
+#define TYPE ft
 
 #include "vector.hpp"
 #include "utils/tests.hpp"
 #include <sys/time.h>
 #include <stdio.h>
 #include <vector>
+#include <list>
 
 #include <algorithm>    // std::lexicographical_compare
 
-int main ()
-{
-	TYPE::vector<int>						vector;
-	TYPE::vector<int>::reverse_iterator		rit;
 
+int main(void)
+{
+	TYPE::vector<int>		vector;
+	
 	vector.push_back(1);
 	vector.push_back(2);
 	vector.push_back(3);
+	
+	vector.erase(vector.begin(), vector.begin() + 2);
 
-	rit = vector.rend();
-	rit--;
-	std::cout << *rit << std::endl;
 
-	return 0;
+	std::cout << vector[0] << std::endl;
+	std::cout << vector[1] << std::endl;
+	std::cout << vector[2] << std::endl;
+	std::cout << "size: " << vector.size() << std::endl;
+
+	return (0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//template <typename T>
+//void	printSize(TYPE::vector<T> const &vct, bool print_content = true)
+//{
+//	const size_t size = vct.size();
+//	const size_t capacity = vct.capacity();
+//	const std::string isCapacityOk = (capacity >= size) ? "OK" : "KO";
+
+//	std::cout << "size: " << size << std::endl;
+//	std::cout << "capacity: " << isCapacityOk << std::endl;
+//	std::cout << "max_size: " << vct.max_size() << std::endl;
+//	if (print_content)
+//	{
+//		typename TYPE::vector<T>::const_iterator it = vct.begin();
+//		typename TYPE::vector<T>::const_iterator ite = vct.end();
+//		std::cout << std::endl << "Content is:" << std::endl;
+//		for (; it != ite; ++it)
+//			std::cout << "- " << *it << std::endl;
+//	}
+//	std::cout << "###############################################" << std::endl;
+//}
+
+
+//void	checkErase(TYPE::vector<std::string> const &vct,
+//					TYPE::vector<std::string>::const_iterator const &it)
+//{
+//	static int i = 0;
+//	std::cout << "[" << i++ << "] " << "erase: " << it - vct.begin() << std::endl;
+//	printSize(vct);
+//}
+
+//int		main()
+//{
+//	TYPE::vector<std::string> vct(10);
+
+//	for (unsigned long int i = 0; i < vct.size(); ++i)
+//		vct[i] = std::string((vct.size() - i), i + 65);
+//	printSize(vct);
+
+//	checkErase(vct, vct.erase(vct.begin() + 2));
+
+//	checkErase(vct, vct.erase(vct.begin()));
+//	checkErase(vct, vct.erase(vct.end() - 1));
+//	std::cout << "\n\n\n\n\n\n\n\n\n\n";
+//	checkErase(vct, vct.erase(vct.begin(), vct.begin() + 3));
+//	checkErase(vct, vct.erase(vct.end() - 3, vct.end() - 1));
+
+//	vct.push_back("Hello");
+//	vct.push_back("Hi there");
+//	printSize(vct);
+//	checkErase(vct, vct.erase(vct.end() - 3, vct.end()));
+
+//	vct.push_back("ONE");
+//	vct.push_back("TWO");
+//	vct.push_back("THREE");
+//	vct.push_back("FOUR");
+//	printSize(vct);
+//	checkErase(vct, vct.erase(vct.begin(), vct.end()));
+
+//	return (0);
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -68,6 +282,7 @@ int main ()
 	test_swap_external();
 	test_lexicolographical_compare();
 	test_vector_iterators()
+	test_vector_reverse_iterators();
 
 
 
@@ -643,6 +858,365 @@ void	test_vector_iterators()
 
 
 
+
+
+
+
+
+
+
+//			88""Yb 888888 Yb    dP 888888 88""Yb .dP"Y8 888888     88 888888 888888 88""Yb    db    888888  dP"Yb  88""Yb .dP"Y8 
+//			88__dP 88__    Yb  dP  88__   88__dP `Ybo." 88__       88   88   88__   88__dP   dPYb     88   dP   Yb 88__dP `Ybo." 
+//			88"Yb  88""     YbdP   88""   88"Yb  o.`Y8b 88""       88   88   88""   88"Yb   dP__Yb    88   Yb   dP 88"Yb  o.`Y8b 
+//			88  Yb 888888    YP    888888 88  Yb 8bodP' 888888     88   88   888888 88  Yb dP""""Yb   88    YbodP  88  Yb 8bodP' 
+
+
+
+void	vri_equal()
+{
+	TYPE::vector<int>								vector;
+	TYPE::vector<int>::reverse_iterator				rit;
+	TYPE::vector<int>::const_reverse_iterator		rita;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	rit = vector.rbegin();
+	rita = vector.rbegin();
+	if (rit == rita)
+		std::cout << "These are equal" << std::endl;
+}
+
+void	vri_not_equal()
+{
+	TYPE::vector<int>								vector;
+	TYPE::vector<int>::reverse_iterator				rit;
+	TYPE::vector<int>::const_reverse_iterator		rita;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	rit = vector.rbegin();
+	rita = vector.rbegin();
+	rita++;
+
+	if (rit != rita)
+		std::cout << "These are not equal" << std::endl;
+}
+
+
+
+void	vri_minor()
+{
+	TYPE::vector<int>								vector;
+	TYPE::vector<int>::reverse_iterator				rit;
+	TYPE::vector<int>::const_reverse_iterator		rita;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	rit = vector.rbegin();
+	rita = vector.rbegin();
+
+	rita++;
+	if (rit < rita)
+		std::cout << "First is minor" << std::endl;
+}
+
+void	vri_minor_equal()
+{
+	TYPE::vector<int>								vector;
+	TYPE::vector<int>::reverse_iterator				rit;
+	TYPE::vector<int>::const_reverse_iterator		rita;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	rit = vector.rbegin();
+	rita = vector.rbegin();
+
+	if (rit <= rita)
+		std::cout << "First is minor or equal" << std::endl;
+}
+
+void	vri_major()
+{
+	TYPE::vector<int>								vector;
+	TYPE::vector<int>::reverse_iterator				rit;
+	TYPE::vector<int>::const_reverse_iterator		rita;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	rit = vector.rbegin();
+	rita = vector.rbegin();
+
+	rit++;
+	if (rit > rita)
+		std::cout << "First is mayor" << std::endl;
+}
+
+void	vri_major_equal()
+{
+ 	TYPE::vector<int>								vector;
+	TYPE::vector<int>::reverse_iterator				rit;
+	TYPE::vector<int>::const_reverse_iterator		rita;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	rit = vector.rbegin();
+	rita = vector.rbegin();
+
+	if (rit >= rita && *(rit++) && rit >= rita)
+		std::cout << "First is mayor/equal" << std::endl;
+}
+
+
+void	vri_plus()
+{
+	TYPE::vector<int>						vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+	
+	TYPE::vector<int>::reverse_iterator			rit;
+
+	rit = vector.rbegin();
+	std::cout << *(rit + 1) << std::endl;
+	std::cout << *rit << std::endl << std::endl;
+}
+
+void	vri_plus_equal()
+{
+	TYPE::vector<int>						vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+	
+	TYPE::vector<int>::reverse_iterator			rit;
+
+	rit = vector.rbegin();
+	std::cout << *(rit += 1) << std::endl;
+	std::cout << *rit << std::endl << std::endl;
+}
+
+void	vri_minus()
+{
+	TYPE::vector<int>						vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+	
+	TYPE::vector<int>::reverse_iterator			rit;
+
+	rit = vector.rbegin();
+	rit++;
+	rit++;
+	std::cout << *(rit - 1) << std::endl;
+	std::cout << *rit << std::endl << std::endl;
+}
+
+void	vri_minus_equal()
+{
+	TYPE::vector<int>						vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+	
+	TYPE::vector<int>::reverse_iterator			rit;
+
+	rit = vector.rbegin();
+	rit++;
+	rit++;
+	std::cout << *(rit -= 1) << std::endl;
+	std::cout << *rit << std::endl << std::endl;
+}
+
+
+void	vri_incre_pre()
+{
+	TYPE::vector<int>					vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	TYPE::vector<int>::reverse_iterator			rit;
+	TYPE::vector<int>::const_reverse_iterator	ritc;
+	
+	rit = vector.rbegin();
+	ritc = vector.rbegin();
+
+	std::cout << "Const:     " << *(++rit) << std::endl;
+	std::cout << "Non Const: " << *(++ritc) << std::endl;
+}
+
+void	vri_incre_post()
+{
+	TYPE::vector<int>							vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	TYPE::vector<int>::reverse_iterator			rit;
+	TYPE::vector<int>::const_reverse_iterator	ritc;
+	
+	rit = vector.rbegin();
+	ritc = vector.rbegin();
+
+	std::cout << "Const:     " << *(ritc++) << " -> " << *ritc << std::endl;
+	std::cout << "Non Const: " << *(rit++)  << " -> " << *rit  << std::endl << std::endl;
+}
+
+void	vri_decre_pre()
+{
+	TYPE::vector<int>							vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	TYPE::vector<int>::reverse_iterator			rit;
+	TYPE::vector<int>::const_reverse_iterator	ritc;
+
+	ritc = vector.rbegin();
+	rit = vector.rbegin();
+
+	rit++;
+	rit++;
+
+	ritc++;
+	ritc++;
+
+	std::cout << "Const:     " << *(--ritc) << std::endl;
+	std::cout << "Non Const: " << *(--rit) << std::endl;
+}
+
+void	vri_decre_post()
+{
+	TYPE::vector<int>							vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	TYPE::vector<int>::reverse_iterator			rit;
+	TYPE::vector<int>::const_reverse_iterator	ritc;
+	
+	ritc = vector.rbegin();
+	rit = vector.rbegin();
+
+	rit++;
+	rit++;
+
+	ritc++;
+	ritc++;
+
+	std::cout << "Const:     " << *(ritc--) << " -> " << *ritc << std::endl;
+	std::cout << "Non Const: " << *(rit--)  << " -> " << *ritc << std::endl << std::endl;
+}
+
+void	vri_copy()
+{
+	TYPE::vector<int>							vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+
+	TYPE::vector<int>::reverse_iterator			rit;
+	TYPE::vector<int>::const_reverse_iterator	ritc;
+	
+	rit = vector.rbegin();
+	rit++;
+	rit++;
+
+	ritc = rit;
+
+	std::cout << "Copied: " << *ritc << " _ Original: " << *rit << std::endl;
+}
+
+void	vri_dereference()
+{
+	TYPE::vector<int>							vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	TYPE::vector<int>::reverse_iterator			rit;
+	TYPE::vector<int>::const_reverse_iterator	ritc;
+
+	rit = vector.rbegin();
+	ritc = vector.rbegin();
+
+	rit++;
+	rit++;
+
+	ritc++;
+	ritc++;
+
+	std::cout << "Const:     " << *(ritc) << std::endl;
+	std::cout << "Non Const: " << *(rit) << std::endl;
+
+	int &og = *(rit);
+
+	og = 42;
+
+	std::cout << og << " _ " << *(ritc)<< std::endl;
+}
+
+void	vri_brackets()
+{
+	TYPE::vector<int>					vector;
+
+	vector.push_back(1);
+	vector.push_back(2);
+	vector.push_back(3);
+
+	TYPE::vector<int>::reverse_iterator			rit;
+	TYPE::vector<int>::const_reverse_iterator	ritc;
+
+	rit = vector.rbegin();
+	ritc = vector.rbegin();
+
+	std::cout << "Non Const: " << rit[2] << std::endl;
+	std::cout << "Const:     " << ritc[2] << std::endl;
+}
+
+void	test_vector_reverse_iterators()
+{
+	vri_equal();
+	vri_not_equal();
+	vri_minor();
+	vri_minor_equal();
+	vri_major();
+	vri_major_equal();
+	vri_plus();
+	vri_plus_equal();
+	vri_minus();
+	vri_minus_equal();
+	vri_incre_pre();
+	vri_incre_post();
+	vri_decre_pre();
+	vri_decre_post();
+	vri_copy();
+	vri_dereference();
+	vri_brackets();
+}
 
 
 

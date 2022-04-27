@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/26 20:54:30 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/27 20:11:47 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,22 @@ namespace ft
 
 			reverse_iterator rbegin()
 			{
-				return (ft::reverse_vector_iterator<T>(_ptr + _size));
+				return (ft::reverse_vector_iterator<T>(_ptr + (_size - 1)));
 			}
 
 			const_reverse_iterator rbegin() const
 			{
-				return (ft::reverse_vector_iterator<const T>(_ptr + _size));
+				return (ft::reverse_vector_iterator<const T>(_ptr + (_size - 1)));
 			}
 
 			reverse_iterator rend()
 			{
-				return (ft::reverse_vector_iterator<T>(_ptr));
+				return (ft::reverse_vector_iterator<T>(_ptr - 1));
 			}
 
 			const_reverse_iterator rend() const
 			{
-				return (ft::reverse_vector_iterator<const T>(_ptr));
+				return (ft::reverse_vector_iterator<const T>(_ptr - 1));
 			}
 
 
@@ -377,14 +377,14 @@ namespace ft
 			template <class InputIterator>
 			void	insert(iterator position, InputIterator first, typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last) 
 			{
-				size_type	size_iterators;
-				iterator	it = begin();
-				iterator	ite = end();
-				int			i;
+				size_type		size_iterators;
+				iterator		it = begin();
+				iterator		ite = end();
+				size_t			i;
 
-				size_iterators = 0;
-				ite++;
 				i = 0;
+				ite++;
+				size_iterators = 0;
 				while (it != position && it != ite)
 				{
 					it++;
@@ -392,7 +392,7 @@ namespace ft
 				}
 				if (it != ite)
 				{
-					iterator first_aux = first;
+					InputIterator first_aux = first;
 					while (first_aux != last)
 					{
 						first_aux++;
@@ -400,12 +400,12 @@ namespace ft
 					}
 					reserve(_size + size_iterators);
 					_size = _size + size_iterators;
-					int a = i + size_iterators;
-					int b = i;
+					size_t a = i + size_iterators;
+					size_t b = i;
 
 					while (a != _size)
 					{
-						_ptr [a] = _ptr[b];
+						_ptr[a] = _ptr[b];
 						a++;
 						b++;
 					}
@@ -418,9 +418,9 @@ namespace ft
 					}
 				}
 			}
-			
 
-			
+
+
 
 			//		_________________                 Erease                 _________________
 
@@ -428,8 +428,8 @@ namespace ft
 			{
 				iterator	it = begin();
 				iterator	ite = end();
-				int			delete_pos = 0;
-				int			a;
+				size_t		delete_pos = 0;
+				size_t		a;
 
 				while (it != position && it != ite)
 				{
@@ -454,10 +454,10 @@ namespace ft
 			{
 				iterator	it = begin();
 				iterator	ite = end();
-				int			n_first = 0;
-				int			n_last = 0;
-				int			a;
-				int			b;
+				size_type	n_first = 0;
+				size_type	n_last = 0;
+				size_type	a;
+				size_type	b;
 
 				while (it != first && it != ite)
 				{
@@ -485,6 +485,12 @@ namespace ft
 				}
 				return (it);				
 			}
+
+
+
+
+			//		_________________                 Clear                  _________________
+
 
 			void clear()
 			{
@@ -590,8 +596,8 @@ namespace ft
 			template <class InputIterator>
 			vector (typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last, const allocator_type& alloc = allocator_type())
 			{
-				size_type	i = 0;
-				iterator	it = first;
+				size_type		i = 0;
+				InputIterator	it = first;
 
 				_ptr = NULL;
 				_size = 0;
@@ -606,7 +612,10 @@ namespace ft
 				{
 					reserve(i);
 					for (size_type j = 0; j < i; ++j)
-						_ptr[j] = first[j];
+					{
+						_ptr[j] = *first;
+						first++;
+					}
 				}
 				_size = i;
 			}
