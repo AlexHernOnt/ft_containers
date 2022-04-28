@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/27 20:11:47 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/28 20:00:39 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ namespace ft
 					value_type				*aux;
 
 					_capacity = n;
+
 					aux = _allocator.allocate(_capacity);
 					for (size_type i = 0; i < _size; i++)
 					{
@@ -400,14 +401,22 @@ namespace ft
 					}
 					reserve(_size + size_iterators);
 					_size = _size + size_iterators;
-					size_t a = i + size_iterators;
+					value_type		store[_size - i - size_iterators];
+					size_t a = 0;
 					size_t b = i;
-
-					while (a != _size)
+					while (b != _size)
 					{
-						_ptr[a] = _ptr[b];
+						store[a] = _ptr[b];
 						a++;
 						b++;
+					}
+					a = i + size_iterators;
+					b = 0;
+					while (a != _size)
+					{
+						_ptr[a] = store[b];
+						++a;
+						++b;
 					}
 					a = i;
 					while (a < i + size_iterators && first != last)
@@ -459,11 +468,14 @@ namespace ft
 				size_type	a;
 				size_type	b;
 
+				ite++;
+				//place it into the first element to delete and counts how many positions to the start deletetion
 				while (it != first && it != ite)
 				{
 					n_first++;
 					it++;
 				}
+				//place it into the last element to delete and counts how many positions to DELEATE
 				it = begin();
 				while (it != last && it != ite)
 				{
@@ -481,7 +493,7 @@ namespace ft
 						a++;
 					}
 					_size -= n_last - n_first;
-					return (it);
+					return (begin() + n_first);
 				}
 				return (it);				
 			}
@@ -718,9 +730,9 @@ namespace ft
 	}
 }
 
-//void	ft_leaks()
-//{
-//	system("leaks ft_containers");
-//}
+void	ft_leaks()
+{
+	system("leaks ft_containers");
+}
 
 #endif

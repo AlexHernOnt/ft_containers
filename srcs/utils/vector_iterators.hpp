@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:48:17 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/27 20:09:43 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/28 20:55:36 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ namespace ft
 			typedef value_type&								reference_type;
 			typedef const value_type*						const_pointer_type;
 			typedef const value_type&						const_reference_type;
-
+			typedef ptrdiff_t               				difference_type;
 		private:
 			pointer_type									m_ptr;
 
@@ -89,14 +89,19 @@ namespace ft
 
 			//		________		+ Operators
 
-			vector_iterator			operator+(const int n)
+			friend vector_iterator<value_type>			operator+(difference_type n, const vector_iterator &rhs)
+			{
+				return (rhs.operator+(n));
+			};
+
+			vector_iterator			operator+(const long n) const
 			{
 				pointer_type aux;
 				
 				aux = m_ptr;
 				for (int i = 0; i < n; ++i)
 					++aux;
-				return (aux);				
+				return (aux);
 			}
 
 			vector_iterator			operator+=(const int n)
@@ -421,15 +426,15 @@ namespace ft
 				return *(m_ptr - idx);
 			}
 
-			//reference_type			operator->()
-			//{
-			//	return (m_ptr);
-			//}
+			reference_type			operator->()
+			{
+				return (m_ptr);
+			}
 
-			//const_reference_type	operator->() const
-			//{
-			//	return (m_ptr);
-			//}	
+			const_reference_type	operator->() const
+			{
+				return (m_ptr);
+			}	
 
 			//
 			//		______________________________ Cons & Dest ______________________________
@@ -440,11 +445,18 @@ namespace ft
 				m_ptr = NULL;
 			}
 			
+			
 			reverse_vector_iterator(pointer_type ptr)
 			{
 				m_ptr = ptr;
 			}
 
+			template <typename K>
+			reverse_vector_iterator(const reverse_vector_iterator<K>& ref)
+			{
+				m_ptr = ref.get_pointer();
+			}
+			
 			~reverse_vector_iterator()
 			{
 			}

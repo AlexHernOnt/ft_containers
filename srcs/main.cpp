@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/27 20:36:26 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/28 20:51:56 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,161 @@
 
 #include <algorithm>    // std::lexicographical_compare
 
-
-int main(void)
+template <typename T>
+void	printSize(TYPE::vector<T> const &vct, bool print_content = true)
 {
-	TYPE::vector<int>		vector;
-	
-	vector.push_back(1);
-	vector.push_back(2);
-	vector.push_back(3);
-	
-	vector.erase(vector.begin(), vector.begin() + 2);
+	const size_t size = vct.size();
+	const size_t capacity = vct.capacity();
+	const std::string isCapacityOk = (capacity >= size) ? "OK" : "KO";
+
+	std::cout << "size: " << size << std::endl;
+	std::cout << "capacity: " << isCapacityOk << std::endl;
+	std::cout << "max_size: " << vct.max_size() << std::endl;
+	if (print_content)
+	{
+		typename TYPE::vector<T>::const_iterator it = vct.begin();
+		typename TYPE::vector<T>::const_iterator ite = vct.end();
+		std::cout << std::endl << "Content is:" << std::endl;
+		for (; it != ite; ++it)
+			std::cout << "- " << *it << std::endl;
+	}
+	std::cout << "###############################################" << std::endl;
+}
 
 
-	std::cout << vector[0] << std::endl;
-	std::cout << vector[1] << std::endl;
-	std::cout << vector[2] << std::endl;
-	std::cout << "size: " << vector.size() << std::endl;
+
+
+
+
+
+
+
+
+
+
+//								 --- Class foo ---
+template <typename T>
+class foo {
+	public:
+		typedef T	value_type;
+
+		foo(void) : value(), _verbose(false) { };
+		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
+		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
+		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
+
+		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
+		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
+		
+		foo &operator=(value_type src) { this->value = src; return *this; };
+		foo &operator=(foo const &src)
+		{
+			if (this->_verbose || src._verbose)
+				std::cout << "foo::operator=(foo) CALLED" << std::endl;
+			this->value = src.value;
+			return *this;
+		};
+		value_type	getValue(void) const { return this->value; };
+		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
+
+		operator value_type(void) const
+		{
+			return value_type(this->value);
+		}
+	private:
+		value_type	value;
+		bool		_verbose;
+};
+
+template <typename T>
+std::ostream	&operator<<(std::ostream &o, foo<T> const &bar) {
+	o << bar.getValue();
+	return o;
+}
+// --- End of class foo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#define TESTED_TYPE foo<int>
+
+int		main(void)
+{
+	const int size = 5;
+	TYPE::vector<TESTED_TYPE> vct(size);
+	TYPE::vector<TESTED_TYPE>::reverse_iterator it(vct.rbegin());
+	TYPE::vector<TESTED_TYPE>::const_reverse_iterator ite(vct.rend());
+
+	for (int i = 1; it != ite; ++i)
+		*it++ = (i * 7);
+	printSize(vct, 1);
+
+	it = vct.rbegin();
+	ite = vct.rbegin();
+
+	std::cout << *(++ite) << std::endl;
+	std::cout << *(ite++) << std::endl;
+	std::cout << *ite++ << std::endl;
+	std::cout << *++ite << std::endl;
+
+	it->m();
+	//ite->m();
+
+	//std::cout << *(++it) << std::endl;
+	//std::cout << *(it++) << std::endl;
+	//std::cout << *it++ << std::endl;
+	//std::cout << *++it << std::endl;
+
+	//std::cout << *(--ite) << std::endl;
+	//std::cout << *(ite--) << std::endl;
+	//std::cout << *--ite << std::endl;
+	//std::cout << *ite-- << std::endl;
+
+	//(*it).m();
+	//(*ite).m();
+
+	//std::cout << *(--it) << std::endl;
+	//std::cout << *(it--) << std::endl;
+	//std::cout << *it-- << std::endl;
+	//std::cout << *--it << std::endl;
 
 	return (0);
 }
@@ -85,109 +224,6 @@ int main(void)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//template <typename T>
-//void	printSize(TYPE::vector<T> const &vct, bool print_content = true)
-//{
-//	const size_t size = vct.size();
-//	const size_t capacity = vct.capacity();
-//	const std::string isCapacityOk = (capacity >= size) ? "OK" : "KO";
-
-//	std::cout << "size: " << size << std::endl;
-//	std::cout << "capacity: " << isCapacityOk << std::endl;
-//	std::cout << "max_size: " << vct.max_size() << std::endl;
-//	if (print_content)
-//	{
-//		typename TYPE::vector<T>::const_iterator it = vct.begin();
-//		typename TYPE::vector<T>::const_iterator ite = vct.end();
-//		std::cout << std::endl << "Content is:" << std::endl;
-//		for (; it != ite; ++it)
-//			std::cout << "- " << *it << std::endl;
-//	}
-//	std::cout << "###############################################" << std::endl;
-//}
-
-
-//void	checkErase(TYPE::vector<std::string> const &vct,
-//					TYPE::vector<std::string>::const_iterator const &it)
-//{
-//	static int i = 0;
-//	std::cout << "[" << i++ << "] " << "erase: " << it - vct.begin() << std::endl;
-//	printSize(vct);
-//}
-
-//int		main()
-//{
-//	TYPE::vector<std::string> vct(10);
-
-//	for (unsigned long int i = 0; i < vct.size(); ++i)
-//		vct[i] = std::string((vct.size() - i), i + 65);
-//	printSize(vct);
-
-//	checkErase(vct, vct.erase(vct.begin() + 2));
-
-//	checkErase(vct, vct.erase(vct.begin()));
-//	checkErase(vct, vct.erase(vct.end() - 1));
-//	std::cout << "\n\n\n\n\n\n\n\n\n\n";
-//	checkErase(vct, vct.erase(vct.begin(), vct.begin() + 3));
-//	checkErase(vct, vct.erase(vct.end() - 3, vct.end() - 1));
-
-//	vct.push_back("Hello");
-//	vct.push_back("Hi there");
-//	printSize(vct);
-//	checkErase(vct, vct.erase(vct.end() - 3, vct.end()));
-
-//	vct.push_back("ONE");
-//	vct.push_back("TWO");
-//	vct.push_back("THREE");
-//	vct.push_back("FOUR");
-//	printSize(vct);
-//	checkErase(vct, vct.erase(vct.begin(), vct.end()));
-
-//	return (0);
-//}
 
 
 
