@@ -6,7 +6,7 @@
 #    By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 14:48:46 by ahernand          #+#    #+#              #
-#    Updated: 2022/04/27 17:38:06 by ahernand         ###   ########.fr        #
+#    Updated: 2022/04/29 19:45:54 by ahernand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = ft_containers
 
 CXX = clang++ 
 
-CPPFLAGS = -std=c++98 -Wall -Wextra -Werror
+CPPFLAGS = -std=c++98# -Wall -Wextra -Werror
 
 SRCS =	srcs/main.cpp
 
@@ -37,8 +37,11 @@ $(NAME) : $(OBJS)
 test:
 	cd srcs/containers_test && sh do.sh vector
 
-make fclean:
+clean:
+	@rm -f $(OBJS)
+
+fclean:
 	@rm -f $(OBJS)
 	@rm -f $(NAME)
 
-re:	fclean all
+re:	fclean all clean

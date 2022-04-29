@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/28 20:00:39 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/29 19:42:09 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -597,17 +597,19 @@ namespace ft
 			explicit vector (size_type n, const value_type& val = value_type(),
 								const allocator_type& alloc = allocator_type())
 			{
-				_ptr = NULL;
-				_size = 0;
-				_capacity = 0;
+				_size = n;
+				_capacity = n;
 				_allocator = alloc;
-				insert(begin(), n, val);
+				_ptr = _allocator.allocate(_capacity);
+				for (size_type i = 0; i < n; ++i)
+					_allocator.construct(&_ptr[i], val);
 			}
 
 
 			template <class InputIterator>
 			vector (typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last, const allocator_type& alloc = allocator_type())
 			{
+
 				size_type		i = 0;
 				InputIterator	it = first;
 

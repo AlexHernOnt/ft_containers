@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:48:17 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/28 20:55:36 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/04/29 20:30:33 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ namespace ft
 
 			//		________		>< Operators
 
+			pointer_type	get_pointer() const	{ return (m_ptr); }
+
 			template <typename K>
-			bool					operator<(vector_iterator<K>& ref)
+			bool					operator<(const vector_iterator<K>& ref) const
 			{
 				if (&(*m_ptr) < &(*ref))
 					return (true);
@@ -44,7 +46,7 @@ namespace ft
 			}
 
 			template <typename K>
-			bool					operator<=(vector_iterator<K>& ref)
+			bool					operator<=(const vector_iterator<K>& ref) const
 			{
 				if (&(*m_ptr) <= &(*ref))
 					return (true);
@@ -52,7 +54,7 @@ namespace ft
 			}
 
 			template <typename K>
-			bool					operator>(vector_iterator<K>& ref)
+			bool					operator>(const vector_iterator<K>& ref) const
 			{
 				if (&(*m_ptr) > &(*ref))
 					return (true);
@@ -60,25 +62,24 @@ namespace ft
 			}
 
 			template <typename K>
-			bool					operator>=(vector_iterator<K>& ref)
+			bool					operator>=(const vector_iterator<K>& ref) const
 			{
 				if (&(*m_ptr) >= &(*ref))
 					return (true);
 				return (false);
 			}
-			
+
 			template <typename K>
-			bool					operator==(vector_iterator<K>& ref) const
+			bool					operator==(const vector_iterator<K> ref) const
 			{
-				if (&(*m_ptr) == &(*ref))
+				if (m_ptr == ref.get_pointer())
 					return (true);
 				return (false);
 			}
 
-			pointer_type	get_pointer() const	{ return (m_ptr); }
 			
 			template <typename K>
-			bool					operator!=(vector_iterator<K> ref) const
+			bool					operator!=(const vector_iterator<K> ref) const
 			{
 				if (m_ptr != ref.get_pointer())
 					return (true);
@@ -211,15 +212,15 @@ namespace ft
 				return *(m_ptr + idx);
 			}
 
-			reference_type			operator->()
+			pointer_type			operator->(void)
 			{
 				return (m_ptr);
 			}
 
-			const_reference_type	operator->() const
+			const_pointer_type		operator->(void) const
 			{
 				return (m_ptr);
-			}			
+			}		
 
 
 			//
@@ -256,6 +257,8 @@ namespace ft
 			typedef value_type&								reference_type;
 			typedef const value_type*						const_pointer_type;
 			typedef const value_type&						const_reference_type;
+			typedef ptrdiff_t               				difference_type;
+
 
 		private:
 			pointer_type									m_ptr;
@@ -319,9 +322,14 @@ namespace ft
 			}
 			
 
-			//		________		+ Operators
+			//		________				+ Operators
+			
+			friend reverse_vector_iterator<value_type>			operator+(difference_type n, const reverse_vector_iterator &rhs)
+			{
+				return (rhs.operator+(n));
+			};
 
-			reverse_vector_iterator			operator+(const int n)
+			reverse_vector_iterator			operator+(const int n) const
 			{
 				pointer_type aux;
 				
@@ -330,6 +338,7 @@ namespace ft
 					--aux;
 				return (aux);				
 			}
+
 
 			reverse_vector_iterator			operator+=(const int n)
 			{
@@ -340,9 +349,20 @@ namespace ft
 
 
 
-			//		________		- Operators
+			//		________				- Operators
 
-			reverse_vector_iterator			operator-(const int n)
+			template <typename K>
+			size_t							operator-(const reverse_vector_iterator<K> &rhs) const
+			{
+				pointer_type aux;
+				
+				aux = m_ptr;
+				for (int i = 0; i < n; ++i)
+					++aux;
+				return (2);
+			}
+
+			reverse_vector_iterator			operator-(const int n) const
 			{
 				pointer_type aux;
 				
@@ -426,15 +446,15 @@ namespace ft
 				return *(m_ptr - idx);
 			}
 
-			reference_type			operator->()
+			pointer_type		operator->(void)
 			{
 				return (m_ptr);
 			}
 
-			const_reference_type	operator->() const
+			const_pointer_type	operator->(void) const
 			{
 				return (m_ptr);
-			}	
+			}
 
 			//
 			//		______________________________ Cons & Dest ______________________________
@@ -456,9 +476,16 @@ namespace ft
 			{
 				m_ptr = ref.get_pointer();
 			}
+
+			template <typename K>
+			reverse_vector_iterator(const vector_iterator<K>& ref)
+			{
+				m_ptr = ref.get_pointer();
+			}
 			
 			~reverse_vector_iterator()
 			{
 			}
 	};
 }
+
