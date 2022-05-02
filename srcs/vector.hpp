@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/29 19:42:09 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/02 19:05:43 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,24 @@ namespace ft
 	class vector
 	{
 		public:
-			typedef T										value_type;
-			typedef Allocator								allocator_type;
-			typedef value_type&								reference;
-			typedef const value_type&						const_reference;
-			typedef value_type*								pointer;
-			typedef const value_type*						const_pointer;
-			typedef	ft::vector_iterator<T>					iterator;
-			typedef	ft::vector_iterator<const T>			const_iterator;
-			typedef ft::reverse_vector_iterator<T>			reverse_iterator;
-			typedef ft::reverse_vector_iterator<const T>	const_reverse_iterator;
-			// ?	?										?
-			typedef size_t									size_type;
+			typedef T													value_type;
+			typedef Allocator											allocator_type;
+			typedef value_type&											reference;
+			typedef const value_type&									const_reference;
+			typedef value_type*											pointer;
+			typedef const value_type*									const_pointer;
+			typedef	ft::vector_iterator<T>								iterator;
+			typedef	ft::vector_iterator<const T>						const_iterator;
+			typedef ft::reverse_vector_iterator<iterator>				reverse_iterator;
+			typedef ft::reverse_vector_iterator<const_iterator>			const_reverse_iterator;
+			// ?	?													?
+			typedef size_t												size_type;
 
 		private:
-			size_type										_size;
-			size_type										_capacity;
-			allocator_type									_allocator;
-			value_type										*_ptr;
+			size_type													_size;
+			size_type													_capacity;
+			allocator_type												_allocator;
+			value_type													*_ptr;
 
 		public:
 
@@ -73,22 +73,22 @@ namespace ft
 
 			reverse_iterator rbegin()
 			{
-				return (ft::reverse_vector_iterator<T>(_ptr + (_size - 1)));
+				return (reverse_iterator(_ptr + (_size)));
 			}
 
 			const_reverse_iterator rbegin() const
 			{
-				return (ft::reverse_vector_iterator<const T>(_ptr + (_size - 1)));
+				return (const_reverse_iterator(_ptr + (_size)));
 			}
 
 			reverse_iterator rend()
 			{
-				return (ft::reverse_vector_iterator<T>(_ptr - 1));
+				return (reverse_iterator(_ptr - 1));
 			}
 
 			const_reverse_iterator rend() const
 			{
-				return (ft::reverse_vector_iterator<const T>(_ptr - 1));
+				return (const_reverse_iterator(_ptr - 1));
 			}
 
 

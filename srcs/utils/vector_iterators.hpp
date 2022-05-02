@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:48:17 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/29 20:30:33 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/02 20:45:53 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ namespace ft
 	{
 		public:
 			typedef T										value_type;
-			typedef value_type*								pointer_type;
-			typedef value_type&								reference_type;
-			typedef const value_type*						const_pointer_type;
-			typedef const value_type&						const_reference_type;
 			typedef ptrdiff_t               				difference_type;
+			typedef value_type*								pointer;
+			typedef value_type&								reference;
+			typedef const value_type*						const_pointer;
+			typedef const value_type&						const_reference;
 		private:
-			pointer_type									m_ptr;
+			pointer											m_ptr;
 
 		public:
 
@@ -35,7 +35,7 @@ namespace ft
 
 			//		________		>< Operators
 
-			pointer_type	get_pointer() const	{ return (m_ptr); }
+			pointer					get_pointer() const	{ return (m_ptr); }
 
 			template <typename K>
 			bool					operator<(const vector_iterator<K>& ref) const
@@ -90,14 +90,14 @@ namespace ft
 
 			//		________		+ Operators
 
-			friend vector_iterator<value_type>			operator+(difference_type n, const vector_iterator &rhs)
+			friend vector_iterator<value_type>			operator+(difference_type n, const vector_iterator &ref)
 			{
-				return (rhs.operator+(n));
-			};
+				return (ref.operator+(n));
+			}
 
 			vector_iterator			operator+(const long n) const
 			{
-				pointer_type aux;
+				pointer				aux;
 				
 				aux = m_ptr;
 				for (int i = 0; i < n; ++i)
@@ -118,7 +118,7 @@ namespace ft
 
 			vector_iterator			operator-(const int n)
 			{
-				pointer_type aux;
+				pointer				aux;
 				
 				aux = m_ptr;
 				for (int i = 0; i < n; ++i)
@@ -190,34 +190,36 @@ namespace ft
 
 
 
+
+
 			//		________		Access Operators
 
-			reference_type			operator*()
+			reference				operator*()
 			{
 				return (*m_ptr);
 			}
 
-			const_reference_type	operator*() const
+			const_reference			operator*() const
 			{
 				return (*m_ptr);
 			}
 
-			reference_type			operator[](const int &idx)
+			reference				operator[](const int &idx)
 			{
 				return *(m_ptr + idx);
 			}
 
-			const_reference_type	operator[](const int &idx) const
+			const_reference			operator[](const int &idx) const
 			{
 				return *(m_ptr + idx);
 			}
 
-			pointer_type			operator->(void)
+			pointer					operator->(void)
 			{
 				return (m_ptr);
 			}
 
-			const_pointer_type		operator->(void) const
+			const_pointer			operator->(void) const
 			{
 				return (m_ptr);
 			}		
@@ -238,7 +240,7 @@ namespace ft
 				m_ptr = NULL;
 			}
 			
-			vector_iterator(pointer_type ptr)
+			vector_iterator(pointer ptr)
 			{
 				m_ptr = ptr;
 			}
@@ -248,23 +250,25 @@ namespace ft
 			}
 	};
 
-	template <typename T>
+	template <typename iterator>
 	class reverse_vector_iterator
 	{
 		public:
-			typedef T										value_type;
-			typedef value_type*								pointer_type;
-			typedef value_type&								reference_type;
-			typedef const value_type*						const_pointer_type;
-			typedef const value_type&						const_reference_type;
-			typedef ptrdiff_t               				difference_type;
-
+			typedef iterator									iterator_type;
+			typedef typename iterator::value_type				value_type;
+			typedef typename iterator::difference_type			difference_type;
+			typedef typename iterator::pointer					pointer;
+			typedef typename iterator::reference				reference;
 
 		private:
-			pointer_type									m_ptr;
-
+			iterator											m_base;
 		public:
 
+			iterator				base() const
+			{
+				return (m_base);
+			};
+			
 			//
 			//		_______________________________ Operators _______________________________
 			//
@@ -274,17 +278,17 @@ namespace ft
 			template <typename K>
 			bool					operator==(reverse_vector_iterator<K>& ref) const
 			{
-				if (&(*m_ptr) == &(*ref))
+				if (m_base == ref.base())
 					return (true);
 				return (false);
 			}
 			
-			pointer_type	get_pointer() const	{ return (m_ptr); }
+			pointer					get_pointer() const	{ return (m_base); }
 			
 			template <typename K>
 			bool					operator!=(reverse_vector_iterator<K> ref) const
 			{
-				if (m_ptr != ref.get_pointer())
+				if (m_base != ref.base())
 					return (true);
 				return (false);
 			}
@@ -292,7 +296,7 @@ namespace ft
 			template <typename K>
 			bool					operator<(reverse_vector_iterator<K>& ref)
 			{
-				if (&(*m_ptr) > &(*ref))
+				if (m_base > ref.base())
 					return (true);
 				return (false);
 			}
@@ -300,7 +304,7 @@ namespace ft
 			template <typename K>
 			bool					operator<=(reverse_vector_iterator<K>& ref)
 			{
-				if (&(*m_ptr) >= &(*ref))
+				if (m_base >= ref.base())
 					return (true);
 				return (false);
 			}
@@ -308,7 +312,7 @@ namespace ft
 			template <typename K>
 			bool					operator>(reverse_vector_iterator<K>& ref)
 			{
-				if (&(*m_ptr) < &(*ref))
+				if (m_base < ref.base())
 					return (true);
 				return (false);
 			}
@@ -316,7 +320,7 @@ namespace ft
 			template <typename K>
 			bool					operator>=(reverse_vector_iterator<K>& ref)
 			{
-				if (&(*m_ptr) <= &(*ref))
+				if (m_base <= ref.base())
 					return (true);
 				return (false);
 			}
@@ -324,168 +328,136 @@ namespace ft
 
 			//		________				+ Operators
 			
-			friend reverse_vector_iterator<value_type>			operator+(difference_type n, const reverse_vector_iterator &rhs)
+			friend reverse_vector_iterator	operator+(difference_type n, reverse_vector_iterator &ref)
 			{
-				return (rhs.operator+(n));
-			};
-
-			reverse_vector_iterator			operator+(const int n) const
-			{
-				pointer_type aux;
-				
-				aux = m_ptr;
-				for (int i = 0; i < n; ++i)
-					--aux;
-				return (aux);				
+				return (ref + n);
 			}
 
+			reverse_vector_iterator			operator+(const int n)
+			{
+				reverse_vector_iterator		a(m_base - n);
+				return (a);
+			}
 
 			reverse_vector_iterator			operator+=(const int n)
 			{
-				for (int i = 0; i < n; ++i)
-					--m_ptr;
-				return (*this);				
-			}
-
-
-
-			//		________				- Operators
-
-			template <typename K>
-			size_t							operator-(const reverse_vector_iterator<K> &rhs) const
-			{
-				pointer_type aux;
-				
-				aux = m_ptr;
-				for (int i = 0; i < n; ++i)
-					++aux;
-				return (2);
-			}
-
-			reverse_vector_iterator			operator-(const int n) const
-			{
-				pointer_type aux;
-				
-				aux = m_ptr;
-				for (int i = 0; i < n; ++i)
-					++aux;
-				return (aux);
-			}
-
-			reverse_vector_iterator			operator-=(const int n)
-			{
-				for (int i = 0; i < n; ++i)
-					++m_ptr;
+				m_base -= n;
 				return (*this);
 			}
 
 
 
-			////		________		++-- Operators
+			////		________				- Operators
+
+			reverse_vector_iterator			operator-(const int n) const
+			{
+				reverse_vector_iterator		a(m_base + n);
+				return (a);
+			}
+
+			template <typename K>
+			difference_type					operator-(const reverse_vector_iterator<K> &ref)
+			{
+				return ((m_base - ref.base()) * -1);
+			}
+
+			reverse_vector_iterator			operator-=(const int n)
+			{
+				m_base += n;
+				return (*this);
+			} 
+
+
+			//////		________		++-- Operators
 
 			reverse_vector_iterator			&operator++()
 			{
-				m_ptr--;
+				m_base.operator--();
 				return (*this);
 			}
 
 			reverse_vector_iterator			operator++(int)
 			{
 				reverse_vector_iterator		it_aux = *this;
-				m_ptr--;
+				m_base.operator--();
 				return (it_aux);
 			}
 
 			reverse_vector_iterator			&operator--()
 			{
-				m_ptr++;
+				m_base.operator++();
 				return (*this);
 			}
 
 			reverse_vector_iterator			operator--(int)
 			{
 				reverse_vector_iterator		it_aux = *this;
-				m_ptr++;
+				m_base.operator++();
 				return (it_aux);
 			}
 
 
 
-			////		________		Copy Operator
-
-
+			//		________		Copy Operator
 
 			template <typename K>
 			reverse_vector_iterator			&operator=(const reverse_vector_iterator<K>& ref)
 			{
-				this->m_ptr = ref.get_pointer();
+				m_base = ref.base();
 				return (*this);
 			}
 
 
 
+
 			//		________		Access Operators
 
-			reference_type			operator*()
+			reference				operator*(void) const
 			{
-				return (*m_ptr);
+				return (--iterator(m_base)).operator*();
 			}
 
-			const_reference_type	operator*() const
+
+
+
+			reference				operator[](const size_t &idx)
 			{
-				return (*m_ptr);
+				return *(this->operator+(idx));
 			}
 
-			reference_type			operator[](const int &idx)
+			pointer					operator->(void) const
 			{
-				return *(m_ptr - idx);
-			}
-
-			const_reference_type	operator[](const int &idx) const
-			{
-				return *(m_ptr - idx);
-			}
-
-			pointer_type		operator->(void)
-			{
-				return (m_ptr);
-			}
-
-			const_pointer_type	operator->(void) const
-			{
-				return (m_ptr);
+				return (m_base);
 			}
 
 			//
 			//		______________________________ Cons & Dest ______________________________
 			//
-
+  
 			reverse_vector_iterator()
 			{
-				m_ptr = NULL;
+				m_base = NULL;
 			}
-			
-			
-			reverse_vector_iterator(pointer_type ptr)
+
+			reverse_vector_iterator(pointer ptr)
 			{
-				m_ptr = ptr;
+				m_base = ptr;
 			}
 
 			template <typename K>
-			reverse_vector_iterator(const reverse_vector_iterator<K>& ref)
+			reverse_vector_iterator(reverse_vector_iterator<K> ref)
 			{
-				m_ptr = ref.get_pointer();
+				m_base = ref.base();
 			}
 
 			template <typename K>
-			reverse_vector_iterator(const vector_iterator<K>& ref)
+			reverse_vector_iterator(const vector_iterator<K> ref)
 			{
-				m_ptr = ref.get_pointer();
+				m_base = ref;
 			}
-			
+
 			~reverse_vector_iterator()
 			{
 			}
 	};
 }
-

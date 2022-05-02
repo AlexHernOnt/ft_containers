@@ -6,11 +6,11 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/29 20:24:45 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/02 20:45:44 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define TYPE ft
+#define TYPE std
 
 #include "vector.hpp"
 #include "utils/tests.hpp"
@@ -18,7 +18,6 @@
 #include <algorithm>    // std::lexicographical_compare
 #include <vector>
 #include <list>
-
 
 template <typename T>
 void	printSize(TYPE::vector<T> const &vct, bool print_content = true)
@@ -40,10 +39,42 @@ void	printSize(TYPE::vector<T> const &vct, bool print_content = true)
 	}
 	std::cout << "###############################################" << std::endl;
 }
+template <typename T>
+class foo {
+	public:
+		typedef T	value_type;
 
+		foo(void) : value(), _verbose(false) { };
+		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
+		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
+		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
+		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
+		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
+		foo &operator=(value_type src) { this->value = src; return *this; };
+		foo &operator=(foo const &src) {
+			if (this->_verbose || src._verbose)
+				std::cout << "foo::operator=(foo) CALLED" << std::endl;
+			this->value = src.value;
+			return *this;
+		};
+		value_type	getValue(void) const { return this->value; };
+		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
 
+		operator value_type(void) const {
+			return value_type(this->value);
+		}
+	private:
+		value_type	value;
+		bool		_verbose;
+};
+template <typename T>
+std::ostream	&operator<<(std::ostream &o, foo<T> const &bar) {
+	o << bar.getValue();
+	return o;
+}
 
-#define TESTED_TYPE int
+#define TESTED_TYPE foo<int>
+
 
 
 
@@ -51,83 +82,45 @@ int		main(void)
 {
 	const int size = 5;
 	TYPE::vector<TESTED_TYPE> vct(size);
-	TYPE::vector<TESTED_TYPE>::reverse_iterator it = vct.rbegin();
-	TYPE::vector<TESTED_TYPE>::const_reverse_iterator ite = vct.rbegin();
+	TYPE::vector<TESTED_TYPE>::reverse_iterator it(vct.rbegin());
+	TYPE::vector<TESTED_TYPE>::const_reverse_iterator ite(vct.rend());
 
-	for (int i = 0; i < size; ++i)
-		it[i] = (size - i) * 5;
+	for (int i = 1; it != ite; ++i)
+		*it++ = (i * 7);
+	printSize(vct, 1);
 
-	it = it + 5;
-	it = 1 + it;
-	it = it - 4;
-	std::cout << *(it += 2) << std::endl;
-	std::cout << *(it -= 1) << std::endl;
+	it = vct.rbegin();
+	ite = vct.rbegin();
+	
+	
+	std::cout << *(++ite) << std::endl;
+	std::cout << *(ite++) << std::endl;
+	std::cout << *ite++ << std::endl;
+	std::cout << *++ite << std::endl;
 
-	*(it -= 2) = 42;
-	*(it += 2) = 21;
+	it->m();
+	//ite->m();
 
-	std::cout << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
+	//std::cout << *(++it) << std::endl;
+	//std::cout << *(it++) << std::endl;
+	//std::cout << *it++ << std::endl;
+	//std::cout << *++it << std::endl;
 
-	std::cout << "(it == const_it): " << (ite == it) << std::endl;
-	std::cout << "(const_ite - it): " << (ite - it) << std::endl;
-	std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+	//std::cout << *(--ite) << std::endl;
+	//std::cout << *(ite--) << std::endl;
+	//std::cout << *--ite << std::endl;
+	//std::cout << *ite-- << std::endl;
 
-	printSize(vct, true);
+	//(*it).m();
+	//(*ite).m();
+
+	//std::cout << *(--it) << std::endl;
+	//std::cout << *(it--) << std::endl;
+	//std::cout << *it-- << std::endl;
+	//std::cout << *--it << std::endl;
+
 	return (0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//#define TESTED_TYPE int
-
-//int		main(void)
-//{
-//	const int size = 5;
-//	TYPE::vector<TESTED_TYPE> vct(size);
-//	TYPE::vector<TESTED_TYPE>::iterator it_ = vct.begin();
-//	TYPE::vector<TESTED_TYPE>::reverse_iterator it(it_);
-
-//	for (int i = 0; i < size; ++i)
-//		vct[i] = (i + 1) * 5;
-//	printSize(vct);
-
-//	std::cout << (it_ == it.base()) << std::endl;
-//	std::cout << (it_ == (it + 3).base()) << std::endl;
-
-//	std::cout << *(it.base() + 1) << std::endl;
-//	std::cout << *(it - 3) << std::endl;
-//	std::cout << *(it - 3).base() << std::endl;
-//	it -= 3;
-//	std::cout << *it.base() << std::endl;
-
-//	std::cout << "TEST OFFSET" << std::endl;
-//	std::cout << *(it) << std::endl;
-//	std::cout << *(it).base() << std::endl;
-//	std::cout << *(it - 0) << std::endl;
-//	std::cout << *(it - 0).base() << std::endl;
-//	std::cout << *(it - 1).base() << std::endl;
-
-//	return (0);
-//}
 
 
 
@@ -862,7 +855,7 @@ void	test_vector_iterators()
 
 
 
-
+/*
 
 
 //			88""Yb 888888 Yb    dP 888888 88""Yb .dP"Y8 888888     88 888888 888888 88""Yb    db    888888  dP"Yb  88""Yb .dP"Y8 
@@ -1218,7 +1211,7 @@ void	test_vector_reverse_iterators()
 	vri_brackets();
 }
 
-
+*/
 
 
 
