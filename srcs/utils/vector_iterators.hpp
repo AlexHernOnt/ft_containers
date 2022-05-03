@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:48:17 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/03 17:33:12 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:44:00 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ namespace ft
 
 			//		________		>< Operators
 			pointer					get_pointer()			const	{ return (m_ptr); }
-
 
 			template <typename K>
 			bool					operator<(const vector_iterator<K>& ref) const
@@ -72,7 +71,7 @@ namespace ft
 			template <typename K>
 			bool					operator==(const vector_iterator<K> ref) const
 			{
-				if (m_ptr == ref.get_pointer())
+				if (m_ptr == &(*ref))
 					return (true);
 				return (false);
 			}

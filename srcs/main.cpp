@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/03 17:07:18 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:44:55 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,34 +42,62 @@ void	printSize(TYPE::vector<T> const &vct, bool print_content = true)
 	std::cout << "###############################################" << std::endl;
 }
 
-int main ()
+
+
+
+
+
+void	prepost_incdec(TESTED_NAMESPACE::vector<TESTED_TYPE> &vct)
 {
-	TYPE::vector<TESTED_TYPE> foo(3, 15);
-	TYPE::vector<TESTED_TYPE> bar(5, 42);
-	
-	TYPE::vector<TESTED_TYPE>::const_iterator it_foo = foo.begin();
-	TYPE::vector<TESTED_TYPE>::const_iterator it_bar = bar.begin();
+	TYPE::vector<TESTED_TYPE>::iterator it = vct.begin();
+	TYPE::vector<TESTED_TYPE>::iterator it_tmp;
 
-	std::cout << "BEFORE SWAP" << std::endl;
+	std::cout << "Pre inc" << std::endl;
+	it_tmp = ++it;
+	std::cout << *it_tmp << " | " << *it << std::endl;
 
-	std::cout << "foo contains:" << std::endl;
-	printSize(foo);
-	std::cout << "bar contains:" << std::endl;
-	printSize(bar);
+	std::cout << "Pre dec" << std::endl;
+	it_tmp = --it;
+	std::cout << *it_tmp << " | " << *it << std::endl;
 
-	foo.swap(bar);
+	std::cout << "Post inc" << std::endl;
+	it_tmp = it++;
+	std::cout << *it_tmp << " | " << *it << std::endl;
 
-	std::cout << "AFTER SWAP" << std::endl;
+	std::cout << "Post dec" << std::endl;
+	it_tmp = it--;
+	std::cout << *it_tmp << " | " << *it << std::endl;
+	std::cout << "###############################################" << std::endl;
+}
 
-	std::cout << "foo contains:" << std::endl;
-	printSize(foo);
-	std::cout << "bar contains:" << std::endl;
-	printSize(bar);
+int		main(void)
+{
+	const int size = 5;
+	TYPE::vector<TESTED_TYPE> vct(size);
+	TYPE::vector<TESTED_TYPE>::iterator it = vct.begin();
+	TYPE::vector<TESTED_TYPE>::const_iterator ite = vct.begin();
 
-	std::cout << "Iterator validity:" << std::endl;
-	std::cout << (it_foo == bar.begin()) << std::endl;
-	std::cout << (it_bar == foo.begin()) << std::endl;
+	for (int i = 0; i < size; ++i)
+		it[i] = (size - i) * 5;
+	prepost_incdec(vct);
 
+	it = it + 5;
+	it = 1 + it;
+	it = it - 4;
+	std::cout << *(it += 2) << std::endl;
+	std::cout << *(it -= 1) << std::endl;
+
+	*(it -= 2) = 42;
+	*(it += 2) = 21;
+
+	std::cout << "const_ite +=: " << *(ite += 2) << std::endl;
+	std::cout << "const_ite -=: " << *(ite -= 2) << std::endl;
+
+	std::cout << "(it == const_it): " << (ite == it) << std::endl;
+	std::cout << "(const_ite - it): " << (ite - it) << std::endl;
+	std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+
+	printSize(vct, true);
 	return (0);
 }
 

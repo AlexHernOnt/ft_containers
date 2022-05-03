@@ -6,7 +6,7 @@
 #    By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 14:48:46 by ahernand          #+#    #+#              #
-#    Updated: 2022/04/29 19:45:54 by ahernand         ###   ########.fr        #
+#    Updated: 2022/05/03 17:35:41 by ahernand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = ft_containers
 
 CXX = clang++ 
 
-CPPFLAGS = -std=c++98# -Wall -Wextra -Werror
+CPPFLAGS = -std=c++98 -Wall -Wextra -Werror
 
 SRCS =	srcs/main.cpp
 
