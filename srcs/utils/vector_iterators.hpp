@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:48:17 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/02 20:45:53 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:33:12 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ namespace ft
 			//
 
 			//		________		>< Operators
+			pointer					get_pointer()			const	{ return (m_ptr); }
 
-			pointer					get_pointer() const	{ return (m_ptr); }
 
 			template <typename K>
 			bool					operator<(const vector_iterator<K>& ref) const
@@ -127,13 +127,13 @@ namespace ft
 			}
 
 			template <typename K>
-			long			operator-(vector_iterator<K> n) const
+			long					operator-(vector_iterator<K> n) const
 			{
 				return (m_ptr - n.get_pointer());
 			}
 
 			template <typename K>
-			long			operator-(vector_iterator<K> n)
+			long					operator-(vector_iterator<K> n)
 			{
 				return (m_ptr - n.get_pointer());
 			}
@@ -177,20 +177,6 @@ namespace ft
 
 
 
-			//		________		Copy Operator
-
-
-
-			template <typename K>
-			vector_iterator			&operator=(const vector_iterator<K>& ref)
-			{
-				this->m_ptr = ref.get_pointer();
-				return (*this);
-			}
-
-
-
-
 
 			//		________		Access Operators
 
@@ -223,6 +209,20 @@ namespace ft
 			{
 				return (m_ptr);
 			}		
+
+
+
+
+			//		________		Copy Operator
+
+			template <typename K>
+			vector_iterator			&operator=(const vector_iterator<K>& ref)
+			{
+				this->m_ptr = ref.get_pointer();
+				return (*this);
+			}
+
+
 
 
 			//
@@ -276,14 +276,12 @@ namespace ft
 			//		________		>< Operators
 
 			template <typename K>
-			bool					operator==(reverse_vector_iterator<K>& ref) const
+			bool					operator==(reverse_vector_iterator<K> ref) const
 			{
 				if (m_base == ref.base())
 					return (true);
 				return (false);
 			}
-			
-			pointer					get_pointer() const	{ return (m_base); }
 			
 			template <typename K>
 			bool					operator!=(reverse_vector_iterator<K> ref) const
@@ -294,7 +292,7 @@ namespace ft
 			}
 
 			template <typename K>
-			bool					operator<(reverse_vector_iterator<K>& ref)
+			bool					operator<(reverse_vector_iterator<K> ref) const
 			{
 				if (m_base > ref.base())
 					return (true);
@@ -302,7 +300,7 @@ namespace ft
 			}
 
 			template <typename K>
-			bool					operator<=(reverse_vector_iterator<K>& ref)
+			bool					operator<=(reverse_vector_iterator<K> ref) const
 			{
 				if (m_base >= ref.base())
 					return (true);
@@ -310,7 +308,7 @@ namespace ft
 			}
 
 			template <typename K>
-			bool					operator>(reverse_vector_iterator<K>& ref)
+			bool					operator>(reverse_vector_iterator<K> ref) const
 			{
 				if (m_base < ref.base())
 					return (true);
@@ -318,7 +316,7 @@ namespace ft
 			}
 
 			template <typename K>
-			bool					operator>=(reverse_vector_iterator<K>& ref)
+			bool					operator>=(reverse_vector_iterator<K> ref) const
 			{
 				if (m_base <= ref.base())
 					return (true);
@@ -398,6 +396,28 @@ namespace ft
 
 
 
+
+			//		________		Access Operators
+
+			reference				operator*(void) const
+			{
+				return (--iterator(m_base)).operator*();
+			}
+
+			reference				operator[](const size_t &idx)
+			{
+				return *(this->operator+(idx));
+			}
+
+			pointer					operator->(void) const
+			{
+				return &operator*();
+				//return (m_base);
+			}
+
+
+
+
 			//		________		Copy Operator
 
 			template <typename K>
@@ -409,27 +429,7 @@ namespace ft
 
 
 
-
-			//		________		Access Operators
-
-			reference				operator*(void) const
-			{
-				return (--iterator(m_base)).operator*();
-			}
-
-
-
-
-			reference				operator[](const size_t &idx)
-			{
-				return *(this->operator+(idx));
-			}
-
-			pointer					operator->(void) const
-			{
-				return (m_base);
-			}
-
+			
 			//
 			//		______________________________ Cons & Dest ______________________________
 			//

@@ -6,11 +6,11 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/02 20:45:44 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:07:18 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define TYPE std
+#define TYPE ft
 
 #include "vector.hpp"
 #include "utils/tests.hpp"
@@ -18,6 +18,8 @@
 #include <algorithm>    // std::lexicographical_compare
 #include <vector>
 #include <list>
+
+#define TESTED_TYPE int
 
 template <typename T>
 void	printSize(TYPE::vector<T> const &vct, bool print_content = true)
@@ -39,92 +41,37 @@ void	printSize(TYPE::vector<T> const &vct, bool print_content = true)
 	}
 	std::cout << "###############################################" << std::endl;
 }
-template <typename T>
-class foo {
-	public:
-		typedef T	value_type;
 
-		foo(void) : value(), _verbose(false) { };
-		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
-		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
-		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
-		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
-		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
-		foo &operator=(value_type src) { this->value = src; return *this; };
-		foo &operator=(foo const &src) {
-			if (this->_verbose || src._verbose)
-				std::cout << "foo::operator=(foo) CALLED" << std::endl;
-			this->value = src.value;
-			return *this;
-		};
-		value_type	getValue(void) const { return this->value; };
-		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
-
-		operator value_type(void) const {
-			return value_type(this->value);
-		}
-	private:
-		value_type	value;
-		bool		_verbose;
-};
-template <typename T>
-std::ostream	&operator<<(std::ostream &o, foo<T> const &bar) {
-	o << bar.getValue();
-	return o;
-}
-
-#define TESTED_TYPE foo<int>
-
-
-
-
-int		main(void)
+int main ()
 {
-	const int size = 5;
-	TYPE::vector<TESTED_TYPE> vct(size);
-	TYPE::vector<TESTED_TYPE>::reverse_iterator it(vct.rbegin());
-	TYPE::vector<TESTED_TYPE>::const_reverse_iterator ite(vct.rend());
-
-	for (int i = 1; it != ite; ++i)
-		*it++ = (i * 7);
-	printSize(vct, 1);
-
-	it = vct.rbegin();
-	ite = vct.rbegin();
+	TYPE::vector<TESTED_TYPE> foo(3, 15);
+	TYPE::vector<TESTED_TYPE> bar(5, 42);
 	
-	
-	std::cout << *(++ite) << std::endl;
-	std::cout << *(ite++) << std::endl;
-	std::cout << *ite++ << std::endl;
-	std::cout << *++ite << std::endl;
+	TYPE::vector<TESTED_TYPE>::const_iterator it_foo = foo.begin();
+	TYPE::vector<TESTED_TYPE>::const_iterator it_bar = bar.begin();
 
-	it->m();
-	//ite->m();
+	std::cout << "BEFORE SWAP" << std::endl;
 
-	//std::cout << *(++it) << std::endl;
-	//std::cout << *(it++) << std::endl;
-	//std::cout << *it++ << std::endl;
-	//std::cout << *++it << std::endl;
+	std::cout << "foo contains:" << std::endl;
+	printSize(foo);
+	std::cout << "bar contains:" << std::endl;
+	printSize(bar);
 
-	//std::cout << *(--ite) << std::endl;
-	//std::cout << *(ite--) << std::endl;
-	//std::cout << *--ite << std::endl;
-	//std::cout << *ite-- << std::endl;
+	foo.swap(bar);
 
-	//(*it).m();
-	//(*ite).m();
+	std::cout << "AFTER SWAP" << std::endl;
 
-	//std::cout << *(--it) << std::endl;
-	//std::cout << *(it--) << std::endl;
-	//std::cout << *it-- << std::endl;
-	//std::cout << *--it << std::endl;
+	std::cout << "foo contains:" << std::endl;
+	printSize(foo);
+	std::cout << "bar contains:" << std::endl;
+	printSize(bar);
+
+	std::cout << "Iterator validity:" << std::endl;
+	std::cout << (it_foo == bar.begin()) << std::endl;
+	std::cout << (it_bar == foo.begin()) << std::endl;
 
 	return (0);
 }
-
-
-
-
 
 
 

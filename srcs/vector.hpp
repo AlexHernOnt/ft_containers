@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/02 19:05:43 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:25:01 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace ft
 			typedef	ft::vector_iterator<const T>						const_iterator;
 			typedef ft::reverse_vector_iterator<iterator>				reverse_iterator;
 			typedef ft::reverse_vector_iterator<const_iterator>			const_reverse_iterator;
-			// ?	?													?
+			typedef ptrdiff_t               							difference_type;
 			typedef size_t												size_type;
 
 		private:
@@ -83,12 +83,12 @@ namespace ft
 
 			reverse_iterator rend()
 			{
-				return (reverse_iterator(_ptr - 1));
+				return (reverse_iterator(_ptr));
 			}
 
 			const_reverse_iterator rend() const
 			{
-				return (const_reverse_iterator(_ptr - 1));
+				return (const_reverse_iterator(_ptr));
 			}
 
 
@@ -508,39 +508,21 @@ namespace ft
 			{
 				_size = 0;
 			}
-			
-			void swap (vector& x)
+
+
+
+
+			//		_________________                 Swap                   _________________
+
+			void	swap(vector& x)
 			{
-				value_type				*aux;
-				size_type				aux_size;
-				size_type				aux_capacity;
+				vector<T, allocator_type>			aux;
 
-				aux_size = _size;
-				aux_capacity = _capacity;
-				
-				if (_capacity != 0)
-				{
-					aux = _allocator.allocate(_capacity);
-					for (size_type i = 0; i < _size; ++i)
-						aux[i] = _ptr[i];
-
-
-					_allocator.deallocate(_ptr, _capacity);
-					_capacity = x.capacity();
-					_size = x.size();
-					_ptr = _allocator.allocate(x.capacity());
-
-					for (size_type i = 0; i < x.size(); ++i)
-						_ptr[i] = x[i];
-					while (x.size() != 0)
-						x.pop_back();
-					for (size_type i = 0; i < aux_size; ++i)
-						x.push_back(aux[i]);
-					_allocator.deallocate(aux, aux_capacity);
-				}
+				aux.complete_memory_copy(*this);
+				this->complete_memory_copy(x);
+				x.complete_memory_copy(aux);
+				aux._capacity = 0;
 			}
-
-
 
 
 
@@ -561,7 +543,7 @@ namespace ft
 			**		_______________________________ Operator= _______________________________
 			*/
 
-			ft::vector<T, Allocator>& operator=(const vector& x)
+			vector&		operator=(const vector& x)
 			{
 				if (_capacity != 0)
 				{
@@ -653,6 +635,15 @@ namespace ft
 				if (_capacity != 0)
 					_allocator.deallocate(_ptr, _capacity);
 			}
+
+			private:
+				void	complete_memory_copy(vector	&x)
+				{
+					_size = x.size();
+					_capacity = x.capacity();
+					_allocator = x.get_allocator();
+					_ptr = x._ptr;
+				}
 	};
 
 
