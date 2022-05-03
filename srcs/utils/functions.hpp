@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:28:21 by ahernand          #+#    #+#             */
-/*   Updated: 2022/04/22 14:08:41 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/03 20:53:26 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,43 @@ namespace ft
 	**	pair
 	*/
 
+		template <class T1, class T2>
+		struct  pair
+		{
+			typedef T1		first_type;
+			typedef T2		second_type;
 
+			first_type		first;
+			second_type		second;
 
+			pair			&operator=(const pair &ref)
+			{
+				if (this == &ref)
+					return (*this);
+				first = ref.first;
+				second = ref.second;
+				return (*this);
+			}
 
-
-
+			// Cons & Des
+			pair()
+			{
+				
+			}
+			
+			template<class T, class K>
+			pair(const pair<T, K> &ref)
+			{
+				first = ref.first;
+				second = ref.second;
+			}
+			
+			pair(const first_type &g_first, const second_type &g_second)
+			{
+				first = g_first.first;
+				second = f_second.second;
+			}
+		};
 
 
 
@@ -148,5 +180,11 @@ namespace ft
 
 
 
+}
+
+
+void	ft_leaks()
+{
+	system("leaks ft_containers");
 }
 #endif

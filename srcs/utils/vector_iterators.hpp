@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:48:17 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/03 17:44:00 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/03 18:40:31 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,11 @@ namespace ft
 			//
 
 			//		________		>< Operators
-			pointer					get_pointer()			const	{ return (m_ptr); }
 
 			template <typename K>
 			bool					operator<(const vector_iterator<K>& ref) const
 			{
-				if (&(*m_ptr) < &(*ref))
+				if (m_ptr < &(*ref))
 					return (true);
 				return (false);
 			}
@@ -47,7 +46,7 @@ namespace ft
 			template <typename K>
 			bool					operator<=(const vector_iterator<K>& ref) const
 			{
-				if (&(*m_ptr) <= &(*ref))
+				if (m_ptr <= &(*ref))
 					return (true);
 				return (false);
 			}
@@ -55,7 +54,7 @@ namespace ft
 			template <typename K>
 			bool					operator>(const vector_iterator<K>& ref) const
 			{
-				if (&(*m_ptr) > &(*ref))
+				if (m_ptr > &(*ref))
 					return (true);
 				return (false);
 			}
@@ -63,7 +62,7 @@ namespace ft
 			template <typename K>
 			bool					operator>=(const vector_iterator<K>& ref) const
 			{
-				if (&(*m_ptr) >= &(*ref))
+				if (m_ptr >= &(*ref))
 					return (true);
 				return (false);
 			}
@@ -80,7 +79,7 @@ namespace ft
 			template <typename K>
 			bool					operator!=(const vector_iterator<K> ref) const
 			{
-				if (m_ptr != ref.get_pointer())
+				if (m_ptr != &(*ref))
 					return (true);
 				return (false);
 			}
@@ -115,7 +114,7 @@ namespace ft
 
 			//		________		- Operators
 
-			vector_iterator			operator-(const int n)
+			vector_iterator			operator-(const int n) const
 			{
 				pointer				aux;
 				
@@ -128,13 +127,13 @@ namespace ft
 			template <typename K>
 			long					operator-(vector_iterator<K> n) const
 			{
-				return (m_ptr - n.get_pointer());
+				return (m_ptr - &(*n));
 			}
 
 			template <typename K>
 			long					operator-(vector_iterator<K> n)
 			{
-				return (m_ptr - n.get_pointer());
+				return (m_ptr - &(*n));
 			}
 
 			vector_iterator			operator-=(const int n)
@@ -217,7 +216,7 @@ namespace ft
 			template <typename K>
 			vector_iterator			&operator=(const vector_iterator<K>& ref)
 			{
-				this->m_ptr = ref.get_pointer();
+				m_ptr = &(*ref);
 				return (*this);
 			}
 
@@ -231,7 +230,7 @@ namespace ft
 			template <typename K>
 			vector_iterator(vector_iterator<K> a)
 			{
-				m_ptr = a.get_pointer();
+				m_ptr = &(*a);
 			}
 			
 			vector_iterator()
@@ -263,11 +262,18 @@ namespace ft
 			iterator											m_base;
 		public:
 
+			//
+			//		_______________________________ Base      _______________________________
+			//
+
 			iterator				base() const
 			{
 				return (m_base);
-			};
-			
+			}
+
+
+
+
 			//
 			//		_______________________________ Operators _______________________________
 			//
@@ -281,7 +287,7 @@ namespace ft
 					return (true);
 				return (false);
 			}
-			
+
 			template <typename K>
 			bool					operator!=(reverse_vector_iterator<K> ref) const
 			{
@@ -344,7 +350,7 @@ namespace ft
 
 
 
-			////		________				- Operators
+			//		________				- Operators
 
 			reverse_vector_iterator			operator-(const int n) const
 			{
@@ -365,31 +371,31 @@ namespace ft
 			} 
 
 
-			//////		________		++-- Operators
+			//		________		++-- Operators
 
 			reverse_vector_iterator			&operator++()
 			{
-				m_base.operator--();
+				m_base--;
 				return (*this);
 			}
 
 			reverse_vector_iterator			operator++(int)
 			{
 				reverse_vector_iterator		it_aux = *this;
-				m_base.operator--();
+				m_base--;
 				return (it_aux);
 			}
 
 			reverse_vector_iterator			&operator--()
 			{
-				m_base.operator++();
+				m_base++;
 				return (*this);
 			}
 
 			reverse_vector_iterator			operator--(int)
 			{
 				reverse_vector_iterator		it_aux = *this;
-				m_base.operator++();
+				m_base++;
 				return (it_aux);
 			}
 
@@ -400,7 +406,7 @@ namespace ft
 
 			reference				operator*(void) const
 			{
-				return (--iterator(m_base)).operator*();
+				return (*(m_base - 1));
 			}
 
 			reference				operator[](const size_t &idx)
@@ -411,7 +417,6 @@ namespace ft
 			pointer					operator->(void) const
 			{
 				return &operator*();
-				//return (m_base);
 			}
 
 

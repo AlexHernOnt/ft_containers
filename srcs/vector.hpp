@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/03 17:25:01 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/03 19:56:06 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -469,13 +469,11 @@ namespace ft
 				size_type	b;
 
 				ite++;
-				//place it into the first element to delete and counts how many positions to the start deletetion
 				while (it != first && it != ite)
 				{
 					n_first++;
 					it++;
 				}
-				//place it into the last element to delete and counts how many positions to DELEATE
 				it = begin();
 				while (it != last && it != ite)
 				{
@@ -722,10 +720,4 @@ namespace ft
 		x.swap(y);
 	}
 }
-
-void	ft_leaks()
-{
-	system("leaks ft_containers");
-}
-
 #endif
