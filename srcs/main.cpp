@@ -6,11 +6,11 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/03 20:26:04 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/04 19:09:29 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define TYPE ft
+#define TYPE std
 
 #include "map.hpp"
 #include "vector.hpp"
@@ -25,17 +25,16 @@
 
 int		main(void)
 {
-	std::map<int, std::string>					map1;
+	TYPE::map<int, std::string>					map1;
 	
 	map1[1] = "John";
 	map1[2] = "Lis";
 
-	std::map<int, std::string>::iterator		it = map1.begin();
-	std::map<int, std::string>::iterator		ite = map1.end();
+	TYPE::map<int, std::string>::iterator		it = map1.begin();
+	TYPE::map<int, std::string>::iterator		ite = map1.end();
+	
 	for (; it != ite; ++it)
-	{
 		std::cout << it->first << "  _  " <<  it->second << std::endl;
-	}
 
 	return (0);
 }
@@ -62,11 +61,15 @@ int		main(void)
 
 
 
+/*
 
+	TYPE::map<int, std::string>::iterator		it = map1.begin();
+	TYPE::map<int, std::string>::iterator		ite = map1.end();
+	
+	for (; it != ite; ++it)
+		std::cout << it->first << "  _  " <<  it->second << std::endl;
 
-
-
-
+*/
 
 
 

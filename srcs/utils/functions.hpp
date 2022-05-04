@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:28:21 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/03 20:53:26 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:08:30 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ namespace ft
 			pair(const first_type &g_first, const second_type &g_second)
 			{
 				first = g_first.first;
-				second = f_second.second;
+				second = g_second.second;
 			}
 		};
 

@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/03 19:56:06 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:45:16 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 namespace ft
 {
-	template <typename T, typename Allocator = std::allocator<T> >
+	template <class T, class Allocator = std::allocator<T> >
 	class vector
 	{
 		public:
@@ -646,7 +646,7 @@ namespace ft
 
 
 	/*
-	**		______________________________ Operators ______________________________
+	**		__________________________ External Operators ___________________________
 	*/
 
 	template <class T, class Allocator>
