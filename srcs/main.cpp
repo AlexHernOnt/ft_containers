@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/04 19:09:29 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/05 18:45:51 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,35 @@
 
 int		main(void)
 {
-	TYPE::map<int, std::string>					map1;
+	TYPE::map<int, std::string>					map;
 	
-	map1[1] = "John";
-	map1[2] = "Lis";
-
-	TYPE::map<int, std::string>::iterator		it = map1.begin();
-	TYPE::map<int, std::string>::iterator		ite = map1.end();
+	map.insert(TYPE::pair<int, std::string>(2, "Penis"));
+	map.insert(TYPE::pair<int, std::string>(100, "Vagina"));
 	
-	for (; it != ite; ++it)
-		std::cout << it->first << "  _  " <<  it->second << std::endl;
-
+	std::cout << "Value: " << map[100]		<< std::endl;
+	std::cout << "Size:  " << map.size()	<< std::endl;
+	
 	return (0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

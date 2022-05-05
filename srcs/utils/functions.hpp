@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:28:21 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/04 15:08:30 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:09:42 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,13 +124,14 @@ namespace ft
 		template <class T1, class T2>
 		struct  pair
 		{
-			typedef T1		first_type;
-			typedef T2		second_type;
+			typedef T1			first_type;
+			typedef T2			second_type;
 
-			first_type		first;
-			second_type		second;
+			public:
+				first_type		first;
+				second_type				second;
 
-			pair			&operator=(const pair &ref)
+			pair				&operator=(const pair &ref)
 			{
 				if (this == &ref)
 					return (*this);
@@ -146,16 +147,12 @@ namespace ft
 			}
 			
 			template<class T, class K>
-			pair(const pair<T, K> &ref)
+			pair(const pair<T, K> &ref) : first(ref.first), second(ref.second)
 			{
-				first = ref.first;
-				second = ref.second;
 			}
 			
-			pair(const first_type &g_first, const second_type &g_second)
+			pair(const first_type &g_first, const second_type &g_second)  : first(g_first), second(g_second)
 			{
-				first = g_first.first;
-				second = g_second.second;
 			}
 		};
 
