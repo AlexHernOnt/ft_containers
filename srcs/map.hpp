@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:55:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/05 18:07:05 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/06 16:34:13 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define __MAP_HPP__
 # include <iostream>
 # include "utils/functions.hpp"
-# include "utils/AVL.hpp"
+# include "utils/BST.hpp"
 
 namespace ft
 {
@@ -40,8 +40,8 @@ namespace ft
 			typedef size_t									size_type;
 
 		private:
-			allocator_type									_allocator;
 			node<value_type>								*_root;
+			allocator_type									_allocator;
 			key_compare										_compare;
 			size_type										_size;
 			
@@ -80,8 +80,10 @@ namespace ft
 				if (_size == 0)
 					_root = new node<value_type>(val);
 				else
-					new_node(&_root, val);
+					new_node(_root, val);
 				_size++;
+				if (_size == 3)
+					std::cout << "hi: " <<  _root->right->right->data.first << std::endl;
 			}
 
 

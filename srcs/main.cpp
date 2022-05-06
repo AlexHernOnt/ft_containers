@@ -6,11 +6,11 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/05 18:45:51 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/06 15:33:44 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define TYPE std
+#define TYPE ft
 
 #include "map.hpp"
 #include "vector.hpp"
@@ -27,11 +27,9 @@ int		main(void)
 {
 	TYPE::map<int, std::string>					map;
 	
-	map.insert(TYPE::pair<int, std::string>(2, "Penis"));
-	map.insert(TYPE::pair<int, std::string>(100, "Vagina"));
-	
-	std::cout << "Value: " << map[100]		<< std::endl;
-	std::cout << "Size:  " << map.size()	<< std::endl;
+	map.insert(TYPE::pair<int, std::string>(50, "A"));
+	map.insert(TYPE::pair<int, std::string>(70, "B"));
+	map.insert(TYPE::pair<int, std::string>(100, "B"));
 	
 	return (0);
 }

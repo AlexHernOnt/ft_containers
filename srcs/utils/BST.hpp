@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AVL.hpp                                            :+:      :+:    :+:   */
+/*   BST.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 19:24:15 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/05 18:04:29 by ahernand         ###   ########.fr       */
+/*   Created: 2022/05/06 16:33:50 by ahernand          #+#    #+#             */
+/*   Updated: 2022/05/06 16:34:02 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __AVL_HPP__
-# define __AVL_HPP__
+#ifndef __BST_HPP__
+# define __BST_HPP__
 # include  <iostream>
 
 template <class paired>
@@ -31,12 +31,21 @@ class node
 };
 
 template <class paired>
-void	new_node(node<paired> **_root, paired val)
+node<paired>		*new_node(node<paired> *ptr, paired val)
 {
-	if (val.first > (*_root)->data.first)
-		(*_root)->right = new node<paired>(val);
-	else if (val.first < (*_root)->data.first)
-		(*_root)->left = new node<paired>(val);
+	if (ptr == NULL)
+	{
+		return (new node<paired>(val));
+	}
+	if (val.first > ptr->data.first)
+	{
+		ptr->right = new_node(ptr->right, val);
+	}
+	else if (val.first < ptr->data.first)
+	{
+		ptr->left = new_node(ptr->left, val);
+	}
+	return (ptr);
 }
 
 #endif
