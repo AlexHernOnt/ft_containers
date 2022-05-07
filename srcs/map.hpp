@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:55:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/06 16:34:13 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/07 19:46:55 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,21 @@ namespace ft
 				else
 					new_node(_root, val);
 				_size++;
-				if (_size == 3)
-					std::cout << "hi: " <<  _root->right->right->data.first << std::endl;
 			}
+
+			void	erase(const key_type &val)
+			{
+				mapped_type		mapped_aux;
+				delete_node(_root, ft::pair<const key_type, mapped_type>(val, mapped_aux));
+			}
+
+
+			void	print_in_order()
+			{
+				in_order(_root);
+			}
+
+
 
 
 			/*
@@ -96,6 +108,11 @@ namespace ft
 				_allocator = alloc;
 				_compare = comp;
 				_size = 0;
+			}
+
+			~map()
+			{
+				clear_tree(_root);
 			}
 	};
 }

@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/06 15:33:44 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/07 19:49:02 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,15 @@ int		main(void)
 	
 	map.insert(TYPE::pair<int, std::string>(50, "A"));
 	map.insert(TYPE::pair<int, std::string>(70, "B"));
-	map.insert(TYPE::pair<int, std::string>(100, "B"));
+	map.insert(TYPE::pair<int, std::string>(100, "C"));
 	
+	map.insert(TYPE::pair<int, std::string>(20, "D"));
+	map.insert(TYPE::pair<int, std::string>(5, "D"));
+	map.insert(TYPE::pair<int, std::string>(10, "D"));
+	map.erase(20);
+	map.print_in_order();
+
+	atexit(ft_leaks);
 	return (0);
 }
 
