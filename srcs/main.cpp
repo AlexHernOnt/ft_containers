@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/07 19:49:02 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/10 20:51:08 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@
 
 int		main(void)
 {
-	TYPE::map<int, std::string>					map;
-	
-	map.insert(TYPE::pair<int, std::string>(50, "A"));
-	map.insert(TYPE::pair<int, std::string>(70, "B"));
-	map.insert(TYPE::pair<int, std::string>(100, "C"));
-	
-	map.insert(TYPE::pair<int, std::string>(20, "D"));
-	map.insert(TYPE::pair<int, std::string>(5, "D"));
-	map.insert(TYPE::pair<int, std::string>(10, "D"));
-	map.erase(20);
-	map.print_in_order();
+	TYPE::map<int, std::string>								map;
+	TYPE::map<int, std::string>::iterator					it;
+
+	map.insert(TYPE::pair<int, std::string>(1, "A"));
+	map.insert(TYPE::pair<int, std::string>(2, "A"));
+	//map.insert(TYPE::pair<int, std::string>(3, "A"));
+
+	it = map.begin();
+	++it;
+	std::cout << it->first << std::endl;
+
 
 	atexit(ft_leaks);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:48:17 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/03 18:40:31 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:10:21 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,12 +232,12 @@ namespace ft
 			{
 				m_ptr = &(*a);
 			}
-			
+
 			vector_iterator()
 			{
 				m_ptr = NULL;
 			}
-			
+
 			vector_iterator(pointer ptr)
 			{
 				m_ptr = ptr;

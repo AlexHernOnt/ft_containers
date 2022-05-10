@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:28:21 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/07 19:37:52 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/10 19:06:26 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,11 @@ namespace ft
 		template <class T1, class T2>
 		struct  pair
 		{
-			typedef T1			first_type;
-			typedef T2			second_type;
+			typedef T1					first_type;
+			typedef T2					second_type;
 
 			public:
-				first_type		first;
+				first_type				first;
 				second_type				second;
 
 			pair				&operator=(const pair &ref)
@@ -182,6 +182,7 @@ namespace ft
 
 void	ft_leaks()
 {
+	std::cout << "\n\n\n" << std::endl;
 	system("leaks ft_containers | grep bytes");
 }
 #endif

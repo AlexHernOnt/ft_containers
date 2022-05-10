@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:55:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/07 19:46:55 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/10 21:03:46 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define __MAP_HPP__
 # include <iostream>
 # include "utils/functions.hpp"
+# include "utils/map_iterators.hpp"
 # include "utils/BST.hpp"
 
 namespace ft
@@ -32,7 +33,7 @@ namespace ft
 			typedef const value_type&						const_reference;
 			typedef value_type*								pointer;
 			typedef const value_type*						const_pointer;
-//			typedef 										iterator;
+			typedef ft::map_iterator<value_type>			iterator;
 //			typedef 										const_iterator;
 //			typedef 										reverse_iterator;
 //			typedef 										const_reverse_iterator;
@@ -46,10 +47,29 @@ namespace ft
 			size_type										_size;
 			
 		public:
+		
+			/*
+			**		_______________________________ Iterators  _______________________________
+			*/
+
+			iterator begin()
+			{
+				return (ft::map_iterator<value_type>(bst_get_first(_root)));
+			}
+
+
+
 
 			/*
 			**		_______________________________ Capacity  _______________________________
 			*/
+
+			bool				empty() const
+			{
+				if (_size == 0)
+					return (true);
+				return (false);
+			}
 
 			size_type			size() const
 			{
@@ -78,18 +98,18 @@ namespace ft
 			void	insert (const value_type val)
 			{
 				if (_size == 0)
-					_root = new node<value_type>(val);
+					_root = new node<value_type>(val, NULL);
 				else
-					new_node(_root, val);
+					new_node(_root, _root, val);
 				_size++;
 			}
 
 			void	erase(const key_type &val)
 			{
 				mapped_type		mapped_aux;
-				delete_node(_root, ft::pair<const key_type, mapped_type>(val, mapped_aux));
+				_root = delete_node(_root, ft::pair<const key_type, mapped_type>(val, mapped_aux), _root);
+				--_size;
 			}
-
 
 			void	print_in_order()
 			{
