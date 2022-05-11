@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:55:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/10 21:03:46 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:17:59 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ namespace ft
 //			typedef 										difference_type;
 			typedef size_t									size_type;
 
-		private:
 			node<value_type>								*_root;
+		private:
 			allocator_type									_allocator;
 			key_compare										_compare;
 			size_type										_size;
@@ -57,7 +57,10 @@ namespace ft
 				return (ft::map_iterator<value_type>(bst_get_first(_root)));
 			}
 
-
+			iterator end()
+			{
+				return (ft::map_iterator<value_type>(bst_get_last(_root)));
+			}
 
 
 			/*
@@ -98,7 +101,11 @@ namespace ft
 			void	insert (const value_type val)
 			{
 				if (_size == 0)
-					_root = new node<value_type>(val, NULL);
+				{
+					_root = new node<value_type>(val, NULL, 0);
+					node<value_type>	*sentinel = new node<value_type>(val, _root, 1);
+					_root->right = sentinel;
+				}
 				else
 					new_node(_root, _root, val);
 				_size++;

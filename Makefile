@@ -6,7 +6,7 @@
 #    By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 14:48:46 by ahernand          #+#    #+#              #
-#    Updated: 2022/05/07 14:34:33 by ahernand         ###   ########.fr        #
+#    Updated: 2022/05/11 18:20:20 by ahernand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ $(NAME) : $(OBJS)
 # - - - - - - - - - - - - - - - - - #
 
 test:
-	cd srcs/containers_test && sh do.sh map 
+	cd srcs/containers_test && sh do.sh 
 
 clean:
 	@rm -f $(OBJS)

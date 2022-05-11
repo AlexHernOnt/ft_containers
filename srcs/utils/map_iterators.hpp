@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:19:14 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/10 21:04:53 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/11 21:06:30 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,27 @@ namespace ft
 			//		_______________________________ Operators _______________________________
 			//
 
+			//		________		>< Operators
+
+			
+			template <typename K>
+			bool					operator!=(const map_iterator<K> &ref) const
+			{
+				if (_ptr->data.first != (&ref)->_ptr->data.first || _ptr->_ite != (&ref)->_ptr->_ite)
+					return (true);
+				return (false);
+			}
+
+
 			////////		________		++-- Operators
 
-			map_iterator				&operator++()
+			map_iterator					&operator++()
 			{
 				_ptr = bst_increment(_ptr);
 				return (*this);
 			}
 
-			//vector_iterator			operator++(int)
+			//vector_iterator				operator++(int)
 			//{
 			//	vector_iterator it_aux = *this;
 			//	++(*this);
@@ -51,18 +63,23 @@ namespace ft
 
 
 
-			//		________		Copy Operators
+			//		________				Copy Operators
 
 
 			//template <typename K>
-			//map_iterator			&operator=(const map_iterator<K>  g_ptr)
+			//map_iterator					&operator=(const map_iterator<K>  g_ptr)
 			//{
 			//	_ptr = g_ptr;
 			//	std::cout << "yes: " << *_ptr << std::endl;
 			//	return (*this);
 			//}
 
-			paired*		operator->()
+			reference						operator*()
+			{
+				return (*_ptr);
+			}
+			
+			paired*							operator->()
 			{
 				return (&_ptr->data);
 			}

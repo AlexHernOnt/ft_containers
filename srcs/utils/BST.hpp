@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:33:50 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/10 21:03:08 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/11 20:11:57 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,18 @@ class node
 {
 	public:
 		paired				data;
-
+		
+		int					_ite;
 		node*				left;
 		node* 				right;
 		node* 				parent;
 	
-		node (paired ref, node<paired> *g_parent) : data(ref)
+		node (paired ref, node<paired> *g_parent, int g_ite) : data(ref)
 		{
 			left = NULL;
 			parent = g_parent;
 			right = NULL;
+			_ite = g_ite;
 		}
 };
 
@@ -36,19 +38,33 @@ class node
 
 
 /*
-**					Create Node
+**									Create Node
 */
 
 template <class paired>
-node<paired>		*new_node(node<paired> *ptr, node<paired> *prev, paired val)
+node<paired>						*ft_move_sentinel(node<paired> *ptr, node<paired> *prev, paired val)
+{
+	node<paired>	*aux = new node<paired>(val, prev, 0);
+	node<paired>	*sentinel = new node<paired>(val, aux, 1);
+	aux->right = sentinel;
+	
+	return (aux);
+}
+
+template <class paired>
+node<paired>						*new_node(node<paired> *ptr, node<paired> *prev, paired val)
 {
 	if (ptr == NULL)
-	{
-		return (new node<paired>(val, prev));
-	}
+		return(new node<paired>(val, prev, 0));
 	if (val.first > ptr->data.first)
 	{
-		ptr->right = new_node(ptr->right, ptr, val);
+		if (ptr->right != NULL && ptr->right->_ite == 1)
+		{
+			delete ptr->right;
+			ptr->right = ft_move_sentinel(ptr->right, ptr, val);
+		}
+		else
+			ptr->right = new_node(ptr->right, ptr, val);
 	}
 	else if (val.first < ptr->data.first)
 	{
@@ -61,11 +77,11 @@ node<paired>		*new_node(node<paired> *ptr, node<paired> *prev, paired val)
 
 
 /*
-**					Delete Node
+**									Delete Node
 */
 
 template <class paired>
-node<paired>		*min_value_node(node<paired> *ptr)
+node<paired>						*min_value_node(node<paired> *ptr)
 {
 	node<paired>		*current = ptr;
 
@@ -75,7 +91,7 @@ node<paired>		*min_value_node(node<paired> *ptr)
 }
 
 template <class paired>
-void		parent_point_to_second_not_first(node<paired> *ptr, node<paired> *aux, node<paired> *root)
+void								parent_point_to_second_not_first(node<paired> *ptr, node<paired> *aux, node<paired> *root)
 {
 	if (root != NULL)
 	{
@@ -92,7 +108,7 @@ void		parent_point_to_second_not_first(node<paired> *ptr, node<paired> *aux, nod
 }
 
 template <class paired>
-node<paired>	*delete_node(node<paired> *ptr, paired val, node<paired> *root)
+node<paired>						*delete_node(node<paired> *ptr, paired val, node<paired> *root)
 {
 	if (ptr == NULL)
 		return (ptr);
@@ -146,11 +162,11 @@ node<paired>	*delete_node(node<paired> *ptr, paired val, node<paired> *root)
 
 
 /*
-**							Print in order
+**									Print in order
 */
 
 template <class paired>
-void						in_order(node<paired> *ptr)
+void								in_order(node<paired> *ptr)
 {
 	if (ptr != NULL)
 	{
@@ -164,11 +180,11 @@ void						in_order(node<paired> *ptr)
 
 
 /*
-**							Free
+**									Free
 */
 
 template <class paired>
-void						clear_tree(node<paired> *ptr)
+void								clear_tree(node<paired> *ptr)
 {
 	if (ptr != NULL)
 	{
@@ -182,7 +198,7 @@ void						clear_tree(node<paired> *ptr)
 
 
 /*
-**							Iterator stuff
+**									Iterator stuff
 */
 
 template <class paired>
@@ -190,6 +206,14 @@ node<paired>						*bst_get_first(node<paired> *ptr)
 {
 	while (ptr != NULL && ptr->left != NULL)
 		ptr = ptr->left;
+	return (ptr);
+}
+
+template <class paired>
+node<paired>						*bst_get_last(node<paired> *ptr)
+{
+	while (ptr != NULL && ptr->right != NULL)
+		ptr = ptr->right;
 	return (ptr);
 }
 
@@ -204,9 +228,17 @@ node<paired>						*bst_increment(node<paired> *ptr)
 			return (ptr->parent);
 		else
 		{
-			while (ptr->parent->data.first < ptr->data.first)
-				ptr = ptr->parent;
-			return (ptr);
+			node<paired>		*aux;
+			
+			aux = ptr;
+			while (aux->parent != NULL && aux->parent->data.first < aux->data.first)
+				aux = aux->parent;
+			if (aux->parent == NULL)
+			{
+				std::cout << "L" << std::endl;
+				return (ptr->right);
+			}
+			return (aux);
 		}
 		
 	}

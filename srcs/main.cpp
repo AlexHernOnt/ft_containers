@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/10 20:51:08 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/11 21:06:37 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,20 @@ int		main(void)
 {
 	TYPE::map<int, std::string>								map;
 	TYPE::map<int, std::string>::iterator					it;
+	TYPE::map<int, std::string>::iterator					ite;
+	
 
-	map.insert(TYPE::pair<int, std::string>(1, "A"));
-	map.insert(TYPE::pair<int, std::string>(2, "A"));
-	//map.insert(TYPE::pair<int, std::string>(3, "A"));
-
+	map.insert(TYPE::pair<int, std::string>(30, "A"));
+	map.insert(TYPE::pair<int, std::string>(50, "A"));
+	map.insert(TYPE::pair<int, std::string>(100, "A"));
+	
 	it = map.begin();
-	++it;
-	std::cout << it->first << std::endl;
+	ite = map.end();
 
+	for (; it != ite; ++it)
+		std::cout << it->first << "  _  " <<  it->second << std::endl;
 
+	
 	atexit(ft_leaks);
 	return (0);
 }
