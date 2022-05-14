@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/11 21:06:37 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/14 20:55:43 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "map.hpp"
 #include "vector.hpp"
-#include "utils/tests.hpp"
+#include "iterators/tests.hpp"
 
 
 #include <map>
@@ -26,21 +26,24 @@
 int		main(void)
 {
 	TYPE::map<int, std::string>								map;
-	TYPE::map<int, std::string>::iterator					it;
-	TYPE::map<int, std::string>::iterator					ite;
-	
+	map[1] = "Good ";
+	map[2] = "job ";
 
-	map.insert(TYPE::pair<int, std::string>(30, "A"));
-	map.insert(TYPE::pair<int, std::string>(50, "A"));
-	map.insert(TYPE::pair<int, std::string>(100, "A"));
+	TYPE::map<int, std::string>::iterator		it = map.begin();
+	TYPE::map<int, std::string>::iterator		ite = map.end();
 	
-	it = map.begin();
-	ite = map.end();
-
 	for (; it != ite; ++it)
-		std::cout << it->first << "  _  " <<  it->second << std::endl;
+		std::cout << it->first << " _ " << it->second << std::endl;
 
-	
+
+
+
+
+
+
+
+
+
 	atexit(ft_leaks);
 	return (0);
 }
@@ -77,6 +80,105 @@ int		main(void)
 
 
 
+	//TYPE::vector<int>						vector;
+
+	//vector.push_back(1);
+	//vector.push_back(2);
+	//vector.push_back(3);
+
+
+	//TYPE::vector<int>::const_iterator		it;
+	//it = vector.begin();
+	//std::cout << *it << std::endl;
+
+
+
+
+
+	//TYPE::map<int, std::string>								map;
+
+	//map.insert(TYPE::pair<int, std::string>(30, "My"));
+	//map.insert(TYPE::pair<int, std::string>(50, "Life"));
+	//map.insert(TYPE::pair<int, std::string>(100, "Is greathaah"));
+	
+	//TYPE::map<int, std::string>::const_iterator					it;
+	//it = map.begin();
+	//std::cout << it->first << std::endl;
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//TYPE::map<int, std::string>						map;
+
+	//map.insert(TYPE::pair<int, std::string>(30, "My"));
+	//map.insert(TYPE::pair<int, std::string>(50, "Life"));
+	//map.insert(TYPE::pair<int, std::string>(100, "Is great"));
+	
+	//TYPE::map<int, std::string>::const_iterator					it = map.begin();
+	
+
+	
+	//atexit(ft_leaks);
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -88,8 +190,8 @@ int		main(void)
 
 /*
 
-	TYPE::map<int, std::string>::iterator		it = map1.begin();
-	TYPE::map<int, std::string>::iterator		ite = map1.end();
+	TYPE::map<int, std::string>::iterator		it = map.begin();
+	TYPE::map<int, std::string>::iterator		ite = map.end();
 	
 	for (; it != ite; ++it)
 		std::cout << it->first << "  _  " <<  it->second << std::endl;

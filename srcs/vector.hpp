@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/05 15:37:27 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/14 14:46:24 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 # include <cmath>
 # include <iostream>
 # include <type_traits>
-# include "utils/functions.hpp"
-# include "utils/vector_iterators.hpp"
+# include "iterators/functions.hpp"
+# include "iterators/vector_iterators.hpp"
 
 namespace ft
 {

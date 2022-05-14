@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:33:50 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/11 20:11:57 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/14 20:56:14 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,31 @@ node<paired>						*ft_move_sentinel(node<paired> *ptr, node<paired> *prev, paire
 	return (aux);
 }
 
+
+
+
+
+
+
+
+template <class paired>
+node<paired>						*add_with_sentinel(node<paired> *ptr, node<paired> *prev, paired val)
+{
+	node<paired>	*aux = new node<paired>(val, prev, 0);
+	node<paired>	*sentinel = new node<paired>(val, aux, 1);
+	aux->right = sentinel;
+	
+	return (aux);
+}
+
+
+
+
 template <class paired>
 node<paired>						*new_node(node<paired> *ptr, node<paired> *prev, paired val)
 {
 	if (ptr == NULL)
-		return(new node<paired>(val, prev, 0));
+		return (new node<paired>(val, prev, 0));
 	if (val.first > ptr->data.first)
 	{
 		if (ptr->right != NULL && ptr->right->_ite == 1)
@@ -90,6 +110,10 @@ node<paired>						*min_value_node(node<paired> *ptr)
 	return (current);	
 }
 
+
+
+
+
 template <class paired>
 void								parent_point_to_second_not_first(node<paired> *ptr, node<paired> *aux, node<paired> *root)
 {
@@ -106,6 +130,10 @@ void								parent_point_to_second_not_first(node<paired> *ptr, node<paired> *au
 		parent_point_to_second_not_first(ptr, aux, root->right);
 	}
 }
+
+
+
+
 
 template <class paired>
 node<paired>						*delete_node(node<paired> *ptr, paired val, node<paired> *root)
@@ -209,6 +237,10 @@ node<paired>						*bst_get_first(node<paired> *ptr)
 	return (ptr);
 }
 
+
+
+
+
 template <class paired>
 node<paired>						*bst_get_last(node<paired> *ptr)
 {
@@ -217,6 +249,10 @@ node<paired>						*bst_get_last(node<paired> *ptr)
 	return (ptr);
 }
 
+
+
+
+
 template <class paired>
 node<paired>						*bst_increment(node<paired> *ptr)
 {
@@ -224,7 +260,7 @@ node<paired>						*bst_increment(node<paired> *ptr)
 		return (min_value_node(ptr->right));
 	else
 	{
-		if (ptr->parent->data.first > ptr->data.first)
+		if (ptr->parent != NULL && ptr->parent->data.first > ptr->data.first)
 			return (ptr->parent);
 		else
 		{
@@ -235,13 +271,24 @@ node<paired>						*bst_increment(node<paired> *ptr)
 				aux = aux->parent;
 			if (aux->parent == NULL)
 			{
-				std::cout << "L" << std::endl;
 				return (ptr->right);
 			}
-			return (aux);
+			return (aux->parent);
 		}
-		
 	}
+}
+
+template <class paired, class K>
+node<paired>						*bst_search(node<paired> *ptr, K key)
+{
+	system("pwd > cat");
+	if (ptr == NULL || (ptr != NULL && ptr->data.first == key))
+		return (ptr);
+	if (ptr->data.first > key)
+		bst_search(ptr->left, key);
+	if (ptr->data.first < key)
+		bst_search(ptr->right, key);
+	return (NULL);
 }
 
 #endif

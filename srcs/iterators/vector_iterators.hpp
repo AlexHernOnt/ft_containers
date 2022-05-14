@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:48:17 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/10 17:10:21 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/13 20:00:07 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ namespace ft
 			typedef value_type&								reference;
 			typedef const value_type*						const_pointer;
 			typedef const value_type&						const_reference;
-		private:
 			pointer											m_ptr;
+		private:
 
 		public:
 
@@ -216,6 +216,18 @@ namespace ft
 			template <typename K>
 			vector_iterator			&operator=(const vector_iterator<K>& ref)
 			{
+				std::cout << "Here 3" << std::endl;
+
+
+				
+				//m_ptr = ref.m_ptr;
+
+
+			//typedef T										value_type;
+			//typedef ptrdiff_t               				difference_type;
+			//typedef value_type*								pointer;
+
+
 				m_ptr = &(*ref);
 				return (*this);
 			}
@@ -231,6 +243,7 @@ namespace ft
 			vector_iterator(vector_iterator<K> a)
 			{
 				m_ptr = &(*a);
+				std::cout << "Here 2" << std::endl;
 			}
 
 			vector_iterator()
@@ -240,6 +253,7 @@ namespace ft
 
 			vector_iterator(pointer ptr)
 			{
+				std::cout << "Here 1" << std::endl;
 				m_ptr = ptr;
 			}
 

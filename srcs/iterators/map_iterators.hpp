@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:19:14 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/11 21:06:30 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/14 19:23:44 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@
 
 namespace ft
 {
-	template <class paired>
+	template <class paired, class node_type>
 	class map_iterator
 	{
 		public:
-			typedef node<paired>* 								pointer;
-			typedef node<paired>&								reference;
+			typedef node_type* 								pointer;
+			typedef node_type&								reference;
+
+			node_type										*_ptr;
 
 		private:
-			node<paired>										*_ptr;
 
 		public:
 
@@ -33,16 +34,22 @@ namespace ft
 			//		_______________________________ Operators _______________________________
 			//
 
+
+
+
 			//		________		>< Operators
 
-			
-			template <typename K>
-			bool					operator!=(const map_iterator<K> &ref) const
+			template <typename K, typename N>
+			bool					operator!=(const map_iterator<K, N> &ref) const
 			{
-				if (_ptr->data.first != (&ref)->_ptr->data.first || _ptr->_ite != (&ref)->_ptr->_ite)
+				if (this->_ptr != ref._ptr)
+				{
 					return (true);
+				}
 				return (false);
 			}
+
+
 
 
 			////////		________		++-- Operators
@@ -53,12 +60,12 @@ namespace ft
 				return (*this);
 			}
 
-			//vector_iterator				operator++(int)
-			//{
-			//	vector_iterator it_aux = *this;
-			//	++(*this);
-			//	return (it_aux);
-			//}
+			map_iterator					operator++(int)
+			{
+				map_iterator it_aux = *this;
+				++(*this);
+				return (it_aux);
+			}
 
 
 
@@ -66,43 +73,51 @@ namespace ft
 			//		________				Copy Operators
 
 
-			//template <typename K>
-			//map_iterator					&operator=(const map_iterator<K>  g_ptr)
-			//{
-			//	_ptr = g_ptr;
-			//	std::cout << "yes: " << *_ptr << std::endl;
-			//	return (*this);
-			//}
+			template <typename K, typename N>
+			map_iterator					&operator=(const map_iterator<K, N> &ref)
+			{
+				this->_ptr = ref._ptr;
+				//std::cout << "aqui 3" << std::endl;
+				return (*this);
+			}
 
 			reference						operator*()
 			{
 				return (*_ptr);
 			}
-			
+
 			paired*							operator->()
 			{
 				return (&_ptr->data);
 			}
 
+
+
+
 			//
 			//		______________________________ Cons & Dest ______________________________
 			//
-			
+
+			template <typename K, typename N>
+			map_iterator(map_iterator<K, N> a)
+			{
+				_ptr = a._ptr;
+			}
+
 			map_iterator()
 			{
 				_ptr = NULL;
 			}
 
-			map_iterator(pointer g_ptr)
+			map_iterator(pointer	 ptr)
 			{
-				_ptr = g_ptr;
+				_ptr = ptr;
 			}
 
 			~map_iterator()
 			{
 			}
 	};
-	
 }
 
 #endif
