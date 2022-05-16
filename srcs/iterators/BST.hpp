@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:33:50 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/14 20:56:14 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:02:18 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ class node
 */
 
 template <class paired>
-node<paired>						*ft_move_sentinel(node<paired> *ptr, node<paired> *prev, paired val)
+node<paired>						*ft_move_sentinel(node<paired> *prev, paired val)
 {
 	node<paired>	*aux = new node<paired>(val, prev, 0);
 	node<paired>	*sentinel = new node<paired>(val, aux, 1);
@@ -50,24 +50,6 @@ node<paired>						*ft_move_sentinel(node<paired> *ptr, node<paired> *prev, paire
 	
 	return (aux);
 }
-
-
-
-
-
-
-
-
-template <class paired>
-node<paired>						*add_with_sentinel(node<paired> *ptr, node<paired> *prev, paired val)
-{
-	node<paired>	*aux = new node<paired>(val, prev, 0);
-	node<paired>	*sentinel = new node<paired>(val, aux, 1);
-	aux->right = sentinel;
-	
-	return (aux);
-}
-
 
 
 
@@ -76,12 +58,18 @@ node<paired>						*new_node(node<paired> *ptr, node<paired> *prev, paired val)
 {
 	if (ptr == NULL)
 		return (new node<paired>(val, prev, 0));
+	if (ptr->_ite == 1)
+	{
+		delete ptr;
+		ptr = ft_move_sentinel(prev, val);
+		return (ptr);		
+	}
 	if (val.first > ptr->data.first)
 	{
 		if (ptr->right != NULL && ptr->right->_ite == 1)
 		{
 			delete ptr->right;
-			ptr->right = ft_move_sentinel(ptr->right, ptr, val);
+			ptr->right = ft_move_sentinel(ptr, val);
 		}
 		else
 			ptr->right = new_node(ptr->right, ptr, val);
@@ -171,7 +159,7 @@ node<paired>						*delete_node(node<paired> *ptr, paired val, node<paired> *root
 		*/
 
 		node<paired>		*tmp = min_value_node(ptr->right);
-		node<paired>		*aux = new node<paired>(tmp->data);
+		node<paired>		*aux = new node<paired>(tmp->data, tmp->parent, tmp->_ite);
 
 		ptr->right = delete_node(ptr->right, tmp->data, root);
 		aux->left = ptr->left;
@@ -281,14 +269,11 @@ node<paired>						*bst_increment(node<paired> *ptr)
 template <class paired, class K>
 node<paired>						*bst_search(node<paired> *ptr, K key)
 {
-	system("pwd > cat");
-	if (ptr == NULL || (ptr != NULL && ptr->data.first == key))
+	if (ptr == NULL || ptr->data.first == key)
 		return (ptr);
-	if (ptr->data.first > key)
-		bst_search(ptr->left, key);
 	if (ptr->data.first < key)
-		bst_search(ptr->right, key);
-	return (NULL);
+		return (bst_search(ptr->right, key));
+	return (bst_search(ptr->left, key));
 }
 
 #endif

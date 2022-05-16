@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:19:14 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/14 19:23:44 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:33:21 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ namespace ft
 			typedef node_type* 								pointer;
 			typedef node_type&								reference;
 
-			node_type										*_ptr;
 
+			node_type										*_ptr;
 		private:
 
 		public:

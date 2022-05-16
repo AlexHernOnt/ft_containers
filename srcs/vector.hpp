@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/14 14:46:24 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/16 20:28:21 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -645,6 +645,8 @@ namespace ft
 	};
 
 
+
+
 	/*
 	**		__________________________ External Operators ___________________________
 	*/
@@ -663,11 +665,15 @@ namespace ft
 	}
 
 
+
+
 	template <class T, class Allocator>
 	bool operator!= (const vector<T, Allocator>& lhs, const vector<T, Allocator>& rhs)
 	{
 		return (!(lhs == rhs));
 	}
+
+
 
 
 	template <class T, class Allocator>
@@ -686,6 +692,8 @@ namespace ft
 	}
 
 
+
+
 	template <class T, class Allocator>
 	bool operator>(const vector<T, Allocator>& lhs, const vector<T, Allocator>& rhs)
 	{
@@ -702,17 +710,25 @@ namespace ft
 	}
 
 
+
+
 	template <class T, class Allocator>
 	bool operator<=(const vector<T, Allocator>& lhs, const vector<T, Allocator>& rhs)
 	{
 		return (lhs < rhs || lhs == rhs);
 	}
 
+
+
+
 	template <class T, class Allocator>
 	bool operator>=(const vector<T, Allocator>& lhs, const vector<T, Allocator>& rhs)
 	{
 		return (lhs > rhs || lhs == rhs);
 	}
+
+
+
 
 	template <class T, class Allocator>
 	void swap (vector<T, Allocator>& x, vector<T, Allocator>& y)

@@ -6,11 +6,11 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/14 20:55:43 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/16 20:40:02 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define TYPE ft
+#define TYPE std
 
 #include "map.hpp"
 #include "vector.hpp"
@@ -23,36 +23,25 @@
 #include <algorithm>    // std::lexicographical_compare
 
 
-int		main(void)
+int main ()
 {
 	TYPE::map<int, std::string>								map;
-	map[1] = "Good ";
-	map[2] = "job ";
 
-	TYPE::map<int, std::string>::iterator		it = map.begin();
-	TYPE::map<int, std::string>::iterator		ite = map.end();
+	map.insert(TYPE::pair<int, std::string>(30, "My"));
+	map.insert(TYPE::pair<int, std::string>(50, "Life"));
+	map.insert(TYPE::pair<int, std::string>(100, "Is valuable"));
 	
-	for (; it != ite; ++it)
-		std::cout << it->first << " _ " << it->second << std::endl;
-
-
-
-
-
-
-
-
+	TYPE::map<int, std::string>::const_iterator					it;
+	map.clear();
+	it = map.end();
+	std::cout << it->first << std::endl;
+	
 
 
 	atexit(ft_leaks);
-	return (0);
+
+	return 0;
 }
-
-
-
-
-
-
 
 
 
