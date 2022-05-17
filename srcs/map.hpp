@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:55:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/16 20:51:13 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/17 20:26:59 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,12 +163,14 @@ namespace ft
 					existed = false;
 				else
 					existed = true;
+
 				if (_size == 0)
 				{
 					if (_root != NULL)
 						delete _root;
 					_root = new node<value_type>(val, NULL, 0);
 					_root->right = new node<value_type>(val, _root, 1);
+
 				}
 				else
 					new_node(_root, _root, val);
@@ -193,8 +195,11 @@ namespace ft
 			template <class InputIterator>
 			void							insert (InputIterator first, InputIterator last)
 			{
+
 				for (; first != last; first++)
-					insert(ft::pair<const Key, T>(first->first, first->second));
+				{
+					insert(ft::pair<const Key, T>((first)->first, (first)->second));
+				}
 			}
 
 
@@ -300,9 +305,15 @@ namespace ft
 
 			key_compare						key_comp() const
 			{
-			
-				
+				return (_compare);
 			}
+
+
+
+			//value_compare					value_comp() const
+			//{
+			//	return (_compare);
+			//}
 
 
 
@@ -415,6 +426,7 @@ namespace ft
 			{
 				_allocator = alloc;
 				_compare = comp;
+				_size = 0;
 				insert(first, last);
 			}
 
@@ -423,6 +435,7 @@ namespace ft
 
 			map (const map& x)
 			{
+				_size = 0;
 				insert(x.begin(), x.end());
 			}
 

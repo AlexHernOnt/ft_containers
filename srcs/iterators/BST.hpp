@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:33:50 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/16 19:02:18 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/17 20:22:23 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,9 @@ node<paired>						*new_node(node<paired> *ptr, node<paired> *prev, paired val)
 **									Delete Node
 */
 
+
+
+
 template <class paired>
 node<paired>						*min_value_node(node<paired> *ptr)
 {
@@ -98,6 +101,18 @@ node<paired>						*min_value_node(node<paired> *ptr)
 	return (current);	
 }
 
+
+
+
+template <class paired>
+node<paired>						*max_value_node(node<paired> *ptr)
+{
+	node<paired>		*current = ptr;
+
+	while (current && current->right != NULL && current->right->_ite != 1)
+		current = current->right;
+	return (current);	
+}
 
 
 
@@ -265,6 +280,37 @@ node<paired>						*bst_increment(node<paired> *ptr)
 		}
 	}
 }
+
+
+
+
+template <class paired>
+node<paired>						*bst_decrement(node<paired> *ptr)
+{
+	if (ptr->_ite == 1)
+		return (ptr->parent);
+	if (ptr->left != NULL)
+		return (max_value_node(ptr->left));
+	else
+	{
+		if (ptr->parent != NULL && ptr->parent->data.first < ptr->data.first)
+			return (ptr->parent);
+		else
+		{
+			node<paired>		*aux;
+			
+			aux = ptr;
+			while (aux->parent != NULL && aux->parent->data.first > ptr->data.first)
+				aux = aux->parent;
+			if (aux->parent != NULL)
+				return (aux->parent);
+			return (ptr);
+		}
+	}
+}
+
+
+
 
 template <class paired, class K>
 node<paired>						*bst_search(node<paired> *ptr, K key)

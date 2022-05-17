@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:19:14 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/16 19:33:21 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/17 19:50:36 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,18 @@ namespace ft
 				return (it_aux);
 			}
 
+			map_iterator					&operator--()
+			{
+				_ptr = bst_decrement(_ptr);
+				return (*this);
+			}
 
+			map_iterator					operator--(int)
+			{
+				map_iterator it_aux = *this;
+				--(*this);
+				return (it_aux);
+			}
 
 
 			//		________				Copy Operators
@@ -86,7 +97,7 @@ namespace ft
 				return (*_ptr);
 			}
 
-			paired*							operator->()
+			paired*							operator->() const
 			{
 				return (&_ptr->data);
 			}
