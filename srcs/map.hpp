@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:55:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/17 20:26:59 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/18 20:31:36 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ namespace ft
 
 			const_iterator					begin() const
 			{
-				return (ft::map_iterator<value_type, node_type>(bst_get_first(_root)));
-
+				return (ft::map_iterator<const value_type, node_type>(bst_get_first(_root)));
 			}
 
 			iterator						end()
@@ -355,6 +354,98 @@ namespace ft
 
 
 
+			size_type count (const key_type& k) const
+			{
+				return (bst_search(_root, k) != NULL);
+			}
+
+
+
+
+			iterator							lower_bound (const key_type& k)
+			{
+				typename ft::map<Key, T>::iterator					it = begin();
+				typename ft::map<Key, T>::iterator					ite = end();
+
+				for (; it != ite; ++it)
+				{
+					if (it->first >= k)
+						return (it);
+				}
+				return (ite);
+			}
+
+
+
+
+			const_iterator						lower_bound (const key_type& k) const
+			{
+				typename ft::map<Key, T>::const_iterator			it = begin();
+				typename ft::map<Key, T>::const_iterator			ite = end();
+				
+				for (; it != ite; ++it)
+				{
+					if (it->first >= k)
+						return (it);
+				}
+				return (ite);
+			}
+
+
+
+
+			iterator								upper_bound (const key_type& k)
+			{
+				typename ft::map<Key, T>::iterator					it = begin();
+				typename ft::map<Key, T>::iterator					ite = end();
+
+				for (; it != ite; ++it)
+				{
+					if (it->first > k)
+						return (it);
+				}
+				return (ite);
+			}
+
+
+
+
+			const_iterator							upper_bound (const key_type& k) const
+			{
+				typename ft::map<Key, T>::const_iterator			it = begin();
+				typename ft::map<Key, T>::const_iterator			ite = end();
+
+				for (; it != ite; ++it)
+				{
+					if (it->first > k)
+						return (it);
+				}
+				return (ite);
+			}
+
+
+
+
+			pair<iterator, iterator>					equal_range (const key_type& k)
+			{
+				typename ft::map<Key, T>::iterator					it1 = lower_bound(k);
+				typename ft::map<Key, T>::iterator					it2 = upper_bound(k);
+				return (pair<iterator,iterator>(it1, it2));
+			}
+
+
+
+
+			pair<const_iterator, const_iterator>		equal_range (const key_type& k) const
+			{
+				typename ft::map<Key, T>::const_iterator			it1 = lower_bound(k);
+				typename ft::map<Key, T>::const_iterator			it2 = upper_bound(k);
+				return (pair<const_iterator,const_iterator>(it1, it2));
+			}
+
+
+
+
 
 
 
@@ -362,10 +453,10 @@ namespace ft
 			/*
 			**		___________________		Allocator     ___________________
 			*/
-			
-			
-			
-			
+
+
+
+
 			allocator_type					get_allocator() const
 			{
 				return (_allocator);				
@@ -427,6 +518,7 @@ namespace ft
 				_allocator = alloc;
 				_compare = comp;
 				_size = 0;
+				_root = NULL;
 				insert(first, last);
 			}
 
@@ -436,6 +528,7 @@ namespace ft
 			map (const map& x)
 			{
 				_size = 0;
+				_root = NULL;
 				insert(x.begin(), x.end());
 			}
 

@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:33:50 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/17 20:22:23 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:19:14 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,12 +157,14 @@ node<paired>						*delete_node(node<paired> *ptr, paired val, node<paired> *root
 		else if (ptr->left == NULL)
 		{
 			node<paired> *aux = ptr->right;
+			aux->parent = ptr->parent;
 			delete ptr;
 			return (aux);
 		}
-		else if (ptr->right == NULL)
+		else if (ptr->right == NULL)											//maybe check if the right node is ite == 1
 		{
 			node<paired> *aux = ptr->left;
+			aux->parent = ptr->parent;
 			delete ptr;
 			return (aux);
 		}
@@ -172,17 +174,19 @@ node<paired>						*delete_node(node<paired> *ptr, paired val, node<paired> *root
 			2º Hacer copia del valor de tmp. Y los links de aquel nodo que queremos eliminar 
 			3º Borramos el nodo tmp
 		*/
-
+	
 		node<paired>		*tmp = min_value_node(ptr->right);
 		node<paired>		*aux = new node<paired>(tmp->data, tmp->parent, tmp->_ite);
 
-		ptr->right = delete_node(ptr->right, tmp->data, root);
+		ptr->left->parent = aux;
 		aux->left = ptr->left;
-		aux->right = ptr->right;
+		aux->right = delete_node(ptr->right, tmp->data, root);
 		if (root == ptr)
-			root = aux;
-		else
-			parent_point_to_second_not_first(ptr, aux, root);
+		{
+			delete (ptr);
+			return (aux);
+		}
+		parent_point_to_second_not_first(ptr, aux, root);
 		delete ptr;
 		ptr = aux;
 	}
@@ -288,7 +292,9 @@ template <class paired>
 node<paired>						*bst_decrement(node<paired> *ptr)
 {
 	if (ptr->_ite == 1)
+	{
 		return (ptr->parent);
+	}
 	if (ptr->left != NULL)
 		return (max_value_node(ptr->left));
 	else

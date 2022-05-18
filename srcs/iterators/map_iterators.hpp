@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:19:14 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/17 19:50:36 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:52:39 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,19 @@ namespace ft
 			bool					operator!=(const map_iterator<K, N> &ref) const
 			{
 				if (this->_ptr != ref._ptr)
+				{
+					return (true);
+				}
+				return (false);
+			}
+
+
+
+
+			template <typename K, typename N>
+			bool					operator==(const map_iterator<K, N> &ref) const
+			{
+				if (this->_ptr == ref._ptr)
 				{
 					return (true);
 				}
@@ -92,9 +105,9 @@ namespace ft
 				return (*this);
 			}
 
-			reference						operator*()
+			paired&						operator*()
 			{
-				return (*_ptr);
+				return (_ptr->data);  
 			}
 
 			paired*							operator->() const

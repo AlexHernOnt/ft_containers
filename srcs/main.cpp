@@ -6,11 +6,11 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/17 20:37:23 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/18 20:52:02 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define TYPE ft
+#define TYPE std
 
 #include "map.hpp"
 #include "vector.hpp"
@@ -22,10 +22,6 @@
 #include <vector>
 #include <algorithm>    // std::lexicographical_compare
 #define _pair TYPE::pair
-
-#define T1 int
-#define T2 std::string
-typedef _pair<const T1, T2> T3;
 
 #pragma region
 
@@ -58,6 +54,11 @@ class foo {
 		bool		_verbose;
 };
 
+#define T1 int
+#define T2 std::string
+typedef _pair<const T1, T2> T3;
+
+
 template <typename T>
 std::ostream	&operator<<(std::ostream &o, foo<T> const &bar) {
 	o << bar.getValue();
@@ -79,13 +80,6 @@ T	dec(T it, int n)
 		--it;
 	return (it);
 }
-
-
-
-
-
-
-
 
 template <typename T>
 std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
@@ -114,22 +108,28 @@ void	printSize(T_MAP const &mp, bool print_content = 1)
 #pragma endregion
 
 
-static int iter = 0;
 
-template <typename MAP, typename U>
-void	ft_erase(MAP &mp, U param)
+
+
+
+
+
+TYPE::map<T1, T2>						mp;
+TYPE::map<T1, T2>::iterator				it = mp.end();
+
+void	ft_find(T1 const &k)
 {
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	mp.erase(param);
-	printSize(mp);
+	TYPE::map<T1, T2>::iterator ret = mp.find(k);
+
+	if (ret != it)
+		printPair(ret);
+	else
+		std::cout << "map::find(" << k << ") returned end()" << std::endl;
 }
 
-template <typename MAP, typename U, typename V>
-void	ft_erase(MAP &mp, U param, V param2)
+void	ft_count(T1 const &k)
 {
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	mp.erase(param, param2);
-	printSize(mp);
+	std::cout << "map::count(" << k << ")\treturned [" << mp.count(k) << "]" << std::endl;
 }
 
 
@@ -143,72 +143,57 @@ void	ft_erase(MAP &mp, U param, V param2)
 
 int		main(void)
 {
-	std::list<T3>						lst;
-	unsigned int						lst_size = 10;
+	TYPE::map<T1, T2>::iterator				it1 = mp.begin();
+
+	mp[42] = "fgzgxfn";
+	mp[25] = "funny";
+	mp[80] = "hey";
+	mp[12] = "no";
+	mp[27] = "bee";
+	mp[90] = "8";
+
+
+	if (it1 == mp.begin())
+		std::cout << "Die" << std::endl;
+
+
+
+
+
+
+
+
+
+
+
+
 	
-	for (unsigned int i = 0; i < lst_size; ++i)
-		lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
-		
-	TYPE::map<T1, T2>					mp(lst.begin(), lst.end());
-	printSize(mp);
-
-	//ft_erase(mp, ++mp.begin());
-
-	//ft_erase(mp, mp.begin());
-	//ft_erase(mp, --mp.end());
-
-	//ft_erase(mp, mp.begin(), ++(++(++mp.begin())));
-	//ft_erase(mp, --(--(--mp.end())), --mp.end());
-
-	//mp[10] = "Hello";
-	//mp[11] = "Hi there";
 	//printSize(mp);
-	//ft_erase(mp, --(--(--mp.end())), mp.end());
 
-	//mp[12] = "ONE";
-	//mp[13] = "TWO";
-	//mp[14] = "THREE";
-	//mp[15] = "FOUR";
+	//std::cout << "\t-- FIND --" << std::endl;
+	//ft_find(12);
+	//ft_find(3);
+	//ft_find(35);
+	//ft_find(90);
+	//ft_find(100);
+
+	//std::cout << "\t-- COUNT --" << std::endl;
+	//ft_count(-3);
+	//ft_count(12);
+	//ft_count(3);
+	//ft_count(35);
+	//ft_count(90);
+	//ft_count(100);
+
+	//mp.find(27)->second = "newly inserted mapped_value";
+
 	//printSize(mp);
-	//ft_erase(mp, mp.begin(), mp.end());
 
-	return (0);
+	//TYPE::map<T1, T2> const c_map(mp.begin(), mp.end());
+	//std::cout << "const map.find(" << 42 << ")->second: [" << c_map.find(42)->second << "]" << std::endl;
+	//std::cout << "const map.count(" << 80 << "): [" << c_map.count(80) << "]" << std::endl;
+	//return (0);
 }
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
