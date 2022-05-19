@@ -73,6 +73,7 @@
 		"set": "cpp",
 		"stack": "cpp",
 		"memory_resource": "cpp",
-		"__cxx_version": "cpp"
+		"__cxx_version": "cpp",
+		"__memory": "cpp"
 	}
 }

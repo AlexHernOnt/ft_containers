@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:33:50 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/18 18:19:14 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/19 21:16:22 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ class node
 */
 
 template <class paired>
-node<paired>						*ft_move_sentinel(node<paired> *prev, paired val)
+node<paired>						*ft_move_sentinel(node<paired> *prev, node<paired> *sentinel, paired val)
 {
-	node<paired>	*aux = new node<paired>(val, prev, 0);
-	node<paired>	*sentinel = new node<paired>(val, aux, 1);
-	aux->right = sentinel;
+	node<paired>					*aux = new node<paired>(val, prev, 0);
 	
+	aux->right = sentinel;
+	sentinel->parent = aux;
 	return (aux);
 }
 
@@ -60,16 +60,14 @@ node<paired>						*new_node(node<paired> *ptr, node<paired> *prev, paired val)
 		return (new node<paired>(val, prev, 0));
 	if (ptr->_ite == 1)
 	{
-		delete ptr;
-		ptr = ft_move_sentinel(prev, val);
+		ptr = ft_move_sentinel(prev, ptr, val);
 		return (ptr);		
 	}
 	if (val.first > ptr->data.first)
 	{
 		if (ptr->right != NULL && ptr->right->_ite == 1)
 		{
-			delete ptr->right;
-			ptr->right = ft_move_sentinel(ptr, val);
+			ptr->right = ft_move_sentinel(ptr, ptr->right, val);
 		}
 		else
 			ptr->right = new_node(ptr->right, ptr, val);
@@ -127,9 +125,7 @@ void								parent_point_to_second_not_first(node<paired> *ptr, node<paired> *au
 		if (root->left == ptr)
 			root->left = aux;
 		else if (root->right == ptr)
-		{
 			root->right = aux;
-		}
 		parent_point_to_second_not_first(ptr, aux, root->right);
 	}
 }
@@ -147,7 +143,7 @@ node<paired>						*delete_node(node<paired> *ptr, paired val, node<paired> *root
 		ptr->left = delete_node(ptr->left, val, root);
 	else if (val.first > ptr->data.first)
 		ptr->right = delete_node(ptr->right, val, root);
-	else
+	else if (ptr->_ite == 0)
 	{
 		if (ptr->right == NULL && ptr->left == NULL)
 		{
@@ -178,9 +174,11 @@ node<paired>						*delete_node(node<paired> *ptr, paired val, node<paired> *root
 		node<paired>		*tmp = min_value_node(ptr->right);
 		node<paired>		*aux = new node<paired>(tmp->data, tmp->parent, tmp->_ite);
 
+		aux->parent = ptr->parent;
 		ptr->left->parent = aux;
 		aux->left = ptr->left;
 		aux->right = delete_node(ptr->right, tmp->data, root);
+		aux->right->parent = aux;
 		if (root == ptr)
 		{
 			delete (ptr);
@@ -304,7 +302,7 @@ node<paired>						*bst_decrement(node<paired> *ptr)
 		else
 		{
 			node<paired>		*aux;
-			
+
 			aux = ptr;
 			while (aux->parent != NULL && aux->parent->data.first > ptr->data.first)
 				aux = aux->parent;

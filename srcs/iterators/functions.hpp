@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:28:21 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/14 17:46:56 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:45:47 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ namespace ft
 	{
 		while (first1!=last1)
 		{
-			if (first2==last2 || *first2<*first1)
+			if (first2 == last2 || *first2 < *first1)
 				return false;
-			else if (*first1<*first2)
+			else if (*first1 < *first2)
 				return true;
 			++first1;
 			++first2;
