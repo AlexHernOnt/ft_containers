@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:55:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/19 19:54:09 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/20 18:26:05 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,20 @@ namespace ft
 			typedef node<value_type>								node_type;
 			typedef ft::map_iterator<value_type, node_type>			iterator;
 			typedef ft::map_iterator<const value_type, node_type>	const_iterator;
-//			typedef 												reverse_iterator;
-//			typedef 												const_reverse_iterator;
-//			typedef 												difference_type;
+			typedef ft::reverse_map_iterator<iterator>				reverse_iterator;
+			typedef ft::reverse_map_iterator<const_iterator>		const_reverse_iterator;
+			typedef ptrdiff_t										difference_type;
 			typedef size_t											size_type;
-
 			node<value_type>										*_root;
+
 		private:
 			allocator_type											_allocator;
 			key_compare												_compare;
 			size_type												_size;
 
 		public:
+
+
 
 
 			class													value_compare
@@ -75,6 +77,9 @@ namespace ft
 						}
 			};
 
+
+
+
 			/*
 			**		___________________		Iterators     ___________________
 			*/
@@ -102,6 +107,29 @@ namespace ft
 
 
 
+			reverse_iterator				rbegin()
+			{
+				return (ft::reverse_map_iterator<iterator>(bst_get_last(_root)));
+			}
+
+			const_reverse_iterator			rbegin() const
+			{
+				return (ft::reverse_map_iterator<const iterator>(bst_get_last(_root)));
+			}
+
+			reverse_iterator				rend()
+			{
+				return (ft::reverse_map_iterator<iterator>(bst_get_first(_root)));
+			}
+
+			const_reverse_iterator			rend() const
+			{
+				return (ft::reverse_map_iterator<const iterator>(bst_get_first(_root)));
+			}
+
+
+
+
 
 
 
@@ -110,6 +138,9 @@ namespace ft
 			**		___________________		Capacity     ___________________
 			*/
 
+
+
+
 			bool							empty() const
 			{
 				if (_size == 0)
@@ -117,14 +148,20 @@ namespace ft
 				return (false);
 			}
 
+
+
+
 			size_type						size() const
 			{
 				return (_size);				
 			}
 
+
+
+
 			size_type						max_size() const
 			{
-				return (_allocator.max_size());
+				return (std::numeric_limits<difference_type>::max() / (sizeof(node_type) / 2 ?: 1));
 			}
 
 

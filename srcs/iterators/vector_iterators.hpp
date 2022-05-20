@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:48:17 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/19 19:06:03 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/20 15:31:05 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,13 @@ namespace ft
 			}
 	};
 
+
+
+
+
+
+
+
 	template <typename iterator>
 	class reverse_vector_iterator
 	{
@@ -260,6 +267,7 @@ namespace ft
 
 		private:
 			iterator											m_base;
+			
 		public:
 
 			//
@@ -350,7 +358,17 @@ namespace ft
 
 
 
-			//		________				- Operators
+
+
+
+
+
+			/*
+			**		___________________		- Opeartors     ___________________
+			*/
+
+
+
 
 			reverse_vector_iterator			operator-(const int n) const
 			{
@@ -371,7 +389,18 @@ namespace ft
 			} 
 
 
-			//		________		++-- Operators
+
+
+
+
+
+
+			/*
+			**		___________________		inc / dec oepreators     ___________________
+			*/
+
+
+
 
 			reverse_vector_iterator			&operator++()
 			{
@@ -402,22 +431,35 @@ namespace ft
 
 
 
-			//		________		Access Operators
 
-			reference				operator*(void) const
+
+
+
+			/*
+			**		___________________		Access Operators     ___________________
+			*/
+
+
+
+
+			reference						operator*(void) const
 			{
 				return (*(m_base - 1));
 			}
 
-			reference				operator[](const size_t &idx)
+			reference						operator[](const size_t &idx)
 			{
 				return *(this->operator+(idx));
 			}
 
-			pointer					operator->(void) const
+			pointer							operator->(void) const
 			{
 				return &operator*();
 			}
+
+
+
+
 
 
 

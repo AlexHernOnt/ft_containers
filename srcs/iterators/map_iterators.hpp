@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:19:14 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/19 19:14:11 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/20 19:48:48 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 
 namespace ft
 {
-	template <class paired, class node_type>
+	template <class _paired, class node_type>
 	class map_iterator
 	{
 		public:
 			typedef node_type* 								pointer;
 			typedef node_type&								reference;
+			typedef _paired									paired;
 
 
 			node_type										*_ptr;
@@ -42,15 +43,6 @@ namespace ft
 
 
 
-			//template <typename K, typename N>
-			//bool					operator<(const map_iterator<K, N>& ref) const
-			//{
-			//	return (false);
-			//}
-
-
-
-
 			template <typename K, typename N>
 			bool					operator!=(const map_iterator<K, N> &ref) const
 			{
@@ -60,6 +52,19 @@ namespace ft
 				}
 				return (false);
 			}
+
+
+
+
+			//template <typename K>
+			//bool					operator!=(const ft::reverse_map_iterator<k> &ref) const
+			//{
+			//	if (*this != ref.base())
+			//	{
+			//		return (true);
+			//	}
+			//	return (false);
+			//}
 
 
 
@@ -77,7 +82,16 @@ namespace ft
 
 
 
-			////////		________		++-- Operators
+
+
+
+
+			/*
+			**		___________________		inc / dec oepreators     ___________________
+			*/
+
+
+
 
 			map_iterator					&operator++()
 			{
@@ -106,7 +120,17 @@ namespace ft
 			}
 
 
-			//		________				Copy Operators
+
+
+
+
+
+
+			/*
+			**		___________________		Operator=     ___________________
+			*/
+
+
 
 
 			template <typename K, typename N>
@@ -115,6 +139,20 @@ namespace ft
 				this->_ptr = ref._ptr;
 				return (*this);
 			}
+
+
+
+
+
+
+
+
+			/*
+			**		___________________		Access Opereator     ___________________
+			*/
+
+
+
 
 			paired&							operator*() const
 			{
@@ -129,15 +167,51 @@ namespace ft
 
 
 
+
+
+
+
 			//
 			//		______________________________ Cons & Dest ______________________________
 			//
 
+	
+			//template <typename K, typename N>
+			//bool					operator!=(const map_iterator<K, N> &ref) const
+
+
+			//template <typename K, typename N>
+			//map_iterator(N a)
+			//{
+			//	_ptr = a._ptr;
+			//}
+
+			//template <typename K, typename N>
+			//map_iterator(const map_iterator &a)
+			//{
+			//	_ptr = a._ptr;
+			//}
+
+	
 			template <typename K, typename N>
 			map_iterator(map_iterator<K, N> a)
 			{
+				
 				_ptr = a._ptr;
 			}
+
+			
+			//template <typename T, typename _node_type>
+			//map_iterator(_node_type *src)
+			//{
+			//    this->_node = src;
+			//}
+			
+			//template <typename T, typename _node_type>
+			//map_iterator(const map_iterator &src)
+			//{
+			//    *this = src;
+			//}
 
 			map_iterator()
 			{
@@ -153,6 +227,289 @@ namespace ft
 			{
 			}
 	};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	template <class iterator>
+	class reverse_map_iterator
+	{
+		public:
+			typedef typename iterator::pointer						pointer;
+			typedef typename iterator::reference					reference;
+			typedef typename iterator::paired						paired;
+
+			iterator												_base;
+		private:
+
+		public:
+
+
+
+
+			//
+			//		_______________________________ Base      _______________________________
+			//
+
+			iterator				base() const
+			{
+				return (_base);
+			}
+
+
+
+
+
+
+
+
+			//
+			//		_______________________________ Operators _______________________________
+			//
+
+
+
+
+			//		________		>< Operators
+
+
+
+
+
+			template <typename K>
+			bool					operator!=(const reverse_map_iterator<K> &ref) const
+			{
+				if (_base != ref.base())
+					return (true);
+				return (false);
+			}
+
+
+			template <typename K>
+			bool					operator==(const reverse_map_iterator<K> &ref) const
+			{
+				if (_base == ref)
+					return (true);
+				return (false);
+			}
+
+
+
+
+
+
+
+
+			/*
+			**		___________________		inc / dec oepreators     ___________________
+			*/
+
+
+
+
+			reverse_map_iterator					&operator++()
+			{
+				--_base;
+				return (*this);
+			}
+
+			reverse_map_iterator					operator++(int)
+			{
+				reverse_map_iterator it_aux = *this;
+				--_base;
+				return (it_aux);
+			}
+
+			reverse_map_iterator					&operator--()
+			{
+				++_base;
+				return (*this);
+			}
+
+			reverse_map_iterator					operator--(int)
+			{
+				reverse_map_iterator it_aux = *this;
+				++(_base);
+				return (it_aux);
+			}
+
+
+
+
+
+
+
+
+			/*
+			**		___________________		Operator=     ___________________
+			*/
+
+
+
+
+			template <typename K>
+			reverse_map_iterator					&operator=(const reverse_map_iterator<K> &ref)
+			{
+				_base = ref.base();
+				return (*this);
+			}
+
+
+
+
+
+
+
+
+			/*
+			**		___________________		Access Opereator     ___________________
+			*/
+
+
+
+
+			paired&							operator*() const
+			{
+				iterator					aux;
+
+				aux = _base;
+				aux--;
+				return (*aux);
+			}
+
+			paired*							operator->() const
+			{
+				return  &operator*();
+			}
+
+
+
+
+
+
+
+
+			//
+			//		______________________________ Cons & Dest ______________________________
+			//
+
+
+
+
+			template <typename K, typename N>
+			reverse_map_iterator(map_iterator<K, N> a)
+			{
+				_base = a;
+			}
+
+			template <typename K>
+			reverse_map_iterator(reverse_map_iterator<K> a)
+			{
+				_base = a.base();
+			}
+
+			reverse_map_iterator()
+			{
+				_base = NULL;
+			}
+
+			reverse_map_iterator(pointer	 ptr)
+			{
+				_base = ptr;
+			}
+
+			~reverse_map_iterator()
+			{
+			}
+	};
+
 }
 
 #endif

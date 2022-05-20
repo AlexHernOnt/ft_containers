@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:33:50 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/19 21:16:22 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/20 14:52:48 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,16 @@ class node
 
 
 
+
+
+
+
 /*
 **									Create Node
 */
+
+
+
 
 template <class paired>
 node<paired>						*ft_move_sentinel(node<paired> *prev, node<paired> *sentinel, paired val)
@@ -50,6 +57,7 @@ node<paired>						*ft_move_sentinel(node<paired> *prev, node<paired> *sentinel, 
 	sentinel->parent = aux;
 	return (aux);
 }
+
 
 
 
@@ -78,6 +86,10 @@ node<paired>						*new_node(node<paired> *ptr, node<paired> *prev, paired val)
 	}
 	return (ptr);
 }
+
+
+
+
 
 
 
@@ -133,7 +145,6 @@ void								parent_point_to_second_not_first(node<paired> *ptr, node<paired> *au
 
 
 
-
 template <class paired>
 node<paired>						*delete_node(node<paired> *ptr, paired val, node<paired> *root)
 {
@@ -164,7 +175,6 @@ node<paired>						*delete_node(node<paired> *ptr, paired val, node<paired> *root
 			delete ptr;
 			return (aux);
 		}
-
 		/*
 			1º Obtener el mínimo en la rama derecha (tmp)
 			2º Hacer copia del valor de tmp. Y los links de aquel nodo que queremos eliminar 
@@ -172,13 +182,14 @@ node<paired>						*delete_node(node<paired> *ptr, paired val, node<paired> *root
 		*/
 	
 		node<paired>		*tmp = min_value_node(ptr->right);
-		node<paired>		*aux = new node<paired>(tmp->data, tmp->parent, tmp->_ite);
+		node<paired>		*aux = new node<paired>(tmp->data, ptr->parent, tmp->_ite);
 
 		aux->parent = ptr->parent;
 		ptr->left->parent = aux;
 		aux->left = ptr->left;
 		aux->right = delete_node(ptr->right, tmp->data, root);
-		aux->right->parent = aux;
+		if (aux->right != NULL)
+			aux->right->parent = aux;
 		if (root == ptr)
 		{
 			delete (ptr);
@@ -194,9 +205,16 @@ node<paired>						*delete_node(node<paired> *ptr, paired val, node<paired> *root
 
 
 
+
+
+
+
 /*
 **									Print in order
 */
+
+
+
 
 template <class paired>
 void								in_order(node<paired> *ptr)
@@ -212,9 +230,16 @@ void								in_order(node<paired> *ptr)
 
 
 
+
+
+
+
 /*
 **									Free
 */
+
+
+
 
 template <class paired>
 void								clear_tree(node<paired> *ptr)
@@ -230,9 +255,16 @@ void								clear_tree(node<paired> *ptr)
 
 
 
+
+
+
+
 /*
 **									Iterator stuff
 */
+
+
+
 
 template <class paired>
 node<paired>						*bst_get_first(node<paired> *ptr)
@@ -245,7 +277,6 @@ node<paired>						*bst_get_first(node<paired> *ptr)
 
 
 
-
 template <class paired>
 node<paired>						*bst_get_last(node<paired> *ptr)
 {
@@ -253,7 +284,6 @@ node<paired>						*bst_get_last(node<paired> *ptr)
 		ptr = ptr->right;
 	return (ptr);
 }
-
 
 
 
