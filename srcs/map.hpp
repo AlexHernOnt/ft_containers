@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:55:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/20 18:26:05 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/21 18:32:03 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,48 +50,18 @@ namespace ft
 
 
 
-
-			class													value_compare
-			{
-				friend class										map;
-					protected:
-						Compare										comp;
-						value_compare (Compare c) : comp(c)
-						{
-
-						}
-
-					public:
-						typedef bool 								result_type;
-						typedef value_type							first_argument_type;
-						typedef value_type							second_argument_type;
-
-						bool operator() (const value_type& x, const value_type& y) const
-						{
-							return comp(x.first, y.first);
-						}
-
-						bool operator() (const value_type* x, const value_type* y) const
-						{
-							return comp(x->first, y->first);
-						}
-			};
-
-
-
-
 			/*
 			**		___________________		Iterators     ___________________
 			*/
 
 			iterator						begin()
 			{
-				return (ft::map_iterator<value_type, node_type>(bst_get_first(_root)));
+				return (bst_get_first(_root));
 			}
 
 			const_iterator					begin() const
 			{
-				return (ft::map_iterator<const value_type, node_type>(bst_get_first(_root)));
+				return (bst_get_first(_root));
 			}
 
 			iterator						end()
@@ -360,12 +330,40 @@ namespace ft
 			*/
 
 
+			class													value_compare
+			{
+				friend class										map;
+					protected:
+						Compare										comp;
+						value_compare (Compare c) : comp(c)
+						{
+
+						}
+
+					public:
+						typedef bool 								result_type;
+						typedef value_type							first_argument_type;
+						typedef value_type							second_argument_type;
+
+						bool operator() (const value_type& x, const value_type& y) const
+						{
+							return comp(x.first, y.first);
+						}
+
+						bool operator() (const value_type* x, const value_type* y) const
+						{
+							return comp(x->first, y->first);
+						}
+			};
+
+
 
 
 			key_compare						key_comp() const
 			{
 				return (_compare);
 			}
+
 
 
 

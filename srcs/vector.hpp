@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/16 20:28:21 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/21 20:35:38 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -628,7 +628,7 @@ namespace ft
 			}
 
 
-			~vector()
+			virtual ~vector()
 			{
 				if (_capacity != 0)
 					_allocator.deallocate(_ptr, _capacity);

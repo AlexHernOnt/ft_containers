@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:19:14 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/20 19:48:48 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/21 19:25:29 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,43 +175,32 @@ namespace ft
 			//		______________________________ Cons & Dest ______________________________
 			//
 
-	
-			//template <typename K, typename N>
-			//bool					operator!=(const map_iterator<K, N> &ref) const
 
 
-			//template <typename K, typename N>
-			//map_iterator(N a)
-			//{
-			//	_ptr = a._ptr;
-			//}
 
-			//template <typename K, typename N>
-			//map_iterator(const map_iterator &a)
-			//{
-			//	_ptr = a._ptr;
-			//}
-
-	
-			template <typename K, typename N>
-			map_iterator(map_iterator<K, N> a)
+			template <typename T, typename _node_type>
+			map_iterator(_node_type *src)
 			{
-				
-				_ptr = a._ptr;
+				this->_ptr = src;
 			}
 
-			
-			//template <typename T, typename _node_type>
-			//map_iterator(_node_type *src)
-			//{
-			//    this->_node = src;
-			//}
-			
-			//template <typename T, typename _node_type>
-			//map_iterator(const map_iterator &src)
-			//{
-			//    *this = src;
-			//}
+			template <typename T, typename _node_type>
+			map_iterator(const map_iterator  &src)
+			{
+				*this = src;
+			}
+
+
+
+
+
+
+
+
+
+
+
+
 
 			map_iterator()
 			{
@@ -268,6 +257,23 @@ namespace ft
 
 
 
+
+
+
+
+
+
+			//template <typename K, typename N>
+			//map_iterator(N a)
+			//{
+			//	_ptr = a._ptr;
+			//}
+
+			//template <typename K, typename N>
+			//map_iterator(map_iterator<_paired, N> a)
+			//{
+			//	_ptr = a._ptr;
+			//}
 
 
 

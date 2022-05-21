@@ -6,20 +6,22 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/20 20:13:59 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/21 20:37:43 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define TYPE std
+#define TYPE ft
 
 #include "map.hpp"
 #include "vector.hpp"
+#include "stack.hpp"
 #include "iterators/tests.hpp"
 
 
 #include <map>
 #include <list>
 #include <vector>
+#include <stack>
 #include <algorithm>    // std::lexicographical_compare
 #define _pair TYPE::pair
 
@@ -86,20 +88,55 @@ std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::
 	return ("");
 }
 
-template <typename T_MAP>
-void	printSize(T_MAP const &mp, bool print_content = 1)
+//template <typename T_MAP>
+//void	printSize(T_MAP const &mp, bool print_content = 1)
+//{
+//	std::cout << "size: " << mp.size() << std::endl;
+//	std::cout << "max_size: " << mp.max_size() << std::endl;
+//	if (print_content)
+//	{
+//		typename T_MAP::const_iterator it = mp.begin(), ite = mp.end();
+//		std::cout << std::endl << "Content is:" << std::endl;
+//		for (; it != ite; ++it)
+//			std::cout << "- " << printPair(it, false) << std::endl;
+//	}
+//	std::cout << "###############################################" << std::endl;
+//}
+
+
+
+
+
+
+
+
+
+
+
+template <typename T_STACK>
+void	printSize(T_STACK &stck, bool print_content = 1)
 {
-	std::cout << "size: " << mp.size() << std::endl;
-	std::cout << "max_size: " << mp.max_size() << std::endl;
+	std::cout << "size: " << stck.size() << std::endl;
 	if (print_content)
 	{
-		typename T_MAP::const_iterator it = mp.begin(), ite = mp.end();
-		std::cout << std::endl << "Content is:" << std::endl;
-		for (; it != ite; ++it)
-			std::cout << "- " << printPair(it, false) << std::endl;
+		std::cout << std::endl << "Content was:" << std::endl;
+		while (stck.size() != 0) {
+			std::cout << "- " << stck.top() << std::endl;
+			stck.pop();
+		}
 	}
 	std::cout << "###############################################" << std::endl;
 }
+
+
+
+
+
+
+
+
+
+
 
 template <typename T1, typename T2>
 void	printReverse(TYPE::map<T1, T2> &mp)
@@ -116,30 +153,24 @@ void	printReverse(TYPE::map<T1, T2> &mp)
 }
 
 #pragma endregion
-
-
-
-
-
-
-
-
-
-
-
-
 #define T1 int
 #define T2 int
 
 int		main(void)
 {
-	//Trying to get a const <value type> inside a <value type>
-	
-	TYPE::map<T1, T2>								const map1;
-	TYPE::map<T1, T2>::iterator						it = map1.begin(); // <-- error expected
+	TYPE::stack<int>							stck;
 
-	//TYPE::map<T1, T2>								map2;
-	//TYPE::map<T1, T2>::const_iterator				const_it = map2.begin();;
+	std::cout << "empty: " << stck.empty() << std::endl;
+	std::cout << "size: " << stck.size() << std::endl;
+
+	stck.push(41);
+	stck.push(29);
+	stck.push(10);
+	stck.push(42);
+	std::cout << "Added some elements" << std::endl;
+
+	std::cout << "empty: " << stck.empty() << std::endl;
+	printSize(stck);
 
 
 	return (0);
@@ -147,7 +178,6 @@ int		main(void)
 
 
 
-//	const_it it1 = mp.begin();
 
 
 
@@ -170,6 +200,78 @@ int		main(void)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/*
+		it normal, map normal bien
+	*/
+
+	//TYPE::map<T1, T2>									map1;
+	
+	//TYPE::map<T1, T2>::iterator							it1(map1.begin());
+	//TYPE::map<T1, T2>::iterator							_it1(it1);
+
+
+
+
+	/*
+		it const, map const bien
+	*/
+
+	//const TYPE::map<T1, T2>								map2;
+	
+	//TYPE::map<T1, T2>::const_iterator					it2(map2.begin());
+	//TYPE::map<T1, T2>::const_iterator					_it2(it2);
+
+
+
+
+	/*
+		it normal const bien
+	*/
+
+	//TYPE::map<T1, T2>									map3;
+	
+	//TYPE::map<T1, T2>::iterator							it3 = map3.begin();
+	//TYPE::map<T1, T2>::const_iterator					_it3 = it3;
+
+
+	/*
+		Trying to get a _const <value type>_ inside a _<value type>_ and it's ok
+	*/
+
+	//const TYPE::map<T1, T2>								map4;
+	
+	//TYPE::map<T1, T2>::const_iterator						it4 = map4.begin();
+	//TYPE::map<T1, T2>::iterator							_it4 = it4;
 
 
 

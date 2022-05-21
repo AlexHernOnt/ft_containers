@@ -6,7 +6,7 @@
 #    By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 14:48:46 by ahernand          #+#    #+#              #
-#    Updated: 2022/05/17 20:37:06 by ahernand         ###   ########.fr        #
+#    Updated: 2022/05/21 20:23:55 by ahernand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,9 @@ test:
 
 test_vector:
 	cd srcs/containers_test && sh do.sh vector
+
+test_stack:
+	cd srcs/containers_test && sh do.sh stack
 
 clean:
 	@rm -f $(OBJS)
