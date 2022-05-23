@@ -6,11 +6,11 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/23 19:54:07 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/23 20:25:51 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define TYPE std
+#define TYPE ft
 
 
 #include "map.hpp"
@@ -25,7 +25,60 @@
 #include <algorithm>    // std::lexicographical_compare
 
 
+#pragma region 
 
+// --- Class foo
+template <typename T>
+class foo {
+	public:
+		typedef T	value_type;
+
+		foo(void) : value(), _verbose(false) { };
+		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
+		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
+		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
+		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
+		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
+		foo &operator=(value_type src) { this->value = src; return *this; };
+		foo &operator=(foo const &src) {
+			if (this->_verbose || src._verbose)
+				std::cout << "foo::operator=(foo) CALLED" << std::endl;
+			this->value = src.value;
+			return *this;
+		};
+		value_type	getValue(void) const { return this->value; };
+		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
+
+		operator value_type(void) const {
+			return value_type(this->value);
+		}
+	private:
+		value_type	value;
+		bool		_verbose;
+};
+
+template <typename T>
+std::ostream	&operator<<(std::ostream &o, foo<T> const &bar) {
+	o << bar.getValue();
+	return o;
+}
+// --- End of class foo
+
+template <typename T>
+T	inc(T it, int n)
+{
+	while (n-- > 0)
+		++it;
+	return (it);
+}
+
+template <typename T>
+T	dec(T it, int n)
+{
+	while (n-- > 0)
+		--it;
+	return (it);
+}
 
 
 #define _pair TYPE::pair
@@ -54,49 +107,74 @@ void	printSize(T_MAP const &mp, bool print_content = 1)
 	std::cout << "###############################################" << std::endl;
 }
 
+template <typename T1, typename T2>
+void	printReverse(TYPE::map<T1, T2> &mp)
+{
+	typename TYPE::map<T1, T2>::iterator it = mp.end(), ite = mp.begin();
+
+	std::cout << "printReverse:" << std::endl;
+	while (it != ite) {
+		it--;
+		std::cout << "-> " << printPair(it, false) << std::endl;
+	}
+	std::cout << "_______________________________________________" << std::endl;
+}
+
+#pragma endregion
+
 
 
 #define T1 char
 #define T2 int
 typedef _pair<const T1, T2> T3;
 
-template <class T>
-void	is_empty(T const &mp)
+template <class MAP>
+void	cmp(const MAP &lhs, const MAP &rhs)
 {
-	std::cout << "is_empty: " << mp.empty() << std::endl;
+	static int i = 0;
+
+	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
+	std::cout << "eq: " << (lhs == rhs) << " | ne: " << (lhs != rhs) << std::endl;
+	//std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
+	//std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
 }
+
+
+
+
+
+
+
+
 
 int		main(void)
 {
-	std::list<T3> lst;
-	unsigned int lst_size = 7;
-	for (unsigned int i = 0; i < lst_size; ++i)
-		lst.push_back(T3('a' + i, lst_size - i));
+	TYPE::map<T1, T2> mp1;
+	TYPE::map<T1, T2> mp2;
 
-	TYPE::map<T1, T2> mp(lst.begin(), lst.end()), mp2;
-	TYPE::map<T1, T2>::iterator it;
+	mp1['a'] = 2; mp1['b'] = 3; mp1['c'] = 4; mp1['d'] = 5;
+	mp2['a'] = 2; mp2['b'] = 3; mp2['c'] = 4; mp2['d'] = 5;
 
-	lst.clear();
-	is_empty(mp);
-	printSize(mp);
+	cmp(mp1, mp1); // 0
+	cmp(mp1, mp2); // 1
 
-	is_empty(mp2);
-	mp2 = mp;
-	is_empty(mp2);
+	mp2['e'] = 6; mp2['f'] = 7; mp2['h'] = 8; mp2['h'] = 9;
 
-	it = mp.begin();
-	for (unsigned long int i = 3; i < mp.size(); ++i)
-		it++->second = i * 7;
+	cmp(mp1, mp2); // 2
+	cmp(mp2, mp1); // 3
 
-	printSize(mp);
-	printSize(mp2);
+	(++(++mp1.begin()))->second = 42;
 
-	mp2.clear();
-	is_empty(mp2);
-	printSize(mp2);
+	cmp(mp1, mp2); // 4
+	cmp(mp2, mp1); // 5
+
+	swap(mp1, mp2);
+
+	cmp(mp1, mp2); // 6
+	cmp(mp2, mp1); // 7
+
 	return (0);
 }
-
 
 
 
