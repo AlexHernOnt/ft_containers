@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/23 20:45:28 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/23 21:05:58 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,145 +133,10 @@ typedef _pair<const T1, T2> T3;
 
 int main()
 {
+	test_vector();
 	test_vector_iterators();
 	return (0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//#define T1 int
-//#define T2 int
-
-//int		main(void)
-//{
-//	TYPE::map<T1, T2> const mp;
-//	TYPE::map<T1, T2>::iterator it = mp.begin(); // <-- error expected
-
-//	(void)it;
-//	return (0);
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -350,40 +215,6 @@ int main()
 	//it = map.begin();
 	//std::cout << it->first << std::endl;
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1135,7 +966,202 @@ void	test_vector_iterators()
 	vi_brackets();
 }
 
+void	test_vector()
+{
+	//	Construct
+	{
+		std::vector<int>	first;                                // empty vector of ints
+		std::vector<int>	second (4,100);                       // four ints with value 100
+		std::vector<int>	third (second.begin(),second.end());  // iterating through second
+		std::vector<int>	fourth (third);                       // a copy of third
+		
+		int											myints[] = {16,2,77,29};
+		std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+		
+		std::cout << "The contents of fifth are:";
+		for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+			std::cout << ' ' << *it;
+		std::cout << '\n';
+	}
+	//	Operator=
+	{
+		std::vector<int> foo (3,0);
+		std::vector<int> bar (5,0);
+		
+		bar = foo;
+		foo = std::vector<int>();
+		
+		std::cout << "Size of foo: " << int(foo.size()) << '\n';
+		std::cout << "Size of bar: " << int(bar.size()) << '\n';
+	}	
+	//	Begin
+	{
+		std::vector<int> myvector;
+		for (int i = 1; i <= 5; i++) myvector.push_back(i);
+		
+		std::cout << "myvector contains:";
+		for (std::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+			std::cout << ' ' << *it;
+		std::cout << '\n';
+	}
+	//	End
+	{
+		std::vector<int> myvector;
+		for (int i=1; i<=5; i++) myvector.push_back(i);
+		
+		std::cout << "myvector contains:";
+		for (std::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+			std::cout << ' ' << *it;
+		std::cout << '\n';
+	}
+	//	Rbegin
+	{
+		std::vector<int> myvector (5);  // 5 default-constructed ints
 
+		int i = 0;
+
+		std::vector<int>::reverse_iterator rit = myvector.rbegin();
+		for (; rit!= myvector.rend(); ++rit)
+			*rit = ++i;
+
+		std::cout << "myvector contains:";
+		for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+			std::cout << ' ' << *it;
+		std::cout << '\n';
+	}
+	//	Rend
+	{
+		std::vector<int> myvector (5);  // 5 default-constructed ints
+		std::vector<int>::reverse_iterator rit = myvector.rbegin();
+		
+		int i = 0;
+		for (rit = myvector.rbegin(); rit!= myvector.rend(); ++rit)
+			*rit = ++i;
+		
+		std::cout << "myvector contains:";
+		for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+			std::cout << ' ' << *it;
+		std::cout << '\n';
+	}
+	//	Size
+	{
+		std::vector<int>	myints;
+		std::cout << "0. size: " << myints.size() << '\n';
+
+		for (int i = 0; i < 10; i++) myints.push_back(i);
+		std::cout << "1. size: " << myints.size() << '\n';
+
+		myints.insert (myints.end(), 10,100);
+		std::cout << "2. size: " << myints.size() << '\n';
+
+		myints.pop_back();
+		std::cout << "3. size: " << myints.size() << '\n';
+	}
+	//	Max Size
+	{
+		std::vector<int>	myvector;
+	
+		for (int i = 0; i < 100; i++) myvector.push_back(i);
+	
+		std::cout << "size: " << myvector.size() << "\n";
+		std::cout << "capacity: " << myvector.capacity() << "\n";
+		std::cout << "max_size: " << myvector.max_size() << "\n";
+	}	
+	//Resize
+	{
+		std::vector<int> myvector;
+		
+		// set some initial content:
+		for (int i=1;i<10;i++) myvector.push_back(i);
+		
+		myvector.resize(5);
+		myvector.resize(8,100);
+		myvector.resize(12);
+		
+		std::cout << "myvector contains:";
+		for (int i=0;i<myvector.size();i++)
+			std::cout << ' ' << myvector[i];
+		std::cout << '\n';
+	}
+	//Capacity
+	{
+		std::vector<int> myvector;
+	
+		// set some content in the vector:
+		for (int i = 0; i < 100; i++) myvector.push_back(i);
+	
+		std::cout << "size: " << (int) myvector.size() << '\n';
+		std::cout << "capacity: " << (int) myvector.capacity() << '\n';
+		std::cout << "max_size: " << (int) myvector.max_size() << '\n';
+	}
+	//Empty
+	{
+		std::vector<int> myvector;
+		int sum (0);
+		
+		for (int i = 1; i <= 10; i++)
+			myvector.push_back(i);
+		while (!myvector.empty())
+		{
+			sum += myvector.back();
+			myvector.pop_back();
+		}
+		std::cout << "total: " << sum << '\n';
+	}
+	//Reserve
+	{
+		std::vector<int>::size_type			sz;
+	
+		std::vector<int>					foo;
+		sz = foo.capacity();
+		std::cout << "making foo grow:\n";
+		for (int i = 0; i < 100; ++i)
+		{
+			foo.push_back(i);
+			if (sz!=foo.capacity())
+			{
+				sz = foo.capacity();
+				std::cout << "capacity changed: " << sz << '\n';
+			}
+		}
+	
+		std::vector<int>					bar;
+		sz = bar.capacity();
+		bar.reserve(100);   // this is the only difference with foo above
+		std::cout << "making bar grow:\n";
+		for (int i = 0; i < 100; ++i)
+		{
+			bar.push_back(i);
+			if (sz!=bar.capacity())
+			{
+				sz = bar.capacity();
+				std::cout << "capacity changed: " << sz << '\n';
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 
 
 
