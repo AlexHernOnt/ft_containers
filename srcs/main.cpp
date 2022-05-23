@@ -6,78 +6,29 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/21 20:37:43 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:54:07 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define TYPE ft
+#define TYPE std
+
 
 #include "map.hpp"
 #include "vector.hpp"
 #include "stack.hpp"
 #include "iterators/tests.hpp"
 
-
 #include <map>
 #include <list>
 #include <vector>
 #include <stack>
 #include <algorithm>    // std::lexicographical_compare
+
+
+
+
+
 #define _pair TYPE::pair
-
-#pragma region
-
-template <typename T>
-class foo {
-	public:
-		typedef T	value_type;
-
-		foo(void) : value(), _verbose(false) { };
-		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
-		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
-		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
-		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
-		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
-		foo &operator=(value_type src) { this->value = src; return *this; };
-		foo &operator=(foo const &src) {
-			if (this->_verbose || src._verbose)
-				std::cout << "foo::operator=(foo) CALLED" << std::endl;
-			this->value = src.value;
-			return *this;
-		};
-		value_type	getValue(void) const { return this->value; };
-		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
-
-		operator value_type(void) const {
-			return value_type(this->value);
-		}
-	private:
-		value_type	value;
-		bool		_verbose;
-};
-
-
-template <typename T>
-std::ostream	&operator<<(std::ostream &o, foo<T> const &bar) {
-	o << bar.getValue();
-	return o;
-}
-
-template <typename T>
-T	inc(T it, int n)
-{
-	while (n-- > 0)
-		++it;
-	return (it);
-}
-
-template <typename T>
-T	dec(T it, int n)
-{
-	while (n-- > 0)
-		--it;
-	return (it);
-}
 
 template <typename T>
 std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
@@ -88,192 +39,63 @@ std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::
 	return ("");
 }
 
-//template <typename T_MAP>
-//void	printSize(T_MAP const &mp, bool print_content = 1)
-//{
-//	std::cout << "size: " << mp.size() << std::endl;
-//	std::cout << "max_size: " << mp.max_size() << std::endl;
-//	if (print_content)
-//	{
-//		typename T_MAP::const_iterator it = mp.begin(), ite = mp.end();
-//		std::cout << std::endl << "Content is:" << std::endl;
-//		for (; it != ite; ++it)
-//			std::cout << "- " << printPair(it, false) << std::endl;
-//	}
-//	std::cout << "###############################################" << std::endl;
-//}
-
-
-
-
-
-
-
-
-
-
-
-template <typename T_STACK>
-void	printSize(T_STACK &stck, bool print_content = 1)
+template <typename T_MAP>
+void	printSize(T_MAP const &mp, bool print_content = 1)
 {
-	std::cout << "size: " << stck.size() << std::endl;
+	std::cout << "size: " << mp.size() << std::endl;
+	std::cout << "max_size: " << mp.max_size() << std::endl;
 	if (print_content)
 	{
-		std::cout << std::endl << "Content was:" << std::endl;
-		while (stck.size() != 0) {
-			std::cout << "- " << stck.top() << std::endl;
-			stck.pop();
-		}
+		typename T_MAP::const_iterator it = mp.begin(), ite = mp.end();
+		std::cout << std::endl << "Content is:" << std::endl;
+		for (; it != ite; ++it)
+			std::cout << "- " << printPair(it, false) << std::endl;
 	}
 	std::cout << "###############################################" << std::endl;
 }
 
 
 
-
-
-
-
-
-
-
-
-template <typename T1, typename T2>
-void	printReverse(TYPE::map<T1, T2> &mp)
-{
-	typename TYPE::map<T1, T2>::iterator it = mp.end(), ite = mp.begin();
-
-	std::cout << "printReverse:" << std::endl;
-	while (it != ite)
-	{
-		it--;
-		std::cout << "-> " << printPair(it, false) << std::endl;
-	}
-	std::cout << "_______________________________________________" << std::endl;
-}
-
-#pragma endregion
-#define T1 int
+#define T1 char
 #define T2 int
+typedef _pair<const T1, T2> T3;
+
+template <class T>
+void	is_empty(T const &mp)
+{
+	std::cout << "is_empty: " << mp.empty() << std::endl;
+}
 
 int		main(void)
 {
-	TYPE::stack<int>							stck;
+	std::list<T3> lst;
+	unsigned int lst_size = 7;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(T3('a' + i, lst_size - i));
 
-	std::cout << "empty: " << stck.empty() << std::endl;
-	std::cout << "size: " << stck.size() << std::endl;
+	TYPE::map<T1, T2> mp(lst.begin(), lst.end()), mp2;
+	TYPE::map<T1, T2>::iterator it;
 
-	stck.push(41);
-	stck.push(29);
-	stck.push(10);
-	stck.push(42);
-	std::cout << "Added some elements" << std::endl;
+	lst.clear();
+	is_empty(mp);
+	printSize(mp);
 
-	std::cout << "empty: " << stck.empty() << std::endl;
-	printSize(stck);
+	is_empty(mp2);
+	mp2 = mp;
+	is_empty(mp2);
 
+	it = mp.begin();
+	for (unsigned long int i = 3; i < mp.size(); ++i)
+		it++->second = i * 7;
 
+	printSize(mp);
+	printSize(mp2);
+
+	mp2.clear();
+	is_empty(mp2);
+	printSize(mp2);
 	return (0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	/*
-		it normal, map normal bien
-	*/
-
-	//TYPE::map<T1, T2>									map1;
-	
-	//TYPE::map<T1, T2>::iterator							it1(map1.begin());
-	//TYPE::map<T1, T2>::iterator							_it1(it1);
-
-
-
-
-	/*
-		it const, map const bien
-	*/
-
-	//const TYPE::map<T1, T2>								map2;
-	
-	//TYPE::map<T1, T2>::const_iterator					it2(map2.begin());
-	//TYPE::map<T1, T2>::const_iterator					_it2(it2);
-
-
-
-
-	/*
-		it normal const bien
-	*/
-
-	//TYPE::map<T1, T2>									map3;
-	
-	//TYPE::map<T1, T2>::iterator							it3 = map3.begin();
-	//TYPE::map<T1, T2>::const_iterator					_it3 = it3;
-
-
-	/*
-		Trying to get a _const <value type>_ inside a _<value type>_ and it's ok
-	*/
-
-	//const TYPE::map<T1, T2>								map4;
-	
-	//TYPE::map<T1, T2>::const_iterator						it4 = map4.begin();
-	//TYPE::map<T1, T2>::iterator							_it4 = it4;
-
-
 
 
 

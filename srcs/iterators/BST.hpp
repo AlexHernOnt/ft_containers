@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:33:50 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/20 14:52:48 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/23 20:00:37 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class node
 		node*				left;
 		node* 				right;
 		node* 				parent;
-	
+		
 		node (paired ref, node<paired> *g_parent, int g_ite) : data(ref)
 		{
 			left = NULL;

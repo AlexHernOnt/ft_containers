@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/21 20:35:38 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/23 15:12:01 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ namespace ft
 					aux = _allocator.allocate(_capacity);
 					for (size_type i = 0; i < _size; i++)
 					{
-						aux[i] = _ptr[i];
+						_allocator.construct(&aux[i], _ptr[i]);
 					}
 					if (_ptr != NULL)
 					{
@@ -269,16 +269,18 @@ namespace ft
 				if (_capacity == 0)
 				{
 					_ptr = _allocator.allocate(1);
-					_ptr[_size] = val;
+					_allocator.construct(&_ptr[_size], val);
 					_capacity++;
 				}
 				else if (_size == _capacity)
 				{
 					reserve(_capacity * 2);
-					_ptr[_size] = val;
+					_allocator.construct(&_ptr[_size], val);
 				}
 				else
-					_ptr[_size] = val;
+				{
+					_allocator.construct(&_ptr[_size], val);
+				}
 				_size++;
 			}
 

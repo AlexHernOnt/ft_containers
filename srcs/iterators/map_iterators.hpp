@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:19:14 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/21 19:25:29 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/23 20:01:01 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,7 @@ namespace ft
 
 
 
-			template <typename K, typename N>
-			map_iterator					&operator=(const map_iterator<K, N> &ref)
+			map_iterator					&operator=(const map_iterator &ref)
 			{
 				this->_ptr = ref._ptr;
 				return (*this);
@@ -175,17 +174,23 @@ namespace ft
 			//		______________________________ Cons & Dest ______________________________
 			//
 
-
-
-
-			template <typename T, typename _node_type>
-			map_iterator(_node_type *src)
+			operator		map_iterator<const _paired, node_type>(void) const
 			{
-				this->_ptr = src;
+				return map_iterator<const _paired, node_type>(this->_ptr);
 			}
 
-			template <typename T, typename _node_type>
-			map_iterator(const map_iterator  &src)
+
+			map_iterator()
+			{
+				_ptr = NULL;
+			}
+
+			map_iterator(node_type *src)
+			{
+				_ptr = src;
+			}
+			
+			map_iterator(const map_iterator &src)
 			{
 				*this = src;
 			}
@@ -201,16 +206,6 @@ namespace ft
 
 
 
-
-			map_iterator()
-			{
-				_ptr = NULL;
-			}
-
-			map_iterator(pointer	 ptr)
-			{
-				_ptr = ptr;
-			}
 
 			~map_iterator()
 			{
@@ -245,35 +240,6 @@ namespace ft
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			//template <typename K, typename N>
-			//map_iterator(N a)
-			//{
-			//	_ptr = a._ptr;
-			//}
-
-			//template <typename K, typename N>
-			//map_iterator(map_iterator<_paired, N> a)
-			//{
-			//	_ptr = a._ptr;
-			//}
 
 
 

@@ -6,7 +6,7 @@
 #    By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 14:48:46 by ahernand          #+#    #+#              #
-#    Updated: 2022/05/21 20:23:55 by ahernand         ###   ########.fr        #
+#    Updated: 2022/05/23 16:55:40 by ahernand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ $(NAME) : $(OBJS)
 
 
 # - - - - - - - - - - - - - - - - - #
-# - - - - C L E A N I N G - - - - - #
+# - - - - - - T E S T - - - - - - - #
 # - - - - - - - - - - - - - - - - - #
 
 test:
@@ -39,9 +39,20 @@ test:
 
 test_vector:
 	cd srcs/containers_test && sh do.sh vector
+	
+test_map:
+	cd srcs/containers_test && sh do.sh map
 
 test_stack:
 	cd srcs/containers_test && sh do.sh stack
+
+
+
+
+# - - - - - - - - - - - - - - - - - #
+# - - - - C L E A N I N G - - - - - #
+# - - - - - - - - - - - - - - - - - #
+
 
 clean:
 	@rm -f $(OBJS)
