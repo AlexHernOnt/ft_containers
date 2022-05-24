@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:19:14 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/24 19:03:08 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/24 21:00:15 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,9 @@ namespace ft
 			typedef node_type&								reference;
 			typedef _paired									paired;
 
-
+		protected:
 			node_type										*_ptr;
-		private:
-			_comp													_compare;
+			_comp											_compare;
 		public:
 
 			//
@@ -147,7 +146,9 @@ namespace ft
 
 			paired*							operator->() const
 			{
-				return (&_ptr->data);
+				if (_ptr != NULL)
+					return (&_ptr->data);
+				return (NULL);
 			}
 
 

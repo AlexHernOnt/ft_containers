@@ -6,11 +6,11 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/24 19:46:04 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/24 21:06:15 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define TYPE std
+#define TYPE ft
 
 #include "map.hpp"
 #include "vector.hpp"
@@ -120,66 +120,41 @@ void	printReverse(TYPE::map<T1, T2> &mp)
 
 #pragma endregion
 
-#define T1 int
-#define T2 int
-typedef _pair<const T1, T2> T3;
+#define T1 char
+#define T2 foo<float>
+typedef TYPE::map<T1, T2> _map;
+typedef _map::const_iterator const_it;
+
+static unsigned int i = 0;
+
+void	ft_comp(const _map &mp, const const_it &it1, const const_it &it2)
+{
+	bool res[2];
+
+	std::cout << "\t-- [" << ++i << "] --" << std::endl;
+	res[0] = mp.key_comp()(it1->first, it2->first);
+	res[1] = mp.value_comp()(*it1, *it2);
+	std::cout << "with [" << it1->first << " and " << it2->first << "]: ";
+	std::cout << "key_comp: " << res[0] << " | " << "value_comp: " << res[1] << std::endl;
+}
 
 int		main(void)
 {
-	std::list<T3> lst;
-	unsigned int lst_size = 7;
-	for (unsigned int i = 0; i < lst_size; ++i)
-		lst.push_back(T3(lst_size - i, i));
+	_map	mp;
 
-	TYPE::map<T1, T2> mp(lst.begin(), lst.end());
-	TYPE::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
-
-	TYPE::map<T1, T2> mp_range(it, --(--ite));
-	for (int i = 0; it != ite; ++it)
-		it->second = ++i * 5;
-
-	it = mp.begin(); ite = --(--mp.end());
-	TYPE::map<T1, T2> mp_copy(mp);
-	for (int i = 0; it != ite; ++it)
-		it->second = ++i * 7;
-
-
-
-
-	std::cout << "\t-- PART ONE --" << std::endl;
-	//printSize(mp);
-	//printSize(mp_range);
-	printSize(mp_copy);
-
-	mp = mp_copy;
-	//mp_copy = mp_range;
-	//mp_range.clear();
-
-
-
-
-	std::cout << "\t-- PART TWO --" << std::endl;
+	mp['a'] = 2.3;
+	mp['b'] = 1.4;
+	mp['c'] = 0.3;
+	mp['d'] = 4.2;
 	printSize(mp);
-	//printSize(mp_range);
-	//printSize(mp_copy);
+
+	for (const_it it1 = mp.begin(); it1 != mp.end(); ++it1)
+		for (const_it it2 = mp.begin(); it2 != mp.end(); ++it2)
+			ft_comp(mp, it1, it2);
+
+	printSize(mp);
 	return (0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

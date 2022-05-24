@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:55:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/24 19:44:12 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/24 21:01:44 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ namespace ft
 			typedef ft::reverse_map_iterator<const_iterator>						const_reverse_iterator;
 			typedef ptrdiff_t														difference_type;
 			typedef size_t															size_type;
-			node<value_type>														*_root;
 
 		private:
+			node<value_type>														*_root;
 			allocator_type															_allocator;
 			Compare																	_compare;
 			size_type																_size;
@@ -261,7 +261,7 @@ namespace ft
 
 			void							erase(iterator position)
 			{
-				erase (position._ptr->data.first);
+				erase (position->first);
 			}
 
 
@@ -537,12 +537,7 @@ namespace ft
 
 			map&							operator= (const map& x)
 			{
-				Key		a;
-				T		b;
-
-				clear_tree(_root);
-				_size = 0;
-				_root = new node<value_type>(ft::pair<const Key, T>(a, b), NULL, 1);
+				clear();
 				insert(x.begin(), x.end());
 				return (*this);
 			}
@@ -623,9 +618,9 @@ namespace ft
 	};
 
 
-	///*
-	//**		___________________		External Operators     ___________________
-	//*/
+	/*
+	**		___________________		External Operators     ___________________
+	*/
 
 
 
