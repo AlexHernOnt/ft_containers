@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:19:14 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/23 20:01:01 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/24 19:03:08 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 namespace ft
 {
-	template <class _paired, class node_type>
+	template <class _paired, class node_type, class _comp>
 	class map_iterator
 	{
 		public:
@@ -28,7 +28,7 @@ namespace ft
 
 			node_type										*_ptr;
 		private:
-
+			_comp													_compare;
 		public:
 
 			//
@@ -43,8 +43,8 @@ namespace ft
 
 
 
-			template <typename K, typename N>
-			bool					operator!=(const map_iterator<K, N> &ref) const
+			template <typename K, typename N, typename C>
+			bool					operator!=(const map_iterator<K, N, C> &ref) const
 			{
 				if (this->_ptr != ref._ptr)
 				{
@@ -56,21 +56,8 @@ namespace ft
 
 
 
-			//template <typename K>
-			//bool					operator!=(const ft::reverse_map_iterator<k> &ref) const
-			//{
-			//	if (*this != ref.base())
-			//	{
-			//		return (true);
-			//	}
-			//	return (false);
-			//}
-
-
-
-
-			template <typename K, typename N>
-			bool					operator==(const map_iterator<K, N> &ref) const
+			template <typename K, typename N, typename C>
+			bool					operator==(const map_iterator<K, N, C> &ref) const
 			{
 				if (this->_ptr == ref._ptr)
 				{
@@ -95,7 +82,7 @@ namespace ft
 
 			map_iterator					&operator++()
 			{
-				_ptr = bst_increment(_ptr);
+				_ptr = bst_increment(_ptr, _compare);
 				return (*this);
 			}
 
@@ -108,7 +95,7 @@ namespace ft
 
 			map_iterator					&operator--()
 			{
-				_ptr = bst_decrement(_ptr);
+				_ptr = bst_decrement(_ptr, _compare);
 				return (*this);
 			}
 
@@ -174,11 +161,10 @@ namespace ft
 			//		______________________________ Cons & Dest ______________________________
 			//
 
-			operator		map_iterator<const _paired, node_type>(void) const
+			operator		map_iterator<const _paired, node_type, _comp>(void) const
 			{
-				return map_iterator<const _paired, node_type>(this->_ptr);
+				return (map_iterator<const _paired, node_type, _comp>(this->_ptr));
 			}
-
 
 			map_iterator()
 			{
@@ -194,18 +180,6 @@ namespace ft
 			{
 				*this = src;
 			}
-
-
-
-
-
-
-
-
-
-
-
-
 
 			~map_iterator()
 			{
@@ -455,8 +429,8 @@ namespace ft
 
 
 
-			template <typename K, typename N>
-			reverse_map_iterator(map_iterator<K, N> a)
+			template <typename K, typename N, typename C>
+			reverse_map_iterator(map_iterator<K, N, C> a)
 			{
 				_base = a;
 			}

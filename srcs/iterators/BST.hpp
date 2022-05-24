@@ -6,13 +6,13 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:33:50 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/23 20:00:37 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/24 19:40:23 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __BST_HPP__
 # define __BST_HPP__
-# include  <iostream>
+# include <iostream>
 
 template <class paired>
 class node
@@ -39,321 +39,323 @@ class node
 
 
 
-
-
-/*
-**									Create Node
-*/
-
-
-
-
-template <class paired>
-node<paired>						*ft_move_sentinel(node<paired> *prev, node<paired> *sentinel, paired val)
-{
-	node<paired>					*aux = new node<paired>(val, prev, 0);
+	/*
+	**									Create Node
+	*/
 	
-	aux->right = sentinel;
-	sentinel->parent = aux;
-	return (aux);
-}
-
-
-
-
-template <class paired>
-node<paired>						*new_node(node<paired> *ptr, node<paired> *prev, paired val)
-{
-	if (ptr == NULL)
-		return (new node<paired>(val, prev, 0));
-	if (ptr->_ite == 1)
+	
+	
+	
+	template <class paired>
+	node<paired>						*ft_move_sentinel(node<paired> *prev, node<paired> *sentinel, paired val)
 	{
-		ptr = ft_move_sentinel(prev, ptr, val);
-		return (ptr);		
-	}
-	if (val.first > ptr->data.first)
-	{
-		if (ptr->right != NULL && ptr->right->_ite == 1)
-		{
-			ptr->right = ft_move_sentinel(ptr, ptr->right, val);
-		}
-		else
-			ptr->right = new_node(ptr->right, ptr, val);
-	}
-	else if (val.first < ptr->data.first)
-	{
-		ptr->left = new_node(ptr->left, ptr, val);
-	}
-	return (ptr);
-}
-
-
-
-
-
-
-
-
-/*
-**									Delete Node
-*/
-
-
-
-
-template <class paired>
-node<paired>						*min_value_node(node<paired> *ptr)
-{
-	node<paired>		*current = ptr;
-
-	while (current && current->left != NULL)
-		current = current->left;
-	return (current);	
-}
-
-
-
-
-template <class paired>
-node<paired>						*max_value_node(node<paired> *ptr)
-{
-	node<paired>		*current = ptr;
-
-	while (current && current->right != NULL && current->right->_ite != 1)
-		current = current->right;
-	return (current);	
-}
-
-
-
-
-template <class paired>
-void								parent_point_to_second_not_first(node<paired> *ptr, node<paired> *aux, node<paired> *root)
-{
-	if (root != NULL)
-	{
-		parent_point_to_second_not_first(ptr, aux, root->left);
+		node<paired>					*aux = new node<paired>(val, prev, 0);
 		
-		if (root->left == ptr)
-			root->left = aux;
-		else if (root->right == ptr)
-			root->right = aux;
-		parent_point_to_second_not_first(ptr, aux, root->right);
+		aux->right = sentinel;
+		sentinel->parent = aux;
+		return (aux);
 	}
-}
-
-
-
-
-template <class paired>
-node<paired>						*delete_node(node<paired> *ptr, paired val, node<paired> *root)
-{
-	if (ptr == NULL)
-		return (ptr);
-	else if (val.first < ptr->data.first)
-		ptr->left = delete_node(ptr->left, val, root);
-	else if (val.first > ptr->data.first)
-		ptr->right = delete_node(ptr->right, val, root);
-	else if (ptr->_ite == 0)
-	{
-		if (ptr->right == NULL && ptr->left == NULL)
-		{
-			delete ptr;
-			return (NULL);
-		}
-		else if (ptr->left == NULL)
-		{
-			node<paired> *aux = ptr->right;
-			aux->parent = ptr->parent;
-			delete ptr;
-			return (aux);
-		}
-		else if (ptr->right == NULL)											//maybe check if the right node is ite == 1
-		{
-			node<paired> *aux = ptr->left;
-			aux->parent = ptr->parent;
-			delete ptr;
-			return (aux);
-		}
-		/*
-			1º Obtener el mínimo en la rama derecha (tmp)
-			2º Hacer copia del valor de tmp. Y los links de aquel nodo que queremos eliminar 
-			3º Borramos el nodo tmp
-		*/
 	
-		node<paired>		*tmp = min_value_node(ptr->right);
-		node<paired>		*aux = new node<paired>(tmp->data, ptr->parent, tmp->_ite);
-
-		aux->parent = ptr->parent;
-		ptr->left->parent = aux;
-		aux->left = ptr->left;
-		aux->right = delete_node(ptr->right, tmp->data, root);
-		if (aux->right != NULL)
-			aux->right->parent = aux;
-		if (root == ptr)
+	
+	
+	
+	template <class paired, class _comp>
+	node<paired>						*new_node(node<paired> *ptr, node<paired> *prev, paired val, _comp comp)
+	{
+		if (ptr == NULL)
+			return (new node<paired>(val, prev, 0));
+		if (ptr->_ite == 1)
 		{
-			delete (ptr);
-			return (aux);
-		}
-		parent_point_to_second_not_first(ptr, aux, root);
-		delete ptr;
-		ptr = aux;
-	}
-	return (ptr);
-}
-
-
-
-
-
-
-
-
-/*
-**									Print in order
-*/
-
-
-
-
-template <class paired>
-void								in_order(node<paired> *ptr)
-{
-	if (ptr != NULL)
-	{
-		in_order(ptr->left);
-		std::cout << ptr->data.first << std::endl;
-		in_order(ptr->right);
-	}
-}
-
-
-
-
-
-
-
-
-/*
-**									Free
-*/
-
-
-
-
-template <class paired>
-void								clear_tree(node<paired> *ptr)
-{
-	if (ptr != NULL)
-	{
-		clear_tree(ptr->left);
-		delete ptr;
-		clear_tree(ptr->right);
-	}
-}
-
-
-
-
-
-
-
-
-/*
-**									Iterator stuff
-*/
-
-
-
-
-template <class paired>
-node<paired>						*bst_get_first(node<paired> *ptr)
-{
-	while (ptr != NULL && ptr->left != NULL)
-		ptr = ptr->left;
-	return (ptr);
-}
-
-
-
-
-template <class paired>
-node<paired>						*bst_get_last(node<paired> *ptr)
-{
-	while (ptr != NULL && ptr->right != NULL)
-		ptr = ptr->right;
-	return (ptr);
-}
-
-
-
-
-template <class paired>
-node<paired>						*bst_increment(node<paired> *ptr)
-{
-	if (ptr->right != NULL)
-		return (min_value_node(ptr->right));
-	else
-	{
-		if (ptr->parent != NULL && ptr->parent->data.first > ptr->data.first)
-			return (ptr->parent);
-		else
+			ptr = ft_move_sentinel(prev, ptr, val);
+			return (ptr);		
+		}		
+	
+		if (!comp(val.first, ptr->data.first) && val.first != ptr->data.first)
 		{
-			node<paired>		*aux;
-			
-			aux = ptr;
-			while (aux->parent != NULL && aux->parent->data.first < aux->data.first)
-				aux = aux->parent;
-			if (aux->parent == NULL)
+			if (ptr->right != NULL && ptr->right->_ite == 1)
 			{
-				return (ptr->right);
+				ptr->right = ft_move_sentinel(ptr, ptr->right, val);
 			}
-			return (aux->parent);
+			else
+				ptr->right = new_node(ptr->right, ptr, val, comp);
+		}
+		else if (comp(val.first, ptr->data.first) && val.first != ptr->data.first)
+		{
+			ptr->left = new_node(ptr->left, ptr, val, comp);
+		}
+		return (ptr);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	**									Delete Node
+	*/
+	
+	
+	
+	
+	template <class paired>
+	node<paired>						*min_value_node(node<paired> *ptr)
+	{
+		node<paired>		*current = ptr;
+	
+		while (current && current->left != NULL)
+			current = current->left;
+		return (current);	
+	}
+	
+	
+	
+	
+	template <class paired>
+	node<paired>						*max_value_node(node<paired> *ptr)
+	{
+		node<paired>		*current = ptr;
+	
+		while (current && current->right != NULL && current->right->_ite != 1)
+			current = current->right;
+		return (current);	
+	}
+	
+	
+	
+	
+	template <class paired>
+	void								parent_point_to_second_not_first(node<paired> *ptr, node<paired> *aux, node<paired> *root)
+	{
+		if (root != NULL)
+		{
+			parent_point_to_second_not_first(ptr, aux, root->left);
+			
+			if (root->left == ptr)
+				root->left = aux;
+			else if (root->right == ptr)
+				root->right = aux;
+			parent_point_to_second_not_first(ptr, aux, root->right);
 		}
 	}
-}
-
-
-
-
-template <class paired>
-node<paired>						*bst_decrement(node<paired> *ptr)
-{
-	if (ptr->_ite == 1)
+	
+	
+	
+	
+	template <class paired, class _comp>
+	node<paired>						*delete_node(node<paired> *ptr, paired val, node<paired> *root, _comp comp)
 	{
-		return (ptr->parent);
+		if (ptr == NULL)
+			return (ptr);
+		else if (comp(val.first, ptr->data.first) && val.first != ptr->data.first)
+			ptr->left = delete_node(ptr->left, val, root, comp);
+		else if (!comp(val.first, ptr->data.first) && val.first != ptr->data.first)
+			ptr->right = delete_node(ptr->right, val, root, comp);
+		else if (ptr->_ite == 0)
+		{
+			if (ptr->right == NULL && ptr->left == NULL)
+			{
+				delete ptr;
+				return (NULL);
+			}
+			else if (ptr->left == NULL)
+			{
+				node<paired> *aux = ptr->right;
+				aux->parent = ptr->parent;
+				delete ptr;
+				return (aux);
+			}
+			else if (ptr->right == NULL)											//maybe check if the right node is ite == 1
+			{
+				node<paired> *aux = ptr->left;
+				aux->parent = ptr->parent;
+				delete ptr;
+				return (aux);
+			}
+			/*
+				1º Obtener el mínimo en la rama derecha (tmp)
+				2º Hacer copia del valor de tmp. Y los links de aquel nodo que queremos eliminar 
+				3º Borramos el nodo tmp
+			*/
+		
+			node<paired>		*tmp = min_value_node(ptr->right);
+			node<paired>		*aux = new node<paired>(tmp->data, ptr->parent, tmp->_ite);
+	
+			aux->parent = ptr->parent;
+			ptr->left->parent = aux;
+			aux->left = ptr->left;
+			aux->right = delete_node(ptr->right, tmp->data, root, comp);
+			if (aux->right != NULL)
+				aux->right->parent = aux;
+			if (root == ptr)
+			{
+				delete (ptr);
+				return (aux);
+			}
+			parent_point_to_second_not_first(ptr, aux, root);
+			delete ptr;
+			ptr = aux;
+		}
+		return (ptr);
 	}
-	if (ptr->left != NULL)
-		return (max_value_node(ptr->left));
-	else
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	**									Print in order
+	*/
+	
+	
+	
+	
+	template <class paired>
+	void								in_order(node<paired> *ptr)
 	{
-		if (ptr->parent != NULL && ptr->parent->data.first < ptr->data.first)
-			return (ptr->parent);
+		if (ptr != NULL)
+		{
+			in_order(ptr->left);
+			std::cout << ptr->data.first << std::endl;
+			in_order(ptr->right);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	**									Free
+	*/
+	
+	
+	
+	
+	template <class paired>
+	void								clear_tree(node<paired> *ptr)
+	{
+		if (ptr != NULL)
+		{
+			clear_tree(ptr->left);
+			delete ptr;
+			clear_tree(ptr->right);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	**									Iterator stuff
+	*/
+	
+	
+	
+	
+	template <class paired>
+	node<paired>						*bst_get_first(node<paired> *ptr)
+	{
+		while (ptr != NULL && ptr->left != NULL)
+			ptr = ptr->left;
+		return (ptr);
+	}
+	
+	
+	
+	
+	template <class paired>
+	node<paired>						*bst_get_last(node<paired> *ptr)
+	{
+		while (ptr != NULL && ptr->right != NULL)
+			ptr = ptr->right;
+		return (ptr);
+	}
+	
+	
+	
+	
+	template <class paired, class _comp>
+	node<paired>						*bst_increment(node<paired> *ptr, _comp comp)
+	{
+		if (ptr->right != NULL)
+			return (min_value_node(ptr->right));
 		else
 		{
-			node<paired>		*aux;
-
-			aux = ptr;
-			while (aux->parent != NULL && aux->parent->data.first > ptr->data.first)
-				aux = aux->parent;
-			if (aux->parent != NULL)
+			
+			if (ptr->parent != NULL && !comp(ptr->parent->data.first, ptr->data.first) && ptr->parent->data.first != ptr->data.first)
+				return (ptr->parent);
+			else
+			{
+				node<paired>		*aux;
+				
+				aux = ptr;
+				
+				while (aux->parent != NULL && comp(aux->parent->data.first, aux->data.first) && aux->parent->data.first != aux->data.first)
+					aux = aux->parent;
+				if (aux->parent == NULL)
+				{
+					return (ptr->right);
+				}
 				return (aux->parent);
-			return (ptr);
+			}
 		}
 	}
+	
+	
+	
+	
+	template <class paired, class _comp>
+	node<paired>						*bst_decrement(node<paired> *ptr, _comp comp)
+	{
+		if (ptr->_ite == 1)
+		{
+			return (ptr->parent);
+		}
+		if (ptr->left != NULL)
+			return (max_value_node(ptr->left));
+		else
+		{
+			
+			if (ptr->parent != NULL && comp(ptr->parent->data.first, ptr->data.first) && ptr->parent->data.first != ptr->data.first)
+				return (ptr->parent);
+			else
+			{
+				node<paired>		*aux;
+	
+				aux = ptr;
+				while (aux->parent != NULL && !comp(aux->parent->data.first , ptr->data.first) && aux->parent->data.first != ptr->data.first)
+					aux = aux->parent;
+				if (aux->parent != NULL)
+					return (aux->parent);
+				return (ptr);
+			}
+		}
+	}
+
+
+
+
+	template <class paired, class K, class _comp>
+	node<paired>						*bst_search(node<paired> *ptr, K key, _comp comp)
+	{
+		if (ptr == NULL || ptr->data.first == key)
+			return (ptr);
+
+		if (comp(ptr->data.first, key))
+			return (bst_search(ptr->right, key, comp));
+		return (bst_search(ptr->left, key, comp));
 }
-
-
-
-
-template <class paired, class K>
-node<paired>						*bst_search(node<paired> *ptr, K key)
-{
-	if (ptr == NULL || ptr->data.first == key)
-		return (ptr);
-	if (ptr->data.first < key)
-		return (bst_search(ptr->right, key));
-	return (bst_search(ptr->left, key));
-}
-
 #endif

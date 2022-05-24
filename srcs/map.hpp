@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:55:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/23 20:26:04 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/24 19:44:12 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,28 @@ namespace ft
 	class map
 	{
 		public:
-			typedef Key												key_type;
-			typedef T												mapped_type;
-			typedef ft::pair<const Key, T>							value_type;
-			typedef	Compare											key_compare;
-			typedef Alloc											allocator_type;
-			typedef value_type&										reference;
-			typedef const value_type&								const_reference;
-			typedef value_type*										pointer;
-			typedef const value_type*								const_pointer;
-			typedef node<value_type>								node_type;
-			typedef ft::map_iterator<value_type, node_type>			iterator;
-			typedef ft::map_iterator<const value_type, node_type>	const_iterator;
-			typedef ft::reverse_map_iterator<iterator>				reverse_iterator;
-			typedef ft::reverse_map_iterator<const_iterator>		const_reverse_iterator;
-			typedef ptrdiff_t										difference_type;
-			typedef size_t											size_type;
-			node<value_type>										*_root;
+			typedef Key																key_type;
+			typedef T																mapped_type;
+			typedef ft::pair<const Key, T>											value_type;
+			typedef	Compare															key_compare;
+			typedef Alloc															allocator_type;
+			typedef value_type&														reference;
+			typedef const value_type&												const_reference;
+			typedef value_type*														pointer;
+			typedef const value_type*												const_pointer;
+			typedef node<value_type>												node_type;
+			typedef ft::map_iterator<value_type, node_type, Compare>				iterator;
+			typedef ft::map_iterator<const value_type, node_type, Compare>			const_iterator;
+			typedef ft::reverse_map_iterator<iterator>								reverse_iterator;
+			typedef ft::reverse_map_iterator<const_iterator>						const_reverse_iterator;
+			typedef ptrdiff_t														difference_type;
+			typedef size_t															size_type;
+			node<value_type>														*_root;
 
 		private:
-			allocator_type											_allocator;
-			key_compare												_compare;
-			size_type												_size;
+			allocator_type															_allocator;
+			Compare																	_compare;
+			size_type																_size;
 
 		public:
 
@@ -149,13 +149,13 @@ namespace ft
 			{
 				node_type					*aux;
 
-				aux = bst_search(_root, k);
+				aux = bst_search(_root, k, _compare);
 				if (aux == NULL)
 				{
 					T		b;
 
 					insert(ft::pair<const Key, T>(k, b));
-					aux = bst_search(_root, k);
+					aux = bst_search(_root, k, _compare);
 				}
 				return (aux->data.second);
 			}
@@ -183,7 +183,7 @@ namespace ft
 			{
 				bool						existed;
 
-				if (bst_search(_root, val.first) == NULL)
+				if (bst_search(_root, val.first, _compare) == NULL)
 				{
 					existed = true;
 				}
@@ -200,11 +200,13 @@ namespace ft
 					_root->right->parent = _root;
 				}
 				else
-					new_node(_root, _root, val);
+				{
+					new_node(_root, _root, val, _compare);
+				}
 
 				if (existed == true)
 					_size++;
-				return (ft::pair<iterator, bool>(iterator(bst_search(_root, val.first)), existed));
+				return (ft::pair<iterator, bool>(iterator(bst_search(_root, val.first, _compare)), existed));
 			}
 
 
@@ -215,7 +217,7 @@ namespace ft
 				if (&position == &position)
 					;
 				insert(val);
-				return (iterator(bst_search(_root, val.first)));
+				return (iterator(bst_search(_root, val.first, _compare)));
 			}
 
 
@@ -247,9 +249,9 @@ namespace ft
 			{
 				mapped_type				mapped_aux;
 
-				if (bst_search(_root, val) == NULL)
+				if (bst_search(_root, val, _compare) == NULL)
 					return (0);				
-				_root = delete_node(_root, ft::pair<const key_type, mapped_type>(val, mapped_aux), _root);
+				_root = delete_node(_root, ft::pair<const key_type, mapped_type>(val, mapped_aux), _root, _compare);
 				--_size;
 				return (1);
 			}
@@ -390,7 +392,7 @@ namespace ft
 			{
 				node_type					*aux;
 
-				aux = bst_search(_root, k);
+				aux = bst_search(_root, k, _compare);
 				if (aux == NULL)
 					return (end());
 				return (iterator(aux));
@@ -403,7 +405,7 @@ namespace ft
 			{
 				node_type						*aux;
 
-				aux = bst_search(_root, k);
+				aux = bst_search(_root, k, _compare);
 				if (aux == NULL)
 					return (end());
 				return (const_iterator(aux));
@@ -414,7 +416,7 @@ namespace ft
 
 			size_type count (const key_type& k) const
 			{
-				return (bst_search(_root, k) != NULL);
+				return (bst_search(_root, k, _compare) != NULL);
 			}
 
 
@@ -617,12 +619,8 @@ namespace ft
 					_compare = x._compare; 
 					_root = x._root;
 				}
+				
 	};
-
-
-
-
-
 
 
 	///*
@@ -678,7 +676,6 @@ namespace ft
 
 		for ( ; (first1 != last1) && (first2 != last2); ++first1, (void) ++first2)
 		{
-			//std::cout << std::endl << "|| " << first1->second << " _ " << first2->second << std::endl;
 			if (first1->second < first2->second)
 				return (true);
 			if (first1->second > first2->second)
@@ -737,6 +734,7 @@ namespace ft
 	{
 		return ((lhs == rhs) || (lhs > rhs));
 	}
+
 }
 
 #endif
