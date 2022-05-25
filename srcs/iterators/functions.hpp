@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:28:21 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/19 18:45:47 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:41:40 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ namespace ft
 	};
 
 
+
+
+	/*
+	**	Iterator_traits
+	*/
+
 	struct IteratorTrait
 	{
 
@@ -41,6 +47,51 @@ namespace ft
 	**	is_integral
 	*/
 
+	template <class T, T v>
+	struct	integral_constant
+	{
+		static const T					value = v;
+		typedef T						value_type;
+		typedef integral_constant<T,v>	type;
+		
+		operator		T() const
+		{
+			return (v);
+		}
+	};
+	
+	
+	template<typename>
+				struct	_is_integral_help :								public std::false_type	{ };
+	template<> struct	_is_integral_help <bool> :						public std::true_type	{ };
+	template<> struct	_is_integral_help <char> :						public std::true_type	{ };
+	template<> struct	_is_integral_help <wchar_t> :					public std::true_type	{ };
+	template<> struct	_is_integral_help <signed char> :				public std::true_type	{ };
+	template<> struct	_is_integral_help <short int> :					public std::true_type	{ };
+	template<> struct	_is_integral_help <int> :						public std::true_type	{ };
+	template<> struct	_is_integral_help <long int> :					public std::true_type	{ };
+	template<> struct	_is_integral_help <long long int> :				public std::true_type	{ };
+	template<> struct	_is_integral_help <unsigned char> :				public std::true_type	{ };
+	template<> struct	_is_integral_help <unsigned int> :				public std::true_type	{ };
+	template<> struct	_is_integral_help <unsigned short int> :		public std::true_type	{ };
+	template<> struct	_is_integral_help <unsigned long long int> :	public std::true_type	{ };
+	template<> struct	_is_integral_help <unsigned long int> :			public std::true_type	{ };
+	
+	template <typename T> struct	remove_const						{ typedef T	type; };
+	template <typename T> struct	remove_const <T const>				{ typedef T	type; };
+	template <typename T> struct	remove_volatile						{ typedef T	type; };
+	template <typename T> struct	remove_volatile <T volatile>		{ typedef T	type; };
+	
+	template <typename T>
+	struct	remove_cv
+	{
+		typedef typename	remove_const<typename remove_volatile<T>::type>::type type;
+	};
+	
+	template <class T>
+	struct	is_integral :
+		public integral_constant<bool, (_is_integral_help<typename remove_cv<T>::type>::value)> {	};
+	
 
 
 

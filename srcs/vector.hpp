@@ -6,15 +6,12 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/23 15:12:01 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:52:29 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __VECTOR_HPP__
 # define __VECTOR_HPP__
-# include <cmath>
-# include <iostream>
-# include <type_traits>
 # include "iterators/functions.hpp"
 # include "iterators/vector_iterators.hpp"
 
@@ -108,7 +105,6 @@ namespace ft
 				return (_allocator.max_size());
 			}
 
-			//When in resize: n < (_capacity *2), ej(80 < 128) the reisize goes to that 128 instead of the 80
 			void		resize (size_type n, value_type val = value_type())
 			{
 				if (n <= _size)
@@ -179,6 +175,8 @@ namespace ft
 			}
 
 
+
+
 			reference at(size_type n)
 			{
 				if (n < size())
@@ -196,6 +194,8 @@ namespace ft
 			}
 
 
+
+
 			reference front()
 			{
 				return (_ptr[0]);
@@ -205,6 +205,8 @@ namespace ft
 			{
 				return (_ptr[0]);
 			}
+
+
 
 
 			reference back()
@@ -236,8 +238,10 @@ namespace ft
 			}
 
 
+
+
 			template <class InputIterator>
-			void assign (typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
+			void assign (typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
 			{
 				size_type			i;
 				InputIterator		it;
@@ -262,6 +266,8 @@ namespace ft
 			}
 
 
+
+
 			//		_________________               Push Back               _________________
 			
 			void	push_back (const value_type& val)
@@ -283,6 +289,9 @@ namespace ft
 				}
 				_size++;
 			}
+
+
+
 
 			//		_________________               Push Back               _________________
 
@@ -337,7 +346,10 @@ namespace ft
 				}
 				return (position);
 			}
-			
+
+
+
+
 			void insert (iterator position, size_type n, const value_type& val)
 			{
 				iterator	it;
@@ -377,8 +389,10 @@ namespace ft
 			}
 
 
+
+
 			template <class InputIterator>
-			void	insert(iterator position, InputIterator first, typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type last) 
+			void	insert(iterator position, InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last) 
 			{
 				size_type		size_iterators;
 				iterator		it = begin();
@@ -460,6 +474,9 @@ namespace ft
 				}
 				return (it);				
 			}
+
+
+
 
 			iterator erase (iterator first, iterator last)
 			{
@@ -589,7 +606,7 @@ namespace ft
 
 
 			template <class InputIterator>
-			vector (typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last, const allocator_type& alloc = allocator_type())
+			vector (typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last, const allocator_type& alloc = allocator_type())
 			{
 
 				size_type		i = 0;
@@ -635,6 +652,9 @@ namespace ft
 				if (_capacity != 0)
 					_allocator.deallocate(_ptr, _capacity);
 			}
+
+
+
 
 			private:
 				void	complete_memory_copy(vector	&x)

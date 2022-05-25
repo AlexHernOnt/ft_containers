@@ -6,15 +6,14 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 20:02:32 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/23 16:31:19 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:50:14 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __STACK_HPP__
 # define __STACK_HPP__
-# include <iostream>
-# include "iterators/functions.hpp"
 # include "vector.hpp"
+# include "iterators/functions.hpp"
 
 namespace ft
 {

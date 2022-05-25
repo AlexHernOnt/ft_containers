@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 14:48:17 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/20 15:31:05 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/25 13:42:21 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ namespace ft
 			typedef value_type&								reference;
 			typedef const value_type*						const_pointer;
 			typedef const value_type&						const_reference;
-			pointer											m_ptr;
 		private:
+			pointer											m_ptr;
 
 		public:
 

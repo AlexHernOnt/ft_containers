@@ -6,16 +6,14 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:55:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/24 21:01:44 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:50:54 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __MAP_HPP__
 # define __MAP_HPP__
-# include <iostream>
 # include "iterators/functions.hpp"
 # include "iterators/map_iterators.hpp"
-# include "iterators/BST.hpp"
 
 namespace ft
 {

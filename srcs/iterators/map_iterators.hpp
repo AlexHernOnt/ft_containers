@@ -6,20 +6,20 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:19:14 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/24 21:00:15 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:50:39 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __MAP_ITERATORS__
 # define __MAP_ITERATORS__
 # include "BST.hpp"
-# include <iostream>
 
 namespace ft
 {
 	template <class _paired, class node_type, class _comp>
 	class map_iterator
 	{
+		
 		public:
 			typedef node_type* 								pointer;
 			typedef node_type&								reference;
@@ -42,8 +42,7 @@ namespace ft
 
 
 
-			template <typename K, typename N, typename C>
-			bool					operator!=(const map_iterator<K, N, C> &ref) const
+			bool					operator!=(const map_iterator &ref) const
 			{
 				if (this->_ptr != ref._ptr)
 				{
@@ -55,8 +54,7 @@ namespace ft
 
 
 
-			template <typename K, typename N, typename C>
-			bool					operator==(const map_iterator<K, N, C> &ref) const
+			bool					operator==(const map_iterator &ref) const
 			{
 				if (this->_ptr == ref._ptr)
 				{

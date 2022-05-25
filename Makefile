@@ -6,7 +6,7 @@
 #    By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 14:48:46 by ahernand          #+#    #+#              #
-#    Updated: 2022/05/24 19:00:31 by ahernand         ###   ########.fr        #
+#    Updated: 2022/05/25 16:27:04 by ahernand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,6 @@ $(NAME) : $(OBJS)
 # - - - - - - - - - - - - - - - - - #
 # - - - - - - T E S T - - - - - - - #
 # - - - - - - - - - - - - - - - - - #
-
-test:
-	cd srcs/containers_test && bash do.sh map
 
 test_vector:
 	cd srcs/containers_test && bash do.sh vector
