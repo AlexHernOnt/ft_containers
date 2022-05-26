@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:08:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/25 16:52:29 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:16:16 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,7 +324,7 @@ namespace ft
 				}
 				if (it != ite)
 				{
-					reserve(_size + 1);			// Too slow 1 to 1, expands only 1 time each, have to expand to x2 duuuhhh
+					reserve(_size + 1);
 					_size++;
 					size_t a = _size - 1;
 					size_t b = _size - 2;
@@ -345,47 +345,6 @@ namespace ft
 					return (it);
 				}
 				return (position);
-			}
-
-
-
-
-			void insert (iterator position, size_type n, const value_type& val)
-			{
-				iterator	it;
-				iterator	ite;
-				size_type	i;
-
-				it = begin();
-				ite = end();
-				ite++;
-				i = 0;
-
-				while (it != position && it != ite)
-				{
-					it++;
-					i++;
-				}
-				if (it != ite)
-				{
-					reserve(_size + n);
-					_size = _size + n;
-					size_type a = i + n;
-					size_type b = i;
-
-					while (a != _size)
-					{
-						_ptr[a] = _ptr[b];
-						a++;
-						b++;
-					}
-					a = i;
-					while (a < i + n)
-					{
-						_ptr[a] = val;
-						a++;
-					}
-				}
 			}
 
 
@@ -447,23 +406,62 @@ namespace ft
 
 
 
+			void insert (iterator position, size_type n, const value_type& val)
+			{
+				iterator	it;
+				iterator	ite;
+				size_type	i;
+
+				it = begin();
+				ite = end();
+				ite++;
+				i = 0;
+
+				while (it != position && it != ite)
+				{
+					it++;
+					i++;
+				}
+				if (it != ite)
+				{
+					reserve(_size + n);
+					_size = _size + n;
+					size_type a = i + n;
+					size_type b = i;
+
+					while (a != _size)
+					{
+						_ptr[a] = _ptr[b];
+						a++;
+						b++;
+					}
+					a = i;
+					while (a < i + n)
+					{
+						_ptr[a] = val;
+						a++;
+					}
+				}
+			}
+
+
 			//		_________________                 Erease                 _________________
 
 			iterator erase (iterator position)
 			{
 				iterator	it = begin();
 				iterator	ite = end();
-				size_t		delete_pos = 0;
+				size_t		destroy_pos = 0;
 				size_t		a;
 
 				while (it != position && it != ite)
 				{
-					delete_pos++;
+					destroy_pos++;
 					it++;
 				}
 				if (it != ite)
 				{
-					a = delete_pos;
+					a = destroy_pos;
 					while (a + 1 != _size)
 					{
 						_ptr[a] = _ptr[a + 1];

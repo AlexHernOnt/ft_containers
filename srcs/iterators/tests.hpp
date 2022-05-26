@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:38:36 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/23 20:46:30 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/26 20:20:49 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <sys/time.h>
 # include <stdio.h>
+void	ft_every_test();
 void	test_constructors();
 void	test_assign();
 long	time_now(struct timeval	*start);
@@ -25,6 +26,7 @@ void	print_vector(TYPE::vector<T> aux);
 void	test_vector_iterators();
 void	test_vector_reverse_iterators();
 void	test_vector();
-
+void	test_map();
+void	test_stack();
 
 #endif

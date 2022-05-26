@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:55:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/25 16:50:54 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:15:31 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,11 @@ namespace ft
 			typedef size_t															size_type;
 
 		private:
+			typedef typename Alloc::template rebind<node<value_type> >::other		node_allocator;
+			
 			node<value_type>														*_root;
 			allocator_type															_allocator;
+			node_allocator															_n_allocator;
 			Compare																	_compare;
 			size_type																_size;
 
@@ -191,15 +194,17 @@ namespace ft
 				if (_size == 0)
 				{
 					node<value_type>		*aux;
+					node<value_type>        c_aux(val, NULL, 0);
 					
 					aux = _root;
-					_root = new node<value_type>(val, NULL, 0);
+					_root = _n_allocator.allocate(1);
+					_n_allocator.construct(_root, c_aux);
 					_root->right = aux;
 					_root->right->parent = _root;
 				}
 				else
 				{
-					new_node(_root, _root, val, _compare);
+					create_node(_root, _root, val, _compare, _n_allocator);
 				}
 
 				if (existed == true)
@@ -249,7 +254,7 @@ namespace ft
 
 				if (bst_search(_root, val, _compare) == NULL)
 					return (0);				
-				_root = delete_node(_root, ft::pair<const key_type, mapped_type>(val, mapped_aux), _root, _compare);
+				_root = destroy_node(_root, ft::pair<const key_type, mapped_type>(val, mapped_aux), _root, _compare, _n_allocator);
 				--_size;
 				return (1);
 			}
@@ -312,15 +317,17 @@ namespace ft
 			{
 				Key							a;
 				T							b;
+				node<value_type>      	  c_aux(ft::pair<const Key, T>(a, b), NULL, 1);
 
 				_size = 0;
-				clear_tree(_root);
-				_root = new node<value_type>(ft::pair<const Key, T>(a, b), NULL, 1);
+				clear_tree(_root, _n_allocator);
+				_root = _n_allocator.allocate(1);
+				_n_allocator.construct(_root, c_aux);
 			}
 
 
 
-
+					
 
 
 
@@ -556,13 +563,16 @@ namespace ft
 
 			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
 			{
-				Key		a;
-				T		b;
+				Key						a;
+				T						b;
+				node<value_type>		aux(ft::pair<const Key, T>(a, b), NULL, 1);
 
 				_size = 0;
 				_compare = comp;
 				_allocator = alloc;
-				_root = new node<value_type>(ft::pair<const Key, T>(a, b), NULL, 1);
+
+				_root = _n_allocator.allocate(1);
+				_n_allocator.construct(_root, aux);
 			}
 
 
@@ -573,13 +583,18 @@ namespace ft
 				const key_compare& comp = key_compare(),
 				const allocator_type& alloc = allocator_type())
 			{
-				Key		a;
-				T		b;
+				Key						a;
+				T						b;
+				node<value_type>		aux(ft::pair<const Key, T>(a, b), NULL, 1);
+
 
 				_size = 0;
 				_compare = comp;
 				_allocator = alloc;
-				_root = new node<value_type>(ft::pair<const Key, T>(a, b), NULL, 1);
+
+				_root = _n_allocator.allocate(1);
+				_n_allocator.construct(_root, aux);
+				
 				insert(first, last);
 			}
 
@@ -588,11 +603,15 @@ namespace ft
 
 			map (const map& x)
 			{
-				Key		a;
-				T		b;
-
+				Key						a;
+				T						b;
+				node<value_type>		aux(ft::pair<const Key, T>(a, b), NULL, 1);
+				
 				_size = 0;
-				_root = new node<value_type>(ft::pair<const Key, T>(a, b), NULL, 1);
+				
+				_root = _n_allocator.allocate(1);
+				_n_allocator.construct(_root, aux);
+
 				insert(x.begin(), x.end());
 			}
 
@@ -601,10 +620,25 @@ namespace ft
 
 			~map()
 			{
-				clear_tree(_root);
+				clear_tree(_root, _n_allocator);
 			}
 
+
+
+
+
+
+
+
+			/*
+			**		___________________		Swap aux function  ___________________
+			*/
+
+
+
+
 			private:
+
 				void	complete_memory_copy(map	&x)
 				{
 					_size = x.size();
@@ -612,8 +646,13 @@ namespace ft
 					_compare = x._compare; 
 					_root = x._root;
 				}
-				
 	};
+
+
+
+
+
+
 
 
 	/*

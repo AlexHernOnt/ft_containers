@@ -46,7 +46,6 @@
 		"limits": "cpp",
 		"locale": "cpp",
 		"mutex": "cpp",
-		"new": "cpp",
 		"optional": "cpp",
 		"ostream": "cpp",
 		"ratio": "cpp",
@@ -74,6 +73,8 @@
 		"stack": "cpp",
 		"memory_resource": "cpp",
 		"__cxx_version": "cpp",
-		"__memory": "cpp"
+		"__memory": "cpp",
+		"csignal": "cpp",
+		"fstream": "cpp"
 	}
 }

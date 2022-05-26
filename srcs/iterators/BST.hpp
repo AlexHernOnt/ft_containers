@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:33:50 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/24 19:40:23 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:15:50 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,15 @@ class node
 	
 	
 	
-	template <class paired>
-	node<paired>						*ft_move_sentinel(node<paired> *prev, node<paired> *sentinel, paired val)
+	template <class paired, class _alloc>
+	node<paired>						*ft_move_sentinel(node<paired> *prev, node<paired> *sentinel, paired val, _alloc alloc)
 	{
-		node<paired>					*aux = new node<paired>(val, prev, 0);
-		
+		node<paired>					*aux;
+		node<paired>					c_aux(val, prev, 0);
+
+		aux = alloc.allocate(1);
+		alloc.construct(aux, c_aux);
+	
 		aux->right = sentinel;
 		sentinel->parent = aux;
 		return (aux);
@@ -59,29 +63,35 @@ class node
 	
 	
 	
-	template <class paired, class _comp>
-	node<paired>						*new_node(node<paired> *ptr, node<paired> *prev, paired val, _comp comp)
+	template <class paired, class _comp, class _alloc>
+	node<paired>						*create_node(node<paired> *ptr, node<paired> *prev, paired val, _comp comp, _alloc alloc)
 	{
 		if (ptr == NULL)
-			return (new node<paired>(val, prev, 0));
+		{
+			node<paired>					*aux;
+			node<paired>					c_aux(val, prev, 0);
+			
+			aux = alloc.allocate(1);
+			alloc.construct(aux, c_aux);
+			return (aux);
+		}
 		if (ptr->_ite == 1)
 		{
-			ptr = ft_move_sentinel(prev, ptr, val);
-			return (ptr);		
+			ptr = ft_move_sentinel(prev, ptr, val, alloc);
+			return (ptr);
 		}		
-	
 		if (!comp(val.first, ptr->data.first) && val.first != ptr->data.first)
 		{
 			if (ptr->right != NULL && ptr->right->_ite == 1)
 			{
-				ptr->right = ft_move_sentinel(ptr, ptr->right, val);
+				ptr->right = ft_move_sentinel(ptr, ptr->right, val, alloc);
 			}
 			else
-				ptr->right = new_node(ptr->right, ptr, val, comp);
+				ptr->right = create_node(ptr->right, ptr, val, comp, alloc);
 		}
 		else if (comp(val.first, ptr->data.first) && val.first != ptr->data.first)
 		{
-			ptr->left = new_node(ptr->left, ptr, val, comp);
+			ptr->left = create_node(ptr->left, ptr, val, comp, alloc);
 		}
 		return (ptr);
 	}
@@ -94,7 +104,7 @@ class node
 	
 	
 	/*
-	**									Delete Node
+	**									Eliminate Node
 	*/
 	
 	
@@ -144,34 +154,34 @@ class node
 	
 	
 	
-	template <class paired, class _comp>
-	node<paired>						*delete_node(node<paired> *ptr, paired val, node<paired> *root, _comp comp)
+	template <class paired, class _comp, class _alloc>
+	node<paired>						*destroy_node(node<paired> *ptr, paired val, node<paired> *root, _comp comp, _alloc alloc)
 	{
 		if (ptr == NULL)
 			return (ptr);
 		else if (comp(val.first, ptr->data.first) && val.first != ptr->data.first)
-			ptr->left = delete_node(ptr->left, val, root, comp);
+			ptr->left = destroy_node(ptr->left, val, root, comp, alloc);
 		else if (!comp(val.first, ptr->data.first) && val.first != ptr->data.first)
-			ptr->right = delete_node(ptr->right, val, root, comp);
+			ptr->right = destroy_nodes(ptr->right, val, root, comp, alloc);
 		else if (ptr->_ite == 0)
 		{
 			if (ptr->right == NULL && ptr->left == NULL)
 			{
-				delete ptr;
+				alloc.deallocate(ptr, 1);
 				return (NULL);
 			}
 			else if (ptr->left == NULL)
 			{
 				node<paired> *aux = ptr->right;
 				aux->parent = ptr->parent;
-				delete ptr;
+				alloc.deallocate(ptr, 1);
 				return (aux);
 			}
 			else if (ptr->right == NULL)											//maybe check if the right node is ite == 1
 			{
 				node<paired> *aux = ptr->left;
 				aux->parent = ptr->parent;
-				delete ptr;
+				alloc.deallocate(ptr, 1);
 				return (aux);
 			}
 			/*
@@ -180,22 +190,26 @@ class node
 				3º Borramos el nodo tmp
 			*/
 		
-			node<paired>		*tmp = min_value_node(ptr->right);
-			node<paired>		*aux = new node<paired>(tmp->data, ptr->parent, tmp->_ite);
+			node<paired>			*tmp = min_value_node(ptr->right);
+			
+			node<paired>			c_aux(tmp->data, ptr->parent, tmp->_ite);
+			node<paired>			*aux = alloc.allocate(1);
+			
+			alloc.construct(aux, c_aux);
 	
 			aux->parent = ptr->parent;
 			ptr->left->parent = aux;
 			aux->left = ptr->left;
-			aux->right = delete_node(ptr->right, tmp->data, root, comp);
+			aux->right = destroy_node(ptr->right, tmp->data, root, comp, alloc);
 			if (aux->right != NULL)
 				aux->right->parent = aux;
 			if (root == ptr)
 			{
-				delete (ptr);
+				alloc.deallocate(ptr, 1);
 				return (aux);
 			}
 			parent_point_to_second_not_first(ptr, aux, root);
-			delete ptr;
+			alloc.deallocate(ptr, 1);
 			ptr = aux;
 		}
 		return (ptr);
@@ -240,14 +254,14 @@ class node
 	
 	
 	
-	template <class paired>
-	void								clear_tree(node<paired> *ptr)
+	template <class paired, class _alloc>
+	void								clear_tree(node<paired> *ptr, _alloc alloc)
 	{
 		if (ptr != NULL)
 		{
-			clear_tree(ptr->left);
-			delete ptr;
-			clear_tree(ptr->right);
+			clear_tree(ptr->left, alloc);
+			alloc.deallocate(ptr, 1);
+			clear_tree(ptr->right, alloc);
 		}
 	}
 	

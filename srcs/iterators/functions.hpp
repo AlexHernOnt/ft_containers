@@ -6,12 +6,13 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:28:21 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/25 16:41:40 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:19:39 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __FUNCTIONS_HPP__
 # define __FUNCTIONS_HPP__
+# include <iostream>
 
 namespace ft
 {
@@ -28,17 +29,6 @@ namespace ft
 		typedef IsTrue type;
 	};
 
-
-
-
-	/*
-	**	Iterator_traits
-	*/
-
-	struct IteratorTrait
-	{
-
-	};
 
 
 
@@ -212,6 +202,9 @@ namespace ft
 
 
 
+
+
+
 	/*
 	**	make_pair
 	*/
@@ -219,6 +212,12 @@ namespace ft
 
 
 
+	template <class T1, class T2>
+	ft::pair<T1, T2>	make_pair(T1 x, T2 y)
+	{
+		return (ft::pair<T1, T2>(x, y));
+	}
+	
 
 
 
@@ -226,15 +225,52 @@ namespace ft
 
 
 
+	/*
+	**	make_pair
+	*/
 
 
 
+
+	template <typename _Iterator>
+		struct iterator_traits
+	    {
+			typedef typename _Iterator::iterator_category					iterator_category;
+			typedef typename _Iterator::value_type							value_type;
+			typedef typename _Iterator::difference_type						difference_type;
+			typedef typename _Iterator::pointer								pointer;
+			typedef typename _Iterator::reference							reference;
+		};
+	
+	
+	template <typename _Tp>
+		struct iterator_traits<_Tp*>
+		{
+			typedef std::random_access_iterator_tag							iterator_category;
+			typedef _Tp														value_type;
+			typedef ptrdiff_t												difference_type;
+			typedef _Tp*													pointer;
+			typedef _Tp&													reference;
+		};
+	
+	
+	template <typename _Tp>
+		struct iterator_traits<const _Tp*>
+		{
+			typedef std::random_access_iterator_tag 						iterator_category;
+			typedef _Tp														value_type;
+			typedef ptrdiff_t												difference_type;
+			typedef const _Tp*												pointer;
+			typedef const _Tp&												reference;
+		};
 }
 
 
-void	ft_leaks()
-{
-	std::cout << "\n\n\n" << std::endl;
-	system("leaks ft_containers | grep bytes");
-}
+
+
+//void	ft_leaks()
+//{
+//	std::cout << "\n\n\n" << std::endl;
+//	system("leaks ft_containers | grep bytes");
+//}
 #endif

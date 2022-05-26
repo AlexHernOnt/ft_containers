@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 20:02:32 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/25 16:50:14 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/26 20:47:53 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,39 +24,39 @@ namespace ft
 			typedef T													value_type;
 			typedef Container											container_type;
 			typedef size_t												size_type;
-
-		private:
-			container_type												_vec;
+			
+		protected:
+			container_type												c;
 
 		public:
 				bool empty() const
 				{
-					return (_vec.empty());
+					return (c.empty());
 				}
 
 				size_type size() const
 				{
-					return (_vec.size());
+					return (c.size());
 				}
 
 				value_type& top()
 				{
-					return (_vec.back());
+					return (c.back());
 				}
 
 				const value_type& top() const
 				{
-					return (_vec.back());
+					return (c.back());
 				}
 
 				void push(const value_type& val)
 				{
-					_vec.push_back(val);
+					c.push_back(val);
 				}
 				
 				void pop()
 				{
-					_vec.pop_back();					
+					c.pop_back();					
 				}
 
 
@@ -69,37 +69,37 @@ namespace ft
 				template <typename U, typename _container>
 				friend bool operator==(stack<U, _container> const &lhs, stack<U, _container> const &rhs)
 				{
-					return (lhs._vec == rhs._vec);
+					return (lhs.c == rhs.c);
 				}
 			
 				template <typename U, typename _container>
 				friend bool operator!=(stack<U, _container> const &lhs, stack<U, _container> const &rhs)
 				{
-					return (lhs._vec != rhs._vec);
+					return (lhs.c != rhs.c);
 				}
 			
 				template <typename U, typename _container>
 				friend bool operator<(stack<U, _container> const &lhs, stack<U, _container> const &rhs)
 				{
-					return (lhs._vec < rhs._vec);
+					return (lhs.c < rhs.c);
 				}
 			
 				template <typename U, typename _container>
 				friend bool operator<=(stack<U, _container> const &lhs, stack<U, _container> const &rhs)
 				{
-					return (lhs._vec <= rhs._vec);
+					return (lhs.c <= rhs.c);
 				}
 			
 				template <typename U, typename _container>
 				friend bool operator>(stack<U, _container> const &lhs, stack<U, _container> const &rhs)
 				{
-					return (lhs._vec > rhs._vec);
+					return (lhs.c > rhs.c);
 				}
 			
 				template <typename U, typename _container>
 				friend bool operator>=(stack<U, _container> const &lhs, stack<U, _container> const &rhs)
 				{
-					return (lhs._vec >= rhs._vec);
+					return (lhs.c >= rhs.c);
 				}
 
 
@@ -110,7 +110,7 @@ namespace ft
 
 				stack	&operator=(const stack &ref)
 				{
-					this->_vec = ref._vec();
+					this->c = ref.c();
 				}
 
 
@@ -120,7 +120,7 @@ namespace ft
 				**		___________________		Cons & Dest     ___________________
 				*/
 
-				explicit stack (const container_type& ctnr = container_type()) : _vec(ctnr)
+				explicit stack (const container_type& ctnr = container_type()) : c(ctnr)
 				{
 				}
 
