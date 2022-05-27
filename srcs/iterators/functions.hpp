@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:28:21 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/26 21:19:39 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:44:36 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,9 +268,10 @@ namespace ft
 
 
 
-//void	ft_leaks()
-//{
-//	std::cout << "\n\n\n" << std::endl;
-//	system("leaks ft_containers | grep bytes");
-//}
+// void	ft_leaks()
+// {
+// 	std::cout << "\n\n\n" << std::endl;
+// 	system("leaks test_ft | grep bytes");
+// }
+
 #endif

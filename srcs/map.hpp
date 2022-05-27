@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:55:43 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/26 21:15:31 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:22:55 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ namespace ft
 			typedef size_t															size_type;
 
 		private:
+			node<value_type>														*_root;
 			typedef typename Alloc::template rebind<node<value_type> >::other		node_allocator;
 			
-			node<value_type>														*_root;
 			allocator_type															_allocator;
 			node_allocator															_n_allocator;
 			Compare																	_compare;
@@ -217,8 +217,7 @@ namespace ft
 
 			iterator						insert(iterator position, const value_type& val)
 			{
-				if (&position == &position)
-					;
+				(void)position;
 				insert(val);
 				return (iterator(bst_search(_root, val.first, _compare)));
 			}
@@ -294,7 +293,7 @@ namespace ft
 			void	swap (map& x)
 			{
 				ft::map<Key, T, Compare, Alloc>						aux;
-				
+				_n_allocator.deallocate(aux._root, 1);
 				aux.complete_memory_copy(*this);
 				this->complete_memory_copy(x);
 				x.complete_memory_copy(aux);

@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:49:08 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/26 21:14:06 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:46:02 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,13 @@
 #include <list>
 #include <algorithm>    // std::lexicographical_compare
 
-
 int main()
 {
 	ft_every_test();
-	return (0);
 }
 
 
+	// ft_leaks();
 
 
 
@@ -131,36 +130,16 @@ int main()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//long	time_now(struct timeval	*start)
-//{
-//	long				ms;
-//	struct timeval		end;
-
-//	gettimeofday(&end, NULL);
-//	ms = (((end.tv_sec * (1000000) + end.tv_usec)
-//				- (start->tv_sec * 1000000 + start->tv_usec)));
-//	return (ms);
-//}
+// long	time_now(struct timeval	*start)
+// {
+// 	long				ms;
+// 	struct timeval		end;
+
+// 	gettimeofday(&end, NULL);
+// 	ms = (((end.tv_sec * (1000000) + end.tv_usec)
+// 				- (start->tv_sec * 1000000 + start->tv_usec)));
+// 	return (ms);
+// }
 
 
 
@@ -172,16 +151,16 @@ int main()
 
 void	ft_every_test()
 {
-	//struct timeval start;
-	//gettimeofday(&start, NULL);
+	// struct timeval start;
+	// gettimeofday(&start, NULL);
 	
 	test_vector();
 	test_map();
 	test_stack();
 
-	//std::cout << "___________________"	<< std::endl;
-	//std::cout << "_ It took: _"			<< time_now(&start) << "_ ms" << std::endl;
-	//std::cout << "___________________"	<< std::endl;
+	// std::cout << "___________________"	<< std::endl;
+	// std::cout << "_ It took: _"			<< time_now(&start) << "_ ms" << std::endl;
+	// std::cout << "___________________"	<< std::endl;
 }
 
 
@@ -1871,7 +1850,7 @@ void	test_map()
 		for (TYPE::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
 			std::cout << it->first << " => " << it->second << '\n';
 	}
-	//	Upper_bound
+	//	Equal Range
 	{
 		TYPE::map<char,int> mymap;
 
@@ -1904,6 +1883,8 @@ void	test_map()
 
 		mymap.get_allocator().deallocate(p,5);
 	}
+
+	
 }
 
 
@@ -2265,11 +2246,6 @@ void print_vector(TYPE::vector<T> aux)
 // 		//NORMAL ! :P
 // 	}
 	
-//  for (int i = 0; i < COUNT; ++i)
-// 	{
-// 		map_int.insert(TYPE::make_pair(rand(), rand()));
-// 	}
-
 // 	int sum = 0;
 // 	for (int i = 0; i < 10000; i++)
 // 	{

@@ -6,7 +6,7 @@
 /*   By: ahernand <ahernand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:33:50 by ahernand          #+#    #+#             */
-/*   Updated: 2022/05/26 21:15:50 by ahernand         ###   ########.fr       */
+/*   Updated: 2022/05/27 13:48:18 by ahernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ class node
 		else if (comp(val.first, ptr->data.first) && val.first != ptr->data.first)
 			ptr->left = destroy_node(ptr->left, val, root, comp, alloc);
 		else if (!comp(val.first, ptr->data.first) && val.first != ptr->data.first)
-			ptr->right = destroy_nodes(ptr->right, val, root, comp, alloc);
+			ptr->right = destroy_node(ptr->right, val, root, comp, alloc);
 		else if (ptr->_ite == 0)
 		{
 			if (ptr->right == NULL && ptr->left == NULL)
@@ -177,7 +177,7 @@ class node
 				alloc.deallocate(ptr, 1);
 				return (aux);
 			}
-			else if (ptr->right == NULL)											//maybe check if the right node is ite == 1
+			else if (ptr->right == NULL)
 			{
 				node<paired> *aux = ptr->left;
 				aux->parent = ptr->parent;
